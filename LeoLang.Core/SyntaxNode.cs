@@ -2,5 +2,6 @@
 {
     public abstract class SyntaxNode
     {
+        public abstract void Accept(Visitor visitor);
     }
 }
