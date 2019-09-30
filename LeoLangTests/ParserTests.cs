@@ -1,8 +1,9 @@
 using NUnit.Framework;
+using LeoLang.Core;
 
 namespace Tests
 {
-    public class Tests
+    public class ParserTests
     {
         [SetUp]
         public void Setup()
