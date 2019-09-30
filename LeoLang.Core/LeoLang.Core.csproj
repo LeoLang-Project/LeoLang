@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IronMeta" Version="4.4.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="LeoLang.g.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LeoLang.ironmeta</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="LeoLang.ironmeta">
+      <Generator>IronMetaGenerator</Generator>
+      <LastGenOutput>LeoLang.g.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="AST\" />
+  </ItemGroup>
+
+</Project>
