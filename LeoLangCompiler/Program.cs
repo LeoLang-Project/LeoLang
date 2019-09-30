@@ -1,7 +1,4 @@
-﻿using System;
-using CommandLine;
-using CommandLine.Text;
-using PipelineNet.Middleware;
+﻿using CommandLine;
 using PipelineNet.MiddlewareResolver;
 using PipelineNet.Pipelines;
 
