@@ -1,0 +1,13 @@
+﻿@namespace LeoLang.Core
+@classname LeoParser
+@using System.Globalization
+@start [startrule]
+
+
+
+		
+whitespace = [\t ]
+_ = whitespace+
+
+EOL = '\n'
+EOF = !.

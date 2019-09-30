@@ -5,26 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="IronMeta" Version="4.4.3" />
+    <None Remove="Grammar.peg" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="LeoLang.g.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LeoLang.ironmeta</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="LeoLang.ironmeta">
-      <Generator>IronMetaGenerator</Generator>
-      <LastGenOutput>LeoLang.g.cs</LastGenOutput>
-    </None>
+    <PackageReference Include="Pegasus" Version="4.2.0-alpha0003" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="AST\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PegGrammar Include="Grammar.peg" />
   </ItemGroup>
 
 </Project>
