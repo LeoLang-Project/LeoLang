@@ -7,9 +7,17 @@ namespace Tests
     public class ParserTests
     {
         [Test]
-        public void IdentiferParsse_Should_Match()
+        public void BooleanParse_Should_Match()
         {
-            var result = p.Parse("_abc123");
+            var result = p.ParseBoolean("true");
+
+            Assert.IsTrue(((BooleanLiteralNode)result).Value == true);
+        }
+
+        [Test]
+        public void IdentifierParse_Should_Match()
+        {
+            var result = p.ParseIdentifier("_abc123");
 
             Assert.IsTrue(((IdentifierNode)result).Name == "_abc123");
         }
