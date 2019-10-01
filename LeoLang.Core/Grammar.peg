@@ -1,10 +1,17 @@
 ﻿@namespace LeoLang.Core
 @classname LeoParser
 @using System.Globalization
-@start [startrule]
+@start variableDefinition
 
+number<SyntaxNode> = value:("" [0-9]*) {SyntaxNode.CreateNumber(int.Parse(value))};
+boolean<SyntaxNode> =  "true" { SyntaxNode.CreateBool(true) }
+								/ "false" { SyntaxNode.CreateBool(false) }
 
+value<SyntaxNode> = boolean / number;
 
+identifier<SyntaxNode> = id:("" ([a-z_0-9])*) {SyntaxNode.CreateID(id)};
+
+variableDefinition<SyntaxNode> = "let" _ id:identifier _ "=" _ val:value {SyntaxNode.CreateVarDef(id, val)}
 		
 whitespace = [\t ]
 _ = whitespace+
