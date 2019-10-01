@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AST\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PegGrammar Include="Grammar.peg" />
   </ItemGroup>
 
