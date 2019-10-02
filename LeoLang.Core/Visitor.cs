@@ -1,17 +1,32 @@
-﻿using LeoLang.Core.AST;
+﻿using System;
+using LeoLang.Core.AST;
 
 namespace LeoLang.Core
 {
-    public abstract class Visitor
+    public class Visitor
     {
-        public abstract void Visit(IdentifierNode rootNode);
+        public virtual void Visit(IdentifierNode rootNode)
+        {
+        }
 
-        public abstract void Visit(BooleanLiteralNode rootNode);
+        public virtual void Visit(BooleanLiteralNode rootNode)
+        {
+        }
 
-        public abstract void Visit(LiteralNode rootNode);
+        public virtual void Visit(LiteralNode rootNode)
+        {
+        }
 
-        public abstract void Visit(VariableDefinitionNode rootNode);
+        public virtual void Visit(MethodDefinitionNode rootNode)
+        {
+        }
 
-        public abstract void Visit(NumberLiteralNode rootNode); //Todo: use real syntaxnode implementation
+        public virtual void Visit(VariableDefinitionNode rootNode)
+        {
+        }
+
+        public virtual void Visit(NumberLiteralNode rootNode)
+        {
+        }
     }
 }
