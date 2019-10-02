@@ -13,6 +13,8 @@ namespace LeoLangCompiler.Middlewares
             var parser = new LeoParser();
 
             arg.AST = parser.Parse(content, arg.CmdArgs.Input);
+
+            next(arg);
         }
     }
 }
