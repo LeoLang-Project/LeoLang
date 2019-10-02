@@ -14,6 +14,11 @@ namespace LeoLang.Core
             return new IdentifierNode(value);
         }
 
+        public static SyntaxNode CreateMethod(SyntaxNode name, SyntaxNode retType, SyntaxNode body)
+        {
+            return new MethodDefinitionNode { Name = ((IdentifierNode)name).Name, ReturnType = ((IdentifierNode)retType).Name, Body = body };
+        }
+
         public static SyntaxNode CreateNumber(int value)
         {
             return new NumberLiteralNode(value);
