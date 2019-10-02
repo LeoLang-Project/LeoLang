@@ -2,12 +2,12 @@
 {
     public class VariableDefinitionNode : SyntaxNode
     {
-        public IdentifierNode ID { get; set; }
+        public string ID { get; set; }
         public SyntaxNode Value { get; set; }
 
         public VariableDefinitionNode(IdentifierNode id, SyntaxNode val)
         {
-            ID = id;
+            ID = id.Name;
             Value = val;
         }
 
