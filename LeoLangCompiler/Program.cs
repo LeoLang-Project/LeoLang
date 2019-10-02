@@ -1,4 +1,5 @@
 ﻿using CommandLine;
+using LeoLangCompiler.Middlewares;
 using PipelineNet.MiddlewareResolver;
 using PipelineNet.Pipelines;
 
@@ -13,9 +14,13 @@ namespace LeoLangCompiler
 
         private static void runParsed(Options obj)
         {
-            var pipeline = new Pipeline<Options>(new ActivatorMiddlewareResolver());
+            var pipeline = new Pipeline<CompilerPipelineContext>(new ActivatorMiddlewareResolver());
+            var context = new CompilerPipelineContext();
 
-            pipeline.Execute(obj);
+            pipeline.Add<ConfigureMiddleware>();
+            pipeline.Add<ParsingMiddleware>();
+
+            pipeline.Execute(context);
         }
     }
 }
