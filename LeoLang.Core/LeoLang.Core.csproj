@@ -5,7 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Grammar.peg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Pegasus" Version="4.2.0-alpha0003" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PegGrammar Include="Grammar.peg" />
   </ItemGroup>
 
 </Project>
