@@ -12,6 +12,8 @@ namespace LeoLangCompiler.Middlewares
             .WriteTo.Console()
             .CreateLogger();
 
+            arg.Logger = log;
+
             next(arg);
         }
     }
