@@ -5,10 +5,10 @@
 
   <!-- Template Header -->
   <TemplateConfiguration>
-    <Name>${res:Templates.Project.ConsoleProject.Name}</Name>
+    <Name>Leo Console Project</Name>
     <Category>Leo</Category>
     <Icon>C#.Project.DOSProject</Icon>
-    <Description>${res:Templates.Project.ConsoleProject.Description}</Description>
+    <Description>Make a Leo Console Application</Description>
   </TemplateConfiguration>
 
   <!-- Actions -->

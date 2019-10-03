@@ -28,7 +28,7 @@
     <DebugSymbols>true</DebugSymbols>
     <Optimize>False</Optimize>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <OutputPath>..\..\..\AddIns\Samples\ILAsmBinding\</OutputPath>
+    <OutputPath>D:\SD\AddIns\BackendBindings\Leo\</OutputPath>
     <DebugType>Full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">

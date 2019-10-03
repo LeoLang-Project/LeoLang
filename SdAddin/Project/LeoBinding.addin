@@ -4,25 +4,25 @@
        addInManagerHidden = "preinstalled">
 
   <Manifest>
-    <Identity name = "ICSharpCode.ILAsmBinding" />
+    <Identity name = "ICSharpCode.LeoBinding" />
   </Manifest>
 
   <Runtime>
-    <Import assembly = "ILAsmBinding.dll" />
+    <Import assembly = "LeoBinding.dll" />
     <Import assembly = ":ICSharpCode.SharpDevelop" />
   </Runtime>
 
   <Path name = "/SharpDevelop/Workbench/FileFilter">
     <FileFilter id = "Leo"
 		            insertbefore="AllFiles"
-		            name = "${res:SharpDevelop.FileFilter.Leo} (*.leo)"
-		            extensions = "*.il" />
+		            name = "Leo Project (*.leo)"
+		            extensions = "*.leo" />
   </Path>
 
   <Path name = "/SharpDevelop/Workbench/Combine/FileFilter">
     <FileFilter id         = "LeoProject"
 		            insertbefore="AllFiles"
-		            name       = "${res:SharpDevelop.FileFilter.ILAsmPrjFiles} (*.ilproj)"
+		            name       = "Leo Project (*.ilproj)"
 		            class      = "ICSharpCode.SharpDevelop.Project.LoadProject"
 		            extensions = "*.leoproj" />
   </Path>
@@ -33,12 +33,12 @@
 
   <Path name = "/SharpDevelop/MSBuildEngine/CompileTaskNames">
     <!-- Makes SharpDevelop show the text 'Compiling ProjectName...' when the task is started -->
-    <String id="ilasm" text = "ilasm" />
+    <String id="Leo" text = "leo" />
   </Path>
 
-  <Path name = "/SharpDevelop/BackendBindings/Templates">
+  <!--<Path name = "/SharpDevelop/BackendBindings/Templates">
     <Directory id = "Leo" path = "./Templates" />
-  </Path>
+  </Path>-->
 
   <Path name = "/SharpDevelop/ViewContent/AvalonEdit/SyntaxModes">
     <SyntaxMode id         = "Leo Syntax Mode"
