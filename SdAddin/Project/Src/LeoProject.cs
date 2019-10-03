@@ -26,7 +26,7 @@ namespace ICSharpCode.LeoBinding
         public LeoProject(ProjectCreateInformation info)
             : base(info)
         {
-            this.AddImport(@"$(LeoAddInPath)\SharpDevelop.Build.MSIL.Targets", null);
+            this.AddImport(@"$(LeoAddInPath)\SharpDevelop.Build.Leo.Targets", null);
         }
 
         public override ItemType GetDefaultItemType(string fileName)

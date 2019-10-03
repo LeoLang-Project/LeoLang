@@ -36,9 +36,9 @@
     <String id="Leo" text = "leo" />
   </Path>
 
-  <!--<Path name = "/SharpDevelop/BackendBindings/Templates">
-    <Directory id = "Leo" path = "./Templates" />
-  </Path>-->
+  <Path name = "/SharpDevelop/BackendBindings/Templates">
+    <TemplateFile id = "Leo" path = "./Templates" />
+  </Path>
 
   <Path name = "/SharpDevelop/ViewContent/AvalonEdit/SyntaxModes">
     <SyntaxMode id         = "Leo Syntax Mode"
