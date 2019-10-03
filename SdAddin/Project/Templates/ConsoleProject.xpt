@@ -1,0 +1,44 @@
+﻿<?xml version="1.0"?>
+<Template originator   = "Furesoft"
+          created      = "06/10/2001"
+          lastModified = "02/01/2003">
+
+  <!-- Template Header -->
+  <TemplateConfiguration>
+    <Name>${res:Templates.Project.ConsoleProject.Name}</Name>
+    <Category>Leo</Category>
+    <Icon>C#.Project.DOSProject</Icon>
+    <Description>${res:Templates.Project.ConsoleProject.Description}</Description>
+  </TemplateConfiguration>
+
+  <!-- Actions -->
+  <Actions>
+    <Open filename = "MainClass.leo" />
+  </Actions>
+
+  <!-- Template Content -->
+  <Project language = "Leo">
+    <Files>
+      <File name="MainClass.leo">
+        <![CDATA[.assembly HelloWorld
+{
+}
+
+.namespace ${StandardNamespace}
+{
+	.class private auto ansi beforefieldinit MainClass
+	{
+		.method public hidebysig static void Main(string[] args) cil managed
+		{
+			.entrypoint
+			.maxstack  1
+			ldstr      "Hello World!"
+			call       void [mscorlib]System.Console::WriteLine(string)
+			ret
+		}
+	}
+}]]>
+      </File>
+    </Files>
+  </Project>
+</Template>
