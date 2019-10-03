@@ -12,9 +12,7 @@ value<SyntaxNode> = boolean / number;
 identifier<SyntaxNode> -public = id:("" ([a-zA-Z_][a-z_0-9]*)) {SyntaxNode.CreateID(id)};
 
 variableDefinition<SyntaxNode> = "let" _ id:identifier _ "=" _ val:value {SyntaxNode.CreateVarDef(id, val)}
-methodDefinition<SyntaxNode> = "meth" _ id:identifier _ "as" _ ret:identifier EOL 
-									body:variableDefinition EOL 
-								"end meth" {SyntaxNode.CreateMethod(id, ret, body)};		
+methodDefinition<SyntaxNode> -public = "meth" _ id:identifier "end meth" {SyntaxNode.CreateMethod(id, null, null)};		
 
 whitespace = [\t ]
 _ = whitespace+
