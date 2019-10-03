@@ -1,8 +1,8 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <UsingTask TaskName="ICSharpCode.Build.Tasks.ILAsm" AssemblyFile="$(ILAsmAddInPath)\ILAsmBuildTask.dll" />
+  <UsingTask TaskName="ICSharpCode.Build.Tasks.Leo" AssemblyFile="$(LeoAddInPath)\LeoBuildTask.dll" />
 
   <PropertyGroup>
-    <MSBuildAllProjects>$(MSBuildAllProjects);$(ILAsmAddInPath)\SharpDevelop.Build.Leo.targets</MSBuildAllProjects>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(LeoAddInPath)\SharpDevelop.Build.Leo.targets</MSBuildAllProjects>
     <DefaultLanguageSourceExtension>.leo</DefaultLanguageSourceExtension>
     <Language>Leo</Language>
   </PropertyGroup>
@@ -23,14 +23,9 @@
       DependsOnTargets="$(CoreCompileDependsOn)">
 
     <Leo
-          DebugType="$(DebugType)"
-          EmitDebugInformation="$(DebugSymbols)"
-          FileAlignment="$(FileAlignment)"
-          KeyContainer="$(KeyContainerName)"
-          KeyFile="$(KeyOriginatorFile)"
-          Optimize="$(Optimize)"
+
           OutputAssembly="@(IntermediateAssembly)"
-          Resources="@(ManifestResourceWithNoCulture);@(ManifestNonResxWithNoCultureOnDisk);@(CompiledLicenseFile)"
+
           Sources="@(Compile)"
           TargetType="$(OutputType)" />
   </Target>

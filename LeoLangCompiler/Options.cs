@@ -17,7 +17,7 @@ namespace LeoLangCompiler
             set { Kind = value ? ModuleKind.Console : ModuleKind.Dll; }
         }
 
-        [Option("dll", HelpText = "Create a dll")]
+        [Option("library", HelpText = "Create a dll")]
         public bool MakeDll
         {
             get { return Kind == ModuleKind.Dll; }

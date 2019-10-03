@@ -8,78 +8,6 @@ namespace ICSharpCode.Build.Tasks
 {
     public sealed class Leo : ToolTask
     {
-        public string DebugType
-        {
-            get
-            {
-                return debugType;
-            }
-            set
-            {
-                debugType = value;
-            }
-        }
-
-        public string EmitDebugInformation
-        {
-            get
-            {
-                return emitDebugInformation;
-            }
-            set
-            {
-                emitDebugInformation = value;
-            }
-        }
-
-        public int FileAlignment
-        {
-            get
-            {
-                return fileAlignment;
-            }
-            set
-            {
-                fileAlignment = value;
-            }
-        }
-
-        public string KeyContainer
-        {
-            get
-            {
-                return keyContainer;
-            }
-            set
-            {
-                keyContainer = value;
-            }
-        }
-
-        public string KeyFile
-        {
-            get
-            {
-                return keyFile;
-            }
-            set
-            {
-                keyFile = value;
-            }
-        }
-
-        public bool Optimize
-        {
-            get
-            {
-                return optimize;
-            }
-            set
-            {
-                optimize = value;
-            }
-        }
-
         public ITaskItem OutputAssembly
         {
             get
@@ -89,18 +17,6 @@ namespace ICSharpCode.Build.Tasks
             set
             {
                 outputAssembly = value;
-            }
-        }
-
-        public ITaskItem[] Resources
-        {
-            get
-            {
-                return resources;
-            }
-            set
-            {
-                resources = value;
             }
         }
 
@@ -138,66 +54,42 @@ namespace ICSharpCode.Build.Tasks
 
         protected override string GenerateCommandLineCommands()
         {
+            //ToDo: fix commandline args in leotask
             CommandLineBuilder commandLine = new CommandLineBuilder();
             if (((OutputAssembly == null) && (Sources != null)) && ((Sources.Length > 0)))
             {
                 OutputAssembly = new TaskItem(Path.GetFileNameWithoutExtension(this.Sources[0].ItemSpec));
+
                 if (string.Equals(this.TargetType, "library", StringComparison.OrdinalIgnoreCase))
                 {
                     OutputAssembly.ItemSpec += ".dll";
-                }
-                else if (string.Equals(this.TargetType, "module", StringComparison.OrdinalIgnoreCase))
-                {
-                    OutputAssembly.ItemSpec += ".netmodule";
                 }
                 else
                 {
                     OutputAssembly.ItemSpec += ".exe";
                 }
             }
-            commandLine.AppendSwitch("/NOLOGO");
 
-            // TODO: EmitDebugInformation / DebugType
-            commandLine.AppendSwitch("/DEBUG");
-
-            if (optimize)
-            {
-                commandLine.AppendSwitch("/OPTIMIZE");
-            }
-
-            commandLine.AppendSwitchIfNotNull("/KEY=@", this.KeyContainer);
-            commandLine.AppendSwitchIfNotNull("/KEY=", this.KeyFile);
-
-            if (Resources != null)
-            {
-                foreach (ITaskItem item in Resources)
-                {
-                    commandLine.AppendSwitchIfNotNull("/RESOURCE=", item);
-                }
-            }
-
-            if (FileAlignment > 0)
-            {
-                AppendIntegerSwitch(commandLine, "/ALIGNMENT=", FileAlignment);
-            }
-
-            commandLine.AppendSwitchIfNotNull("/OUTPUT=", this.OutputAssembly);
+            commandLine.AppendSwitchIfNotNull("-o", this.OutputAssembly);
 
             if (string.Equals(this.TargetType, "library", StringComparison.OrdinalIgnoreCase))
             {
-                commandLine.AppendSwitch("/DLL");
+                commandLine.AppendSwitch("-library");
             }
-            else if (string.Equals(this.TargetType, "module", StringComparison.OrdinalIgnoreCase))
+            else if (string.Equals(this.TargetType, "application", StringComparison.OrdinalIgnoreCase))
             {
-                commandLine.AppendSwitch("/DLL");
+                commandLine.AppendSwitch("-console");
             }
 
-            commandLine.AppendFileNamesIfNotNull(this.Sources, " ");
+            commandLine.AppendFileNamesIfNotNull(this.Sources, " -i ");
+
+            File.WriteAllText(@"C:\Users\filmee24\Documents\cmd.txt", commandLine.ToString());
             return commandLine.ToString();
         }
 
         protected override string GenerateFullPathToTool()
         {
+            return this.GetWorkingDirectory();
             string path = ToolLocationHelper.GetPathToDotNetFrameworkFile(ToolName, TargetDotNetFrameworkVersion.VersionLatest);
             if (path == null)
             {

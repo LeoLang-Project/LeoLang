@@ -22,13 +22,13 @@
   <Path name = "/SharpDevelop/Workbench/Combine/FileFilter">
     <FileFilter id         = "LeoProject"
 		            insertbefore="AllFiles"
-		            name       = "Leo Project (*.ilproj)"
+		            name       = "Leo Project (*.leoproj)"
 		            class      = "ICSharpCode.SharpDevelop.Project.LoadProject"
 		            extensions = "*.leoproj" />
   </Path>
 
   <Path name = "/SharpDevelop/MSBuildEngine/AdditionalProperties">
-    <String id="ILAsmAddInPath" text = "${AddInPath:ICSharpCode.ILAsmBinding}" />
+    <String id="LeoAddInPath" text = "${AddInPath:ICSharpCode.LeoBinding}" />
   </Path>
 
   <Path name = "/SharpDevelop/MSBuildEngine/CompileTaskNames">
@@ -62,7 +62,7 @@
 
   <Path name = "/SharpDevelop/Workbench/ProjectBindings">
     <ProjectBinding id                   = "Leo"
-		                guid                 = "{12B76EC0-1D7B-4FA7-A7D0-C524288B48A1}"
+		                guid                 = "{DFF77257-A62E-4181-9276-0C7CB94E79FE}"
 		                supportedextensions  = ".leo"
 		                projectfileextension = ".leoproj"
 		                class                = "ICSharpCode.LeoBinding.LeoProjectBinding" />
