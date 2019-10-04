@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using CommandLine;
+using LeoLangCompiler;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
@@ -55,36 +58,29 @@ namespace ICSharpCode.Build.Tasks
         protected override string GenerateCommandLineCommands()
         {
             //ToDo: fix commandline args in leotask
-            CommandLineBuilder commandLine = new CommandLineBuilder();
-            if (((OutputAssembly == null) && (Sources != null)) && ((Sources.Length > 0)))
+            var opt = new Options();
+            if (((OutputAssembly == null) && (Sources != null)) && (Sources.Length > 0))
             {
                 OutputAssembly = new TaskItem(Path.GetFileNameWithoutExtension(this.Sources[0].ItemSpec));
 
                 if (string.Equals(this.TargetType, "library", StringComparison.OrdinalIgnoreCase))
                 {
                     OutputAssembly.ItemSpec += ".dll";
+                    opt.MakeDll = true;
                 }
                 else
                 {
                     OutputAssembly.ItemSpec += ".exe";
+                    opt.MakeConsole = true;
                 }
             }
 
-            commandLine.AppendSwitchIfNotNull("-o", this.OutputAssembly);
+            opt.Output = outputAssembly.ItemSpec;
+            opt.Input = sources.First().ItemSpec;
 
-            if (string.Equals(this.TargetType, "library", StringComparison.OrdinalIgnoreCase))
-            {
-                commandLine.AppendSwitch("-library");
-            }
-            else if (string.Equals(this.TargetType, "application", StringComparison.OrdinalIgnoreCase))
-            {
-                commandLine.AppendSwitch("-console");
-            }
-
-            commandLine.AppendFileNamesIfNotNull(this.Sources, " -i ");
-
-            File.WriteAllText(@"C:\Users\filmee24\Documents\cmd.txt", commandLine.ToString());
-            return commandLine.ToString();
+            var cmdline = Parser.Default.FormatCommandLine<Options>(opt);
+            File.WriteAllText(@"C:\Users\filmee24\Documents\cmd.txt", cmdline);
+            return cmdline;
         }
 
         protected override string GenerateFullPathToTool()

@@ -40,8 +40,11 @@
     <OutputPath>D:\SD\AddIns\BackendBindings\Leo\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LeoLang.Core">
-      <HintPath>..\..\LeoLang.Core\bin\Debug\netstandard2.0\LeoLang.Core.dll</HintPath>
+    <Reference Include="CommandLine, Version=2.6.0.0, Culture=neutral, PublicKeyToken=5a870481e358d379, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CommandLineParser.2.6.0\lib\net40\CommandLine.dll</HintPath>
+    </Reference>
+    <Reference Include="dnlib, Version=3.2.0.0, Culture=neutral, PublicKeyToken=50e96378b6e77999, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\dnlib.3.2.0\lib\net35\dnlib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
@@ -55,10 +58,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\LeoLangCompiler\Options.cs">
+      <Link>Options.cs</Link>
+    </Compile>
     <Compile Include="LeoTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="SharpDevelop.Build.Common.targets">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
