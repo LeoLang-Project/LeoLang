@@ -24,7 +24,7 @@
 
     <Leo
 
-          OutputAssembly="@(IntermediateAssembly)"
+          OutputAssembly="$(ProjectDir)\bin\Debug\$(ProjectName)"
 
           Sources="@(Compile)"
           TargetType="$(OutputType)" />
