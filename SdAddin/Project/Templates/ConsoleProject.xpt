@@ -13,7 +13,7 @@
 
   <!-- Actions -->
   <Actions>
-    <Open filename = "MainClass.leo" />
+    <Open filename = "Program.leo" />
   </Actions>
 
   <!-- Template Content -->
@@ -26,11 +26,10 @@
 
     <PropertyGroup>
       <OutputType>Exe</OutputType>
-      <AppDesignerFolder>Properties</AppDesignerFolder>
     </PropertyGroup>
 
     <Files>
-      <File name="MainClass.leo">
+      <File name="Program.leo">
         <![CDATA[
         let x = true
 ]]>
