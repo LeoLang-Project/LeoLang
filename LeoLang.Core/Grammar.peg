@@ -3,19 +3,36 @@
 
 @start methodDefinition
 
-number<SyntaxNode> = value:("" [0-9]*) {SyntaxNode.CreateNumber(int.Parse(value))};
+number<SyntaxNode> = value:("" [0-9]*) {SyntaxNode.CreateNumber(int.Parse(value))}
 boolean<SyntaxNode> -public =  val:("true" / "false") { SyntaxNode.CreateBool(bool.Parse(val)) }
 								
 
 value<SyntaxNode> = boolean / number;
 
-identifier<SyntaxNode> -public = id:("" ([a-zA-Z_][a-z_0-9]*)) {SyntaxNode.CreateID(id)};
+identifier<SyntaxNode> -public = id:("" ([a-zA-Z_][a-z_0-9]*)) {SyntaxNode.CreateID(id)}
 
-variableDefinition<SyntaxNode> = "let" _ id:identifier _ "=" _ val:value {SyntaxNode.CreateVarDef(id, val)}
-methodDefinition<SyntaxNode> -public = "meth" _ id:identifier "end meth" {SyntaxNode.CreateMethod(id, null, null)};		
+variableDefinition<SyntaxNode> = "let" _ id:identifier _ "=" _ val:value 
+										{SyntaxNode.CreateVarDef(id, val)}
+Block<SyntaxNode> = _? LCb _? block:StatementLine* _? RCb _? Semi
+					{SyntaxNode.CreateBlock(block)}
+
+Statement<SyntaxNode> = variableDefinition
+
+StatementLine<SyntaxNode> = stmt:Statement Semi {stmt}
+
+methodDefinition<SyntaxNode> -public = ret:identifier _ id:identifier LBr RBr body:Block
+										{SyntaxNode.CreateMethod(id, ret, body)}	
+
+//Tokens
+LBr = '('
+RBr = ')'
+LCb = '{'
+RCb = '}'
+Semi = ';'
 
 whitespace = [\t ]
 _ = whitespace+
 
-EOL = '\n'
+
+EOL = '\n' / '\r' / '\r\n'
 EOF = !.

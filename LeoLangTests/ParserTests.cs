@@ -25,9 +25,9 @@ namespace Tests
         [Test]
         public void MethodParse_Should_Match()
         {
-            var result = p.ParseMethodDefinition("meth main endmeth");
+            var result = p.ParseMethodDefinition("void main() {};");
 
-            Assert.IsTrue(((IdentifierNode)result).Name == "_abc123");
+            Assert.IsTrue(((MethodDefinitionNode)result).Name == "main");
         }
 
         [SetUp]
@@ -39,7 +39,7 @@ namespace Tests
         [Test]
         public void Test1()
         {
-            var result = p.Parse("meth hello as Int32\nlet x = true;\nend meth");
+            var result = p.Parse("void main() {let x = true;};");
             Assert.Pass();
         }
 
