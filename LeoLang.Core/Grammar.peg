@@ -1,4 +1,4 @@
-@namespace LeoLang.Core
+﻿@namespace LeoLang.Core
 @classname LeoParser
 
 @start methodDefinition
@@ -17,11 +17,14 @@ Block<SyntaxNode> = _? LCb _? block:StatementLine* _? RCb _? Semi
 					{SyntaxNode.CreateBlock(block)}
 
 Statement<SyntaxNode> = variableDefinition
-
 StatementLine<SyntaxNode> = stmt:Statement Semi {stmt}
 
-methodDefinition<SyntaxNode> -public = ret:identifier _ id:identifier LBr RBr body:Block
-										{SyntaxNode.CreateMethod(id, ret, body)}	
+paramDef<SyntaxNode> = type:identifier _ name:identifier {SyntaxNode.CreateParameter(type, name)}
+paramList<SyntaxNode> = paramDef / paramListVoid
+paramListVoid<SyntaxNode> = "void" {null}
+
+methodDefinition<SyntaxNode> -public = ret:identifier _ id:identifier LBr param:paramList RBr body:Block
+										{SyntaxNode.CreateMethod(id, ret, param, body)}	
 
 //Tokens
 LBr = '('

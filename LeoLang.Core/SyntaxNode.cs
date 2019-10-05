@@ -20,14 +20,19 @@ namespace LeoLang.Core
             return new IdentifierNode(value);
         }
 
-        public static SyntaxNode CreateMethod(SyntaxNode name, SyntaxNode retType, SyntaxNode body)
+        public static SyntaxNode CreateMethod(SyntaxNode name, SyntaxNode retType, SyntaxNode param, SyntaxNode body)
         {
-            return new MethodDefinitionNode(((IdentifierNode)name).Name, ((IdentifierNode)retType).Name, body);
+            return new MethodDefinitionNode(((IdentifierNode)name).Name, ((IdentifierNode)retType).Name, param, body);
         }
 
         public static SyntaxNode CreateNumber(int value)
         {
             return new NumberLiteralNode(value);
+        }
+
+        public static SyntaxNode CreateParameter(SyntaxNode type, SyntaxNode name)
+        {
+            return new ParameterDefinitionNode(((IdentifierNode)type).Name, ((IdentifierNode)name).Name);
         }
 
         public static SyntaxNode CreateVarDef(SyntaxNode id, SyntaxNode val)
