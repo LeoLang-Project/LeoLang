@@ -5,10 +5,10 @@
 
   <!-- Template Header -->
   <TemplateConfiguration>
-    <Name>Leo Console Project</Name>
+    <Name>Leo Library Project</Name>
     <Category>Leo</Category>
-    <Icon>C#.Project.DOSProject</Icon>
-    <Description>Make a Leo Console Application</Description>
+    <Icon>C#.Project.Library</Icon>
+    <Description>Make a Leo Library</Description>
   </TemplateConfiguration>
 
   <!-- Actions -->
@@ -18,23 +18,14 @@
 
   <!-- Template Content -->
   <Project language = "Leo">
-    <ProjectItems>
-      <Reference Include="System" />
-      <Reference Include="System.Data" />
-      <Reference Include="System.Xml" />
-    </ProjectItems>
-
     <PropertyGroup>
-      <OutputType>Exe</OutputType>
+      <OutputType>Library</OutputType>
       <AppDesignerFolder>Properties</AppDesignerFolder>
     </PropertyGroup>
 
-    <Files>
-      <File name="MainClass.leo">
-        <![CDATA[
-        let x = true
-]]>
-      </File>
-    </Files>
+    <ProjectItems>
+      <Reference Include="System" />
+      <Reference Include="System.Xml" />
+    </ProjectItems>
   </Project>
 </Template>
