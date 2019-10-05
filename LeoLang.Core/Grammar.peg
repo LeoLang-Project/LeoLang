@@ -1,4 +1,4 @@
-﻿@namespace LeoLang.Core
+@namespace LeoLang.Core
 @classname LeoParser
 
 @start methodDefinition
@@ -9,7 +9,7 @@ boolean<SyntaxNode> -public =  val:("true" / "false") { SyntaxNode.CreateBool(bo
 
 value<SyntaxNode> = boolean / number;
 
-identifier<SyntaxNode> -public = id:("" ([a-zA-Z_][a-z_0-9]*)) {SyntaxNode.CreateID(id)}
+identifier<SyntaxNode> -public = id:("" ([a-zA-Z_][a-zA-Z_0-9]*)) {SyntaxNode.CreateID(id)}
 
 variableDefinition<SyntaxNode> = "let" _ id:identifier _ "=" _ val:value 
 										{SyntaxNode.CreateVarDef(id, val)}
