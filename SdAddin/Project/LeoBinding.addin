@@ -1,7 +1,6 @@
 <AddIn name        = "LeoLang binding"
-       author      = "Furesoft"
-       description = "Backing binding for Leo"
-       addInManagerHidden = "preinstalled">
+			 author      = "Furesoft"
+			 description = "Backing binding for Leo">
 
   <Manifest>
     <Identity name = "ICSharpCode.LeoBinding" />
@@ -14,17 +13,17 @@
 
   <Path name = "/SharpDevelop/Workbench/FileFilter">
     <FileFilter id = "Leo"
-		            insertbefore="AllFiles"
-		            name = "Leo Project (*.leo)"
-		            extensions = "*.leo" />
+								insertbefore="AllFiles"
+								name = "Leo Project (*.leo)"
+								extensions = "*.leo" />
   </Path>
 
   <Path name = "/SharpDevelop/Workbench/Combine/FileFilter">
     <FileFilter id         = "LeoProject"
-		            insertbefore="AllFiles"
-		            name       = "Leo Project (*.leoproj)"
-		            class      = "ICSharpCode.SharpDevelop.Project.LoadProject"
-		            extensions = "*.leoproj" />
+								insertbefore="AllFiles"
+								name       = "Leo Project (*.leoproj)"
+								class      = "ICSharpCode.SharpDevelop.Project.LoadProject"
+								extensions = "*.leoproj" />
   </Path>
 
   <Path name = "/SharpDevelop/MSBuildEngine/AdditionalProperties">
@@ -42,29 +41,28 @@
 
   <Path name = "/SharpDevelop/ViewContent/AvalonEdit/SyntaxModes">
     <SyntaxMode id         = "Leo Syntax Mode"
-		            name       = "Leo"
-		            extensions = ".leo"
-		            resource   = "ICSharpCode.LeoBinding.Resources.Leo-Mode.xshd" />
+								name       = "Leo"
+								extensions = ".leo"
+								resource   = "ICSharpCode.LeoBinding.Resources.Leo-Mode.xshd" />
   </Path>
 
   <Path path = "/SharpDevelop/BackendBindings/ProjectOptions/Leo">
     <OptionPanel id    = "Application"
-		             label = "${res:Dialog.ProjectOptions.ApplicationSettings}"
-		             class = "ICSharpCode.SharpDevelop.Gui.OptionPanels.ApplicationSettings" />
+								 label = "${res:Dialog.ProjectOptions.ApplicationSettings}"
+								 class = "ICSharpCode.SharpDevelop.Gui.OptionPanels.ApplicationSettings" />
     <OptionPanel id    = "BuildEvents"
-		             label = "${res:Dialog.ProjectOptions.BuildEvents}"
-		             class = "ICSharpCode.SharpDevelop.Gui.OptionPanels.BuildEvents" />
+								 label = "${res:Dialog.ProjectOptions.BuildEvents}"
+								 class = "ICSharpCode.SharpDevelop.Gui.OptionPanels.BuildEvents" />
     <OptionPanel id    = "DebugOptions"
-		             label = "${res:Dialog.ProjectOptions.DebugOptions}"
-		             class = "ICSharpCode.SharpDevelop.Gui.OptionPanels.DebugOptions" />
-    <Include id = "AllManaged" path="/SharpDevelop/BackendBindings/ProjectOptions/AllManaged" />
+								 label = "${res:Dialog.ProjectOptions.DebugOptions}"
+								 class = "ICSharpCode.SharpDevelop.Gui.OptionPanels.DebugOptions" />
   </Path>
 
   <Path name = "/SharpDevelop/Workbench/ProjectBindings">
     <ProjectBinding id                   = "Leo"
-		                guid                 = "{DFF77257-A62E-4181-9276-0C7CB94E79FE}"
-		                supportedextensions  = ".leo"
-		                projectfileextension = ".leoproj"
-		                class                = "ICSharpCode.LeoBinding.LeoProjectBinding" />
+										guid                 = "{DFF77257-A62E-4181-9276-0C7CB94E79FE}"
+										supportedextensions  = ".leo"
+										projectfileextension = ".leoproj"
+										class                = "ICSharpCode.LeoBinding.LeoProjectBinding" />
   </Path>
 </AddIn>
