@@ -1,9 +1,15 @@
 ﻿using LeoLang.Core.AST;
+using System.Collections.Generic;
 
 namespace LeoLang.Core
 {
     public abstract class SyntaxNode
     {
+        public static SyntaxNode CreateBlock(IEnumerable<SyntaxNode> body)
+        {
+            return new BlockNode(body);
+        }
+
         public static SyntaxNode CreateBool(bool value)
         {
             return new BooleanLiteralNode(value);
@@ -16,7 +22,7 @@ namespace LeoLang.Core
 
         public static SyntaxNode CreateMethod(SyntaxNode name, SyntaxNode retType, SyntaxNode body)
         {
-            return new MethodDefinitionNode { Name = ((IdentifierNode)name).Name, ReturnType = ((IdentifierNode)retType).Name, Body = body };
+            return new MethodDefinitionNode(((IdentifierNode)name).Name, ((IdentifierNode)retType).Name, body);
         }
 
         public static SyntaxNode CreateNumber(int value)
