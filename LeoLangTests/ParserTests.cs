@@ -7,6 +7,14 @@ namespace Tests
     public class ParserTests
     {
         [Test]
+        public void BinaryExpressionParse_Should_Match()
+        {
+            var result = p.ParseBinaryExpression("65 == 65");
+
+            Assert.IsTrue(((CharLiteralNode)result).Value == 'c');
+        }
+
+        [Test]
         public void BooleanParse_Should_Match()
         {
             var result = p.ParseBooleanLiteral("true");
@@ -36,6 +44,14 @@ namespace Tests
             var result = p.ParseMethodDefinition("void main(void) {};");
 
             Assert.IsTrue(((MethodDefinitionNode)result).Name == "main");
+        }
+
+        [Test]
+        public void NumberParse_Should_Match()
+        {
+            var result = p.ParseNumberLiteral("65");
+
+            Assert.IsTrue(((NumberLiteralNode)result).Value == 65);
         }
 
         [SetUp]
