@@ -1,4 +1,5 @@
 ﻿using LeoLang.Core.AST;
+using LeoLang.Core.AST.Expressions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,6 +7,11 @@ namespace LeoLang.Core
 {
     public abstract class SyntaxNode
     {
+        public static SyntaxNode CreateBinary(SyntaxNode l, BinaryOperator op, SyntaxNode r)
+        {
+            return new BinaryExpressionNode(l, op, r);
+        }
+
         public static SyntaxNode CreateBlock(IEnumerable<SyntaxNode> body)
         {
             return new BlockNode(body);

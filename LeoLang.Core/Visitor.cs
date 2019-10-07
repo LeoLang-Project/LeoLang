@@ -1,11 +1,16 @@
 ﻿using System;
 using LeoLang.Core.AST;
+using LeoLang.Core.AST.Expressions;
 
 namespace LeoLang.Core
 {
     public class Visitor
     {
         public virtual void Visit(IdentifierNode rootNode)
+        {
+        }
+
+        public virtual void Visit(BinaryExpressionNode rootNode)
         {
         }
 

@@ -1,6 +1,7 @@
 ﻿@namespace LeoLang.Core
 @classname LeoParser
 @using LeoLang.Core.AST
+@using LeoLang.Core.AST.Expressions
 
 @start methodDefinition
 
@@ -13,7 +14,16 @@ value<SyntaxNode> = booleanLiteral / numberLiteral / characterLiteral
 
 identifier<IdentifierNode> -public = id:("" ([a-zA-Z_][a-zA-Z_0-9]*)) {SyntaxNode.CreateID(id)}
 
-expression<SyntaxNode> = value//binaryExpression / value
+expression<SyntaxNode> = binaryExpression / value
+
+binaryOperator<BinaryOperator> = "<=" {BinaryOperator.LessEq}
+							   / ">=" {BinaryOperator.GreaterEq}
+							   / "==" {BinaryOperator.Equal}
+							   / "<" {BinaryOperator.Less}
+							   / ">" {BinaryOperator.Greater};
+
+binaryExpression<SyntaxNode> -public = lhs:value _ op:binaryOperator rhs:value {SyntaxNode.CreateBinary(lhs, op, rhs)}
+
 
 variableDefinition<SyntaxNode> = "let" _ id:identifier _ "=" _ val:expression 
 										{SyntaxNode.CreateVarDef(id, val)}
