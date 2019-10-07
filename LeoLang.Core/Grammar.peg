@@ -1,17 +1,21 @@
 ﻿@namespace LeoLang.Core
 @classname LeoParser
+@using LeoLang.Core.AST
 
 @start methodDefinition
 
-number<SyntaxNode> = value:("" [0-9]*) {SyntaxNode.CreateNumber(int.Parse(value))}
-boolean<SyntaxNode> -public =  val:("true" / "false") { SyntaxNode.CreateBool(bool.Parse(val)) }
-								
+//Literals
+numberLiteral<SyntaxNode> = value:("" [0-9]*) {SyntaxNode.CreateNumber(int.Parse(value))}
+booleanLiteral<SyntaxNode> -public =  val:("true" / "false") { SyntaxNode.CreateBool(bool.Parse(val)) }
+characterLiteral<SyntaxNode> -public = "'" c:("" [^']) "'" {SyntaxNode.CreateChar(c)}							
 
-value<SyntaxNode> = boolean / number;
+value<SyntaxNode> = booleanLiteral / numberLiteral / characterLiteral
 
-identifier<SyntaxNode> -public = id:("" ([a-zA-Z_][a-zA-Z_0-9]*)) {SyntaxNode.CreateID(id)}
+identifier<IdentifierNode> -public = id:("" ([a-zA-Z_][a-zA-Z_0-9]*)) {SyntaxNode.CreateID(id)}
 
-variableDefinition<SyntaxNode> = "let" _ id:identifier _ "=" _ val:value 
+expression<SyntaxNode> = value//binaryExpression / value
+
+variableDefinition<SyntaxNode> = "let" _ id:identifier _ "=" _ val:expression 
 										{SyntaxNode.CreateVarDef(id, val)}
 Block<SyntaxNode> = _? LCb _? block:StatementLine* _? RCb _? Semi
 					{SyntaxNode.CreateBlock(block)}

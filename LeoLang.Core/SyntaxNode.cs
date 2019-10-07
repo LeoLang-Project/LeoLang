@@ -1,5 +1,6 @@
 ﻿using LeoLang.Core.AST;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LeoLang.Core
 {
@@ -15,7 +16,12 @@ namespace LeoLang.Core
             return new BooleanLiteralNode(value);
         }
 
-        public static SyntaxNode CreateID(string value)
+        public static SyntaxNode CreateChar(string value)
+        {
+            return new CharLiteralNode(value.First());
+        }
+
+        public static IdentifierNode CreateID(string value)
         {
             return new IdentifierNode(value);
         }

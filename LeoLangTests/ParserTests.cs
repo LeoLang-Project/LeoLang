@@ -9,9 +9,17 @@ namespace Tests
         [Test]
         public void BooleanParse_Should_Match()
         {
-            var result = p.ParseBoolean("true");
+            var result = p.ParseBooleanLiteral("true");
 
             Assert.IsTrue(((BooleanLiteralNode)result).Value == true);
+        }
+
+        [Test]
+        public void CharacterParse_Should_Match()
+        {
+            var result = p.ParseCharacterLiteral("'c'");
+
+            Assert.IsTrue(((CharLiteralNode)result).Value == 'c');
         }
 
         [Test]

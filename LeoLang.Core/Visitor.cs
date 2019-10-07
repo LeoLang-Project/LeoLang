@@ -13,6 +13,10 @@ namespace LeoLang.Core
         {
         }
 
+        public virtual void Visit(CharLiteralNode rootNode)
+        {
+        }
+
         public virtual void Visit(ParameterDefinitionNode rootNode)
         {
         }
