@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using LeoLang.Core;
 using LeoLang.Core.AST;
+using LeoLang.Core.AST.Expressions;
 
 namespace Tests
 {
@@ -10,8 +11,12 @@ namespace Tests
         public void BinaryExpressionParse_Should_Match()
         {
             var result = p.ParseBinaryExpression("65 == 65");
+            var toTest = new BinaryExpressionNode(
+                    new NumberLiteralNode(65),
+                    BinaryOperator.Equal,
+                    new NumberLiteralNode(65));
 
-            Assert.IsTrue(((CharLiteralNode)result).Value == 'c');
+            Assert.IsTrue(((BinaryExpressionNode)result) == toTest);
         }
 
         [Test]
