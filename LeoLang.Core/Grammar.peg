@@ -22,7 +22,7 @@ binaryOperator<BinaryOperator> = "<=" {BinaryOperator.LessEq}
 							   / "<" {BinaryOperator.Less}
 							   / ">" {BinaryOperator.Greater};
 
-binaryExpression<SyntaxNode> -public = lhs:value _ op:binaryOperator rhs:value {SyntaxNode.CreateBinary(lhs, op, rhs)}
+binaryExpression<SyntaxNode> -public = lhs:value _? op:binaryOperator _? rhs:value {SyntaxNode.CreateBinary(lhs, op, rhs)}
 
 
 variableDefinition<SyntaxNode> = "let" _ id:identifier _ "=" _ val:expression 
