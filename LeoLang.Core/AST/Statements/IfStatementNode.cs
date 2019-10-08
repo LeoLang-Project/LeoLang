@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LeoLang.Core.AST.Statements
+﻿namespace LeoLang.Core.AST.Statements
 {
     public class IfStatementNode : StatementNode
     {
