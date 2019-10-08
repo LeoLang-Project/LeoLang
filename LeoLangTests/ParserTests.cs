@@ -2,6 +2,7 @@ using NUnit.Framework;
 using LeoLang.Core;
 using LeoLang.Core.AST;
 using LeoLang.Core.AST.Expressions;
+using LeoLang.Core.AST.Statements;
 
 namespace Tests
 {
@@ -41,6 +42,12 @@ namespace Tests
             var result = p.ParseIdentifier("_abc123");
 
             Assert.IsTrue(((IdentifierNode)result).Name == "_abc123");
+        }
+
+        [Test]
+        public void IfParse_Should_Match()
+        {
+            var result = p.ParseIfStatement("if(65 == 65) {let x = true;};");
         }
 
         [Test]
