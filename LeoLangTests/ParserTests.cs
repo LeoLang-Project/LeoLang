@@ -47,7 +47,7 @@ namespace Tests
         [Test]
         public void IfParse_Should_Match()
         {
-            var result = p.ParseIfStatement("if(65 == 65) {let x = true;};");
+            var result = p.ParseIfStatement("if(65 == 65) \n {\nlet x = true;\n};");
         }
 
         [Test]
