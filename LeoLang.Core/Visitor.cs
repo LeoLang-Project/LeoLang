@@ -23,6 +23,10 @@ namespace LeoLang.Core
         {
         }
 
+        public virtual void Visit(DefaultExpressionNode n)
+        {
+        }
+
         public virtual void Visit(BooleanLiteralNode n)
         {
         }

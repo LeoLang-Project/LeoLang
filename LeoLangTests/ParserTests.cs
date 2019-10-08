@@ -37,6 +37,14 @@ namespace Tests
         }
 
         [Test]
+        public void DefaultParse_Should_Match()
+        {
+            var result = p.ParseDefaultExpression("default(int)");
+
+            Assert.IsTrue(((DefaultExpressionNode)result).Type == new IdentifierNode("int"));
+        }
+
+        [Test]
         public void IdentifierParse_Should_Match()
         {
             var result = p.ParseIdentifier("_abc123");

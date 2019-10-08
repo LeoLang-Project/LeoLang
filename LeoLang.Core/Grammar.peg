@@ -10,7 +10,7 @@ numberLiteral<SyntaxNode> -public = value:("" [0-9]*) {SyntaxNode.CreateNumber(i
 booleanLiteral<SyntaxNode> -public =  val:("true" / "false") { SyntaxNode.CreateBool(bool.Parse(val)) }
 characterLiteral<SyntaxNode> -public = "'" c:("" [^']) "'" {SyntaxNode.CreateChar(c)}							
 
-value<SyntaxNode> = booleanLiteral / numberLiteral / characterLiteral / identifier
+value<SyntaxNode> = booleanLiteral / numberLiteral / characterLiteral / defaultExpression / identifier
 
 identifier<IdentifierNode> -public = id:("" ([a-zA-Z_][a-zA-Z_0-9]*)) {SyntaxNode.CreateID(id)}
 
@@ -43,6 +43,8 @@ paramListVoid<SyntaxNode> = "void" {null}
 
 methodDefinition<SyntaxNode> -public = ret:identifier _ id:identifier LBr param:paramList RBr body:Block
 										{SyntaxNode.CreateMethod(id, ret, param, body)}	
+
+defaultExpression<SyntaxNode> -public = "default" LBr id:identifier RBr {SyntaxNode.CreateDefault(id)}
 
 //Tokens
 LBr = '('

@@ -28,6 +28,11 @@ namespace LeoLang.Core
             return new CharLiteralNode(value.First());
         }
 
+        public static SyntaxNode CreateDefault(SyntaxNode id)
+        {
+            return new DefaultExpressionNode((IdentifierNode)id);
+        }
+
         public static IdentifierNode CreateID(string value)
         {
             return new IdentifierNode(value);
