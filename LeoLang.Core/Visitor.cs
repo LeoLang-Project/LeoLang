@@ -7,47 +7,47 @@ namespace LeoLang.Core
 {
     public class Visitor
     {
-        public virtual void Visit(IdentifierNode rootNode)
+        public virtual void Visit(IdentifierNode n)
         {
         }
 
-        public virtual void Visit(BinaryExpressionNode rootNode)
+        public virtual void Visit(BinaryExpressionNode n)
         {
         }
 
-        public virtual void Visit(IfStatementNode rootNode)
+        public virtual void Visit(IfStatementNode n)
         {
         }
 
-        public virtual void Visit(BooleanLiteralNode rootNode)
+        public virtual void Visit(BooleanLiteralNode n)
         {
         }
 
-        public virtual void Visit(CharLiteralNode rootNode)
+        public virtual void Visit(CharLiteralNode n)
         {
         }
 
-        public virtual void Visit(ParameterDefinitionNode rootNode)
+        public virtual void Visit(ParameterDefinitionNode n)
         {
         }
 
-        public virtual void Visit(BlockNode rootNode)
+        public virtual void Visit(BlockNode n)
         {
         }
 
-        public virtual void Visit(LiteralNode rootNode)
+        public virtual void Visit(LiteralNode n)
         {
         }
 
-        public virtual void Visit(MethodDefinitionNode rootNode)
+        public virtual void Visit(MethodDefinitionNode n)
         {
         }
 
-        public virtual void Visit(VariableDefinitionNode rootNode)
+        public virtual void Visit(VariableDefinitionNode n)
         {
         }
 
-        public virtual void Visit(NumberLiteralNode rootNode)
+        public virtual void Visit(NumberLiteralNode n)
         {
         }
     }

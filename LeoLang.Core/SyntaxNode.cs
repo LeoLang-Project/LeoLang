@@ -1,5 +1,6 @@
 ﻿using LeoLang.Core.AST;
 using LeoLang.Core.AST.Expressions;
+using LeoLang.Core.AST.Statements;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,7 +35,7 @@ namespace LeoLang.Core
 
         public static SyntaxNode CreateIf(BinaryExpressionNode cond, BlockNode body)
         {
-            return new IfStatement(cond, body);
+            return new IfStatementNode(cond, body);
         }
 
         public static SyntaxNode CreateMethod(SyntaxNode name, SyntaxNode retType, SyntaxNode param, SyntaxNode body)
