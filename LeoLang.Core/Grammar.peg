@@ -33,7 +33,7 @@ ifStatement<SyntaxNode> -public = "if" _? LBr _? cond:binaryExpression _? RBr _?
 Block<SyntaxNode> = _? LCb _? block:StatementLine* _? RCb _? Semi
 					{SyntaxNode.CreateBlock(block)}
 
-Statement<SyntaxNode> = variableDefinition
+Statement<SyntaxNode> = variableDefinition / ifStatement
 StatementLine<SyntaxNode> = stmt:Statement Semi {stmt}
 
 paramDef<SyntaxNode> = type:identifier _ name:identifier {SyntaxNode.CreateParameter(type, name)}
