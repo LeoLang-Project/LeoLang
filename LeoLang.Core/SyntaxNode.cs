@@ -32,6 +32,11 @@ namespace LeoLang.Core
             return new IdentifierNode(value);
         }
 
+        public static SyntaxNode CreateIf(BinaryExpressionNode cond, BlockNode body)
+        {
+            return new IfStatement(cond, body);
+        }
+
         public static SyntaxNode CreateMethod(SyntaxNode name, SyntaxNode retType, SyntaxNode param, SyntaxNode body)
         {
             return new MethodDefinitionNode(((IdentifierNode)name).Name, ((IdentifierNode)retType).Name, param, body);

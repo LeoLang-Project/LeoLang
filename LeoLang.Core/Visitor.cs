@@ -1,6 +1,7 @@
 ﻿using System;
 using LeoLang.Core.AST;
 using LeoLang.Core.AST.Expressions;
+using LeoLang.Core.AST.Statements;
 
 namespace LeoLang.Core
 {
@@ -11,6 +12,10 @@ namespace LeoLang.Core
         }
 
         public virtual void Visit(BinaryExpressionNode rootNode)
+        {
+        }
+
+        public virtual void Visit(IfStatementNode rootNode)
         {
         }
 
