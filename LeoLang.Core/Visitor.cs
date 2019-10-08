@@ -19,6 +19,10 @@ namespace LeoLang.Core
         {
         }
 
+        public virtual void Visit(WhileStatementNode n)
+        {
+        }
+
         public virtual void Visit(BooleanLiteralNode n)
         {
         }

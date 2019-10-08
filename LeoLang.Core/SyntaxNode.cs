@@ -58,6 +58,11 @@ namespace LeoLang.Core
             return new VariableDefinitionNode((IdentifierNode)id, val);
         }
 
+        public static SyntaxNode CreateWhile(SyntaxNode cond, SyntaxNode body)
+        {
+            return new WhileStatementNode((BinaryExpressionNode)cond, (BlockNode)body);
+        }
+
         public abstract void Accept(Visitor visitor);
     }
 }
