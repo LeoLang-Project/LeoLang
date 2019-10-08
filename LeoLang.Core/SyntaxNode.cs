@@ -33,9 +33,9 @@ namespace LeoLang.Core
             return new IdentifierNode(value);
         }
 
-        public static SyntaxNode CreateIf(BinaryExpressionNode cond, BlockNode body)
+        public static SyntaxNode CreateIf(SyntaxNode cond, SyntaxNode body)
         {
-            return new IfStatementNode(cond, body);
+            return new IfStatementNode((BinaryExpressionNode)cond, (BlockNode)body);
         }
 
         public static SyntaxNode CreateMethod(SyntaxNode name, SyntaxNode retType, SyntaxNode param, SyntaxNode body)

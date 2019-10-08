@@ -28,7 +28,7 @@ binaryExpression<SyntaxNode> -public = lhs:value _? op:binaryOperator _? rhs:val
 variableDefinition<SyntaxNode> = "let" _ id:identifier _ "=" _ val:expression 
 										{SyntaxNode.CreateVarDef(id, val)}
 
-ifStatement<SyntaxNode> = if _? LBr _? cond:BinaryExpression _? RBr _? body:Block {SyntaxNode.CreateIf(cond, body)}
+ifStatement<SyntaxNode> = "if" _? LBr _? cond:binaryExpression _? RBr _? body:Block {SyntaxNode.CreateIf(cond, body)}
 
 Block<SyntaxNode> = _? LCb _? block:StatementLine* _? RCb _? Semi
 					{SyntaxNode.CreateBlock(block)}
