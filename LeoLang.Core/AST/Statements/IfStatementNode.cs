@@ -2,16 +2,14 @@
 
 namespace LeoLang.Core.AST.Statements
 {
-    public class IfStatementNode : SyntaxNode
+    public class IfStatementNode : StatementNode
     {
-        public BlockNode Body { get; set; }
-
         public SyntaxNode Condition { get; set; }
 
         public IfStatementNode(SyntaxNode condition, BlockNode body)
+           : base(body)
         {
             Condition = condition;
-            Body = body;
         }
 
         public override void Accept(Visitor visitor)

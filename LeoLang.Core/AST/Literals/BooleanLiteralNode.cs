@@ -1,12 +1,9 @@
 ﻿namespace LeoLang.Core.AST
 {
-    public class BooleanLiteralNode : LiteralNode
+    public class BooleanLiteralNode : LiteralNode<bool>
     {
-        public bool Value { get; set; }
-
-        public BooleanLiteralNode(bool value)
+        public BooleanLiteralNode(bool value) : base(value)
         {
-            Value = value;
         }
 
         public override void Accept(Visitor visitor)

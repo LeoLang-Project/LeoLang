@@ -1,14 +1,9 @@
-﻿using System;
-
-namespace LeoLang.Core.AST
+﻿namespace LeoLang.Core.AST
 {
-    public class NumberLiteralNode : LiteralNode
+    public class NumberLiteralNode : LiteralNode<int>
     {
-        public int Value { get; set; }
-
-        public NumberLiteralNode(int value)
+        public NumberLiteralNode(int value) : base(value)
         {
-            Value = value;
         }
 
         public override void Accept(Visitor visitor)

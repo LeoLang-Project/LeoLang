@@ -35,10 +35,6 @@ namespace LeoLang.Core
         {
         }
 
-        public virtual void Visit(LiteralNode n)
-        {
-        }
-
         public virtual void Visit(MethodDefinitionNode n)
         {
         }

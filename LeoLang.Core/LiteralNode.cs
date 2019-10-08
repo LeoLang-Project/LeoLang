@@ -1,10 +1,14 @@
 ﻿namespace LeoLang.Core
 {
-    public class LiteralNode : SyntaxNode
+    public abstract class LiteralNode<T> : SyntaxNode
     {
-        public override void Accept(Visitor visitor)
+        public T Value { get; set; }
+
+        public abstract override void Accept(Visitor visitor);
+
+        protected LiteralNode(T value)
         {
-            visitor.Visit(this);
+            Value = value;
         }
     }
 }
