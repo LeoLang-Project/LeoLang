@@ -33,6 +33,11 @@ namespace LeoLang.Core
             return new DefaultExpressionNode((IdentifierNode)id);
         }
 
+        public static SyntaxNode CreateGoTo(SyntaxNode id)
+        {
+            return new GoToExpressionNode((IdentifierNode)id);
+        }
+
         public static IdentifierNode CreateID(string value)
         {
             return new IdentifierNode(value);

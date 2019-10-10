@@ -1,5 +1,4 @@
-﻿using System;
-using LeoLang.Core.AST;
+﻿using LeoLang.Core.AST;
 using LeoLang.Core.AST.Expressions;
 using LeoLang.Core.AST.Statements;
 
@@ -8,6 +7,10 @@ namespace LeoLang.Core
     public class Visitor
     {
         public virtual void Visit(IdentifierNode n)
+        {
+        }
+
+        public virtual void Visit(GoToExpressionNode n)
         {
         }
 

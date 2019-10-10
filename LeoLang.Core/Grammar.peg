@@ -36,7 +36,7 @@ whileStatement<SyntaxNode> -public = "while" _? LBr _? cond:binaryExpression _? 
 Block<SyntaxNode> = _? LCb _? block:StatementLine* _? RCb _? Semi
 					{SyntaxNode.CreateBlock(block)}
 
-Statement<SyntaxNode> = variableDefinition / ifStatement / whileStatement
+Statement<SyntaxNode> = goToExpression / variableDefinition / ifStatement / whileStatement
 StatementLine<SyntaxNode> = stmt:Statement Semi {stmt}
 
 paramDef<SyntaxNode> = type:identifier _ name:identifier {SyntaxNode.CreateParameter(type, name)}
@@ -48,6 +48,8 @@ methodDefinition<SyntaxNode> -public = ret:identifier _ id:identifier LBr param:
 
 defaultExpression<SyntaxNode> -public = "default" LBr id:identifier RBr {SyntaxNode.CreateDefault(id)}
 										/ "default" {SyntaxNode.CreateDefault(null)}
+
+goToExpression<SyntaxNode> = "goto" _ id:identifier {SyntaxNode.CreateGoTo(id)}
 
 //Tokens
 LBr -lexical = '('

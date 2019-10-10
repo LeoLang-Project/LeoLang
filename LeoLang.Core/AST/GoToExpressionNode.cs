@@ -2,13 +2,13 @@
 
 namespace LeoLang.Core.AST
 {
-    public class LabelDefinitionNode : SyntaxNode
+    public class GoToExpressionNode : SyntaxNode
     {
-        public string Name { get; set; }
+        public string LabelName { get; set; }
 
-        public LabelDefinitionNode(IdentifierNode id)
+        public GoToExpressionNode(IdentifierNode id)
         {
-            Name = id.Name;
+            LabelName = id.Name;
         }
 
         public override void Accept(Visitor visitor)
@@ -18,7 +18,7 @@ namespace LeoLang.Core.AST
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Name);
+            return HashCode.Combine(LabelName);
         }
     }
 }
