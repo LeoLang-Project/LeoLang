@@ -47,11 +47,11 @@ methodDefinition<SyntaxNode> -public = ret:identifier _ id:identifier LBr param:
 defaultExpression<SyntaxNode> -public = "default" LBr id:identifier RBr {SyntaxNode.CreateDefault(id)}
 
 //Tokens
-LBr = '('
-RBr = ')'
-LCb = '{'
-RCb = '}'
-Semi = ';'
+LBr -lexical = '('
+RBr -lexical = ')'
+LCb -lexical = '{'
+RCb -lexical = '}'
+Semi -lexical = ';'
 
 whitespace = [\t ] / EOL
 _ = whitespace+
