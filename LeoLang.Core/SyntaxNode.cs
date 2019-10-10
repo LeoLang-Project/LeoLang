@@ -68,6 +68,11 @@ namespace LeoLang.Core
             return new ParameterDefinitionNode(((IdentifierNode)type).Name, ((IdentifierNode)name).Name);
         }
 
+        public static SyntaxNode CreateReturn(SyntaxNode expr)
+        {
+            return new ReturnStatementNode(expr);
+        }
+
         public static SyntaxNode CreateVarDef(SyntaxNode id, SyntaxNode val)
         {
             return new VariableDefinitionNode((IdentifierNode)id, val);

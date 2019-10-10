@@ -66,6 +66,14 @@ namespace Tests
         }
 
         [Test]
+        public void MethodParse_Main_Should_Match()
+        {
+            var result = p.ParseMethodDefinition("int main(void) {return 0;};");
+
+            Assert.IsTrue(((MethodDefinitionNode)result).Name == "main");
+        }
+
+        [Test]
         public void MethodParse_Should_Match()
         {
             var result = p.ParseMethodDefinition("void main(void) {};");
