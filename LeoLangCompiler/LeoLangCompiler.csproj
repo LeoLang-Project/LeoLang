@@ -24,4 +24,10 @@
     <Folder Include="Strategies\Optimizing\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="test.leo">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

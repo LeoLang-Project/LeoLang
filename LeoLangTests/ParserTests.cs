@@ -21,6 +21,15 @@ namespace Tests
         }
 
         [Test]
+        public void BlockParse_Should_Match()
+        {
+            //BUG: block ignores second statement
+            var result = p.ParseBlock("{ let x = true; let mal = false; };");
+
+            Assert.IsTrue(result.GetHashCode() == new BooleanLiteralNode(true).GetHashCode());
+        }
+
+        [Test]
         public void BooleanParse_Should_Match()
         {
             var result = p.ParseBooleanLiteral("true");
@@ -87,6 +96,14 @@ namespace Tests
             var result = p.ParseNumberLiteral("65");
 
             Assert.IsTrue(((NumberLiteralNode)result).Value == 65);
+        }
+
+        [Test]
+        public void ReturnParse_Should_Match()
+        {
+            var result = p.ParseReturnStatement("return 0");
+
+            Assert.IsTrue(result.GetHashCode() == new ReturnStatementNode(new NumberLiteralNode(0)).GetHashCode());
         }
 
         [SetUp]

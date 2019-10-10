@@ -33,11 +33,11 @@ label<SyntaxNode> = id:identifier Colon {SyntaxNode.CreateLabel(id)}
 ifStatement<SyntaxNode> -public = "if" _? LBr _? cond:binaryExpression _? RBr _? body:Block {SyntaxNode.CreateIf(cond, body)}
 whileStatement<SyntaxNode> -public = "while" _? LBr _? cond:binaryExpression _? RBr _? body:Block {SyntaxNode.CreateWhile(cond, body)}
 
-Block<SyntaxNode> = _? LCb _? block:StatementLine* _? RCb _? Semi
+Block<SyntaxNode> -public = _? LCb _? block:(StatementLine*) _? RCb Semi
 					{SyntaxNode.CreateBlock(block)}
 
-Statement<SyntaxNode> = goToStatement / variableDefinition / goToStatement / ifStatement / whileStatement
-StatementLine<SyntaxNode> = stmt:Statement Semi {stmt}
+Statement<SyntaxNode> -public = goToStatement / variableDefinition / returnStatement / ifStatement / whileStatement
+StatementLine<SyntaxNode> -public = stmt:Statement Semi {stmt}
 
 paramDef<SyntaxNode> = type:identifier _ name:identifier {SyntaxNode.CreateParameter(type, name)}
 paramList<SyntaxNode> -memoize = paramDef / paramListVoid
@@ -50,7 +50,7 @@ defaultExpression<SyntaxNode> -public = "default" LBr id:identifier RBr {SyntaxN
 										/ "default" {SyntaxNode.CreateDefault(null)}
 
 goToStatement<SyntaxNode> = "goto" _ id:identifier {SyntaxNode.CreateGoTo(id)}
-returnStatement<SyntaxNode> = "return" _ expr:expression {SyntaxNode.CreateReturn(expr)} / "pass" {SyntaxNode.CreateReturn(null)}
+returnStatement<SyntaxNode> -public = "return" _ expr:expression {SyntaxNode.CreateReturn(expr)} / "pass" {SyntaxNode.CreateReturn(null)}
 
 //Tokens
 LBr -lexical = '('
