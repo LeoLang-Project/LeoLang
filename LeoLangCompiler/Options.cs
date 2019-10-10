@@ -24,13 +24,13 @@ namespace LeoLangCompiler
             set { Kind = value ? ModuleKind.Dll : ModuleKind.Dll; }
         }
 
-        [Option('c', "optimize", HelpText = "Should the Program be optimized")]
+        [Option("optimize", HelpText = "Should the Program be optimized")]
         public bool Optimize { get; set; }
 
         [Option('o', "output", HelpText = "Output file to compile", Required = true)]
         public string Output { get; set; }
 
-        [Option('v', "verbose", HelpText = "Enables full logging", Required = true)]
+        [Option('v', "verbose", HelpText = "Enables full logging")]
         public bool Verbose { get; set; }
     }
 }
