@@ -17,7 +17,7 @@ namespace Tests
                     BinaryOperator.Equal,
                     new NumberLiteralNode(65));
 
-            Assert.IsTrue(((BinaryExpressionNode)result) == toTest);
+            Assert.IsTrue(result.GetHashCode() == toTest.GetHashCode());
         }
 
         [Test]
@@ -25,7 +25,7 @@ namespace Tests
         {
             var result = p.ParseBooleanLiteral("true");
 
-            Assert.IsTrue(((BooleanLiteralNode)result).Value == true);
+            Assert.IsTrue(result.GetHashCode() == new BooleanLiteralNode(true).GetHashCode());
         }
 
         [Test]
@@ -33,15 +33,16 @@ namespace Tests
         {
             var result = p.ParseCharacterLiteral("'c'");
 
-            Assert.IsTrue(((CharLiteralNode)result).Value == 'c');
+            Assert.IsTrue(result.GetHashCode() == new CharLiteralNode('c').GetHashCode());
         }
 
         [Test]
         public void DefaultParse_Should_Match()
         {
             var result = p.ParseDefaultExpression("default(int)");
+            var toTest = new DefaultExpressionNode(new IdentifierNode("int"));
 
-            Assert.IsTrue(((DefaultExpressionNode)result).Type == new IdentifierNode("int"));
+            Assert.IsTrue(result.GetHashCode() == toTest.GetHashCode());
         }
 
         [Test]
@@ -49,13 +50,19 @@ namespace Tests
         {
             var result = p.ParseIdentifier("_abc123");
 
-            Assert.IsTrue(((IdentifierNode)result).Name == "_abc123");
+            Assert.IsTrue(result.GetHashCode() == new IdentifierNode("_abc123").GetHashCode());
         }
 
         [Test]
         public void IfParse_Should_Match()
         {
             var result = p.ParseIfStatement("if(65 == 65) \n {\nlet x = true;\n};");
+            var toTest = new IfStatementNode(
+                new BinaryExpressionNode(
+                    new NumberLiteralNode(65), BinaryOperator.Equal, new NumberLiteralNode(65)),
+                new BlockNode(new[] { new VariableDefinitionNode(new IdentifierNode("x"), new BooleanLiteralNode(true)) }));
+
+            Assert.IsTrue(result.GetHashCode() == toTest.GetHashCode());
         }
 
         [Test]
