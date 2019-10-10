@@ -61,8 +61,16 @@ Semi -lexical = ';'
 Colon -lexical = ':'
 
 whitespace = [\t ] / EOL
-_ = whitespace+
+_ -memoize = (whitespace / EOL / comment)*
+
+comment -memoize = singleLineComment / multiLineComment
+
+singleLineComment -memoize -lexical = "//" (!eolChar .)*
+
+multiLineComment -lexical  = "/*" (!"*/" .)* "*/"
+
+eolChar = [\n\r\u2028\u2029]
 
 
 EOL = '\n' / '\r' / '\r\n'
-EOF = !.
+EOF = !.  / unexpected:&. #error{ "PEG0008: Unexpected '" + unexpected + "'" }
