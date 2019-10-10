@@ -10,6 +10,10 @@ namespace LeoLang.Core
         {
         }
 
+        public virtual void Visit(SyntaxNode n)
+        {
+        }
+
         public virtual void Visit(ReturnStatementNode n)
         {
         }
