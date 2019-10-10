@@ -28,6 +28,8 @@ binaryExpression<SyntaxNode> -public = lhs:value _? op:binaryOperator _? rhs:val
 variableDefinition<SyntaxNode> = "let" _ id:identifier _ "=" _ val:expression 
 										{SyntaxNode.CreateVarDef(id, val)}
 
+label<SyntaxNode> = id:identifier Colon {SyntaxNode.CreateLabel(id)}
+
 ifStatement<SyntaxNode> -public = "if" _? LBr _? cond:binaryExpression _? RBr _? body:Block {SyntaxNode.CreateIf(cond, body)}
 whileStatement<SyntaxNode> -public = "while" _? LBr _? cond:binaryExpression _? RBr _? body:Block {SyntaxNode.CreateWhile(cond, body)}
 
@@ -45,6 +47,7 @@ methodDefinition<SyntaxNode> -public = ret:identifier _ id:identifier LBr param:
 										{SyntaxNode.CreateMethod(id, ret, param, body)}	
 
 defaultExpression<SyntaxNode> -public = "default" LBr id:identifier RBr {SyntaxNode.CreateDefault(id)}
+										/ "default" {SyntaxNode.CreateDefault(null)}
 
 //Tokens
 LBr -lexical = '('
@@ -52,6 +55,7 @@ RBr -lexical = ')'
 LCb -lexical = '{'
 RCb -lexical = '}'
 Semi -lexical = ';'
+Colon -lexical = ':'
 
 whitespace = [\t ] / EOL
 _ = whitespace+

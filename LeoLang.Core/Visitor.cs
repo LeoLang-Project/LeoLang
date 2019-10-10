@@ -11,6 +11,10 @@ namespace LeoLang.Core
         {
         }
 
+        public virtual void Visit(LabelDefinitionNode n)
+        {
+        }
+
         public virtual void Visit(BinaryExpressionNode n)
         {
         }
