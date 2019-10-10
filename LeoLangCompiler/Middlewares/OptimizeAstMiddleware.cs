@@ -1,4 +1,5 @@
-﻿using PipelineNet.Middleware;
+﻿using LeoLang.Core;
+using PipelineNet.Middleware;
 using System;
 
 namespace LeoLangCompiler.Middlewares
@@ -7,7 +8,10 @@ namespace LeoLangCompiler.Middlewares
     {
         public void Run(CompilerPipelineContext parameter, Action<CompilerPipelineContext> next)
         {
-            throw new NotImplementedException();
+            var runner = new StrategyRunner<SyntaxNode>();
+            //ToDo: add optimizing strategies
+
+            next(parameter);
         }
     }
 }
