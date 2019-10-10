@@ -2,9 +2,9 @@
 
 namespace LeoLang.Core
 {
-    public class StrategieRunner<T>
+    public class StrategyRunner<T>
     {
-        public void Add(IStrategie<T> strategie)
+        public void Add(IStrategy<T> strategie)
         {
             _strategies.Add(strategie);
         }
@@ -20,6 +20,6 @@ namespace LeoLang.Core
             return tmp;
         }
 
-        private List<IStrategie<T>> _strategies;
+        private List<IStrategy<T>> _strategies;
     }
 }

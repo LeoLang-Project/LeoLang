@@ -1,6 +1,6 @@
 ﻿namespace LeoLang.Core
 {
-    public interface IStrategie<T>
+    public interface IStrategy<T>
     {
         T Do(T arg);
     }
