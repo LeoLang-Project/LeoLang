@@ -20,7 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Strategies\" />
+    <Folder Include="Strategies\Lowering\" />
+    <Folder Include="Strategies\Optimizing\" />
   </ItemGroup>
 
 </Project>
