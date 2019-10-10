@@ -33,8 +33,13 @@ label<SyntaxNode> = id:identifier Colon {SyntaxNode.CreateLabel(id)}
 ifStatement<SyntaxNode> -public = "if" _? LBr _? cond:binaryExpression _? RBr _? body:Block {SyntaxNode.CreateIf(cond, body)}
 whileStatement<SyntaxNode> -public = "while" _? LBr _? cond:binaryExpression _? RBr _? body:Block {SyntaxNode.CreateWhile(cond, body)}
 
-Block<SyntaxNode> -public = _? LCb _? block:(StatementLine*) _? RCb Semi
-					{SyntaxNode.CreateBlock(block)}
+Block<SyntaxNode> -public = _? LCb _? block:blockContent _? RCb Semi
+					{block}
+
+blockContent<SyntaxNode> 
+    = _? head:StatementLine _? tail:blockContent { SyntaxNode.CreateBlock(head).Concat(tail) }
+    / line:StatementLine { SyntaxNode.CreateBlock(line) }
+
 
 Statement<SyntaxNode> -public = goToStatement / variableDefinition / returnStatement / ifStatement / whileStatement
 StatementLine<SyntaxNode> -public = stmt:Statement Semi {stmt}

@@ -18,6 +18,11 @@ namespace LeoLang.Core
             return new BlockNode(body);
         }
 
+        public static BlockNode CreateBlock(SyntaxNode body)
+        {
+            return new BlockNode(new[] { body });
+        }
+
         public static SyntaxNode CreateBool(bool value)
         {
             return new BooleanLiteralNode(value);
