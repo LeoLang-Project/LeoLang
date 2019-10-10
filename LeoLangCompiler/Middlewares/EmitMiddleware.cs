@@ -13,7 +13,7 @@ namespace LeoLangCompiler.Middlewares
         {
             var mod = new ModuleDefUser("ctor-test", Guid.NewGuid(),
                 new AssemblyRefUser(new AssemblyNameInfo(typeof(int).Assembly.GetName().FullName)));
-            // It's a console app
+            arg.Module = mod;
             mod.Kind = arg.CmdArgs.Kind;
             // Create the assembly and add the created module to it
             new AssemblyDefUser("ctor-test", new Version(1, 2, 3, 4)).Modules.Add(mod);

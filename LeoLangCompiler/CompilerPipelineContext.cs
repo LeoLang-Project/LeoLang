@@ -1,5 +1,6 @@
-﻿using LeoLang.Core;
-using Serilog;
+﻿using dnlib.DotNet;
+using LeoLang.Core;
+using ILogger = Serilog.ILogger;
 
 namespace LeoLangCompiler
 {
@@ -9,5 +10,7 @@ namespace LeoLangCompiler
         public Options CmdArgs { get; set; }
 
         public ILogger Logger { get; set; }
+
+        public ModuleDefUser Module { get; set; }
     }
 }
