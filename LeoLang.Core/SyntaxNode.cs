@@ -35,7 +35,7 @@ namespace LeoLang.Core
 
         public static SyntaxNode CreateGoTo(SyntaxNode id)
         {
-            return new GoToExpressionNode((IdentifierNode)id);
+            return new GoToStatementNode((IdentifierNode)id);
         }
 
         public static IdentifierNode CreateID(string value)

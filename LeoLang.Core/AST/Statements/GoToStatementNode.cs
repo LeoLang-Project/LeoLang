@@ -2,11 +2,11 @@
 
 namespace LeoLang.Core.AST
 {
-    public class GoToExpressionNode : SyntaxNode
+    public class GoToStatementNode : SyntaxNode
     {
         public string LabelName { get; set; }
 
-        public GoToExpressionNode(IdentifierNode id)
+        public GoToStatementNode(IdentifierNode id)
         {
             LabelName = id.Name;
         }
