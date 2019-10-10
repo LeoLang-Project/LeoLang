@@ -1,4 +1,6 @@
-﻿namespace LeoLang.Core.AST
+﻿using System;
+
+namespace LeoLang.Core.AST
 {
     public class IdentifierNode : SyntaxNode
     {
@@ -12,6 +14,11 @@
         public override void Accept(Visitor visitor)
         {
             visitor.Visit(this);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name);
         }
     }
 }

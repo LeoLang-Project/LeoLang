@@ -1,4 +1,6 @@
-﻿namespace LeoLang.Core.AST.Expressions
+﻿using System;
+
+namespace LeoLang.Core.AST.Expressions
 {
     public class BinaryExpressionNode : SyntaxNode
     {
@@ -18,6 +20,11 @@
         public override void Accept(Visitor visitor)
         {
             visitor.Visit(this);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Left, Op, Right);
         }
     }
 }

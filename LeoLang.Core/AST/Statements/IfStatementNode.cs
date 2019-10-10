@@ -1,4 +1,6 @@
-﻿namespace LeoLang.Core.AST.Statements
+﻿using System;
+
+namespace LeoLang.Core.AST.Statements
 {
     public class IfStatementNode : StatementNode
     {
@@ -13,6 +15,11 @@
         public override void Accept(Visitor visitor)
         {
             visitor.Visit(this);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Condition, Body);
         }
     }
 }

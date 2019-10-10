@@ -16,5 +16,10 @@ namespace LeoLang.Core
         {
             visitor.Visit(this);
         }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Body);
+        }
     }
 }
