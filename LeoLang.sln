@@ -15,6 +15,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeoBinding", "SdAddin\Proje
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeoBuildTask", "SdAddin\LeoBuildTask\LeoBuildTask.csproj", "{77827AD7-1023-4352-A7E8-5CC3CE8FB133}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CFB92D16-6495-40DA-A398-1F5D0C37E8E6}"
+	ProjectSection(SolutionItems) = preProject
+		LanguageSpec.md = LanguageSpec.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
