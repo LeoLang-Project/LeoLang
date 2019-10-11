@@ -8,6 +8,8 @@ namespace LeoLang.Core
 {
     public abstract class SyntaxNode
     {
+        public static Visitor Visitor;
+
         public static SyntaxNode CreateBinary(SyntaxNode l, BinaryOperator op, SyntaxNode r)
         {
             return new BinaryExpressionNode(l, op, r);
@@ -89,5 +91,10 @@ namespace LeoLang.Core
         }
 
         public abstract void Accept(Visitor visitor);
+
+        public void ApplyVisitor(Visitor visitor)
+        {
+            Visitor.Visit(this);
+        }
     }
 }
