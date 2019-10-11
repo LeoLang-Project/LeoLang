@@ -2,6 +2,7 @@
 using LeoLangCompiler.Middlewares;
 using PipelineNet.MiddlewareResolver;
 using PipelineNet.Pipelines;
+using System;
 
 namespace LeoLangCompiler
 {
@@ -10,6 +11,8 @@ namespace LeoLangCompiler
         private static void Main(string[] args)
         {
             Parser.Default.ParseArguments<Options>(args).WithParsed(runParsed);
+
+            Console.ReadLine();
         }
 
         private static void runParsed(Options opts)

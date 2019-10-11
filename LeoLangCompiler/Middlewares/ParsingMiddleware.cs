@@ -14,6 +14,9 @@ namespace LeoLangCompiler.Middlewares
 
             arg.AST = parser.Parse(content, arg.CmdArgs.Input);
 
+            var dumper = new DumpVisitor();
+            dumper.Visit(arg.AST);
+
             next(arg);
         }
     }

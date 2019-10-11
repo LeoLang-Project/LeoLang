@@ -1,4 +1,5 @@
 ﻿using LeoLang.Core;
+using YamlDotNet.Serialization;
 
 namespace LeoLangCompiler
 {
@@ -6,7 +7,9 @@ namespace LeoLangCompiler
     {
         public override void Visit(SyntaxNode n)
         {
-            YamlDotNet.Serialization.Serializer.
+            var serializer = new SerializerBuilder().Build();
+            var yaml = serializer.Serialize(n);
+            System.Console.WriteLine(yaml);
         }
     }
 }
