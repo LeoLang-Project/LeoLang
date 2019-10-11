@@ -32,5 +32,6 @@ But you can easily define new Operators and with a CompilerPlugin you could intr
 - async/await -> but the heuristic should be so smart, that you dont need to use the keyword async
 - in the If Statement you can check if the value of a nullable type is true by simply use the name of the symbol. 
 - In LeoLang you can simply add two IEnumerable containers together or apply other operators
-- - You can check if a value is in a specific range.
+- You can check if a value is in a specific range.
+- Automatic fluid API generation
   
