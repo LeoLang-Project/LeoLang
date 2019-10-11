@@ -1,5 +1,5 @@
 int hello(void) {
-	let x = true;
+	let x = "hello world";
 
-	return 0;
+	return false;
 };

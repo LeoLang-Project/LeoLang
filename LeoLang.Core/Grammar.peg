@@ -9,8 +9,9 @@
 numberLiteral<SyntaxNode> -public = value:("" [0-9]*) {SyntaxNode.CreateNumber(int.Parse(value))}
 booleanLiteral<SyntaxNode> -public =  val:("true" / "false") { SyntaxNode.CreateBool(bool.Parse(val)) }
 characterLiteral<SyntaxNode> -public = "'" c:("" [^']) "'" {SyntaxNode.CreateChar(c)}							
+stringLiteral<SyntaxNode> -public = '"' val:("" [^"]) '"' {SyntaxNode.CreateString(val)}
 
-value<SyntaxNode> = booleanLiteral / numberLiteral / characterLiteral / defaultExpression / identifier
+value<SyntaxNode> = booleanLiteral / characterLiteral / stringLiteral / defaultExpression / numberLiteral / identifier
 
 identifier<IdentifierNode> -public = id:("" ([a-zA-Z_][a-zA-Z_0-9]*)) {SyntaxNode.CreateID(id)}
 

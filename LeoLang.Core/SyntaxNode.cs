@@ -1,5 +1,6 @@
 ﻿using LeoLang.Core.AST;
 using LeoLang.Core.AST.Expressions;
+using LeoLang.Core.AST.Literals;
 using LeoLang.Core.AST.Statements;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,6 +81,11 @@ namespace LeoLang.Core
             return new ReturnStatementNode(expr);
         }
 
+        public static SyntaxNode CreateString(string value)
+        {
+            return new StringLiteralNode(value);
+        }
+
         public static SyntaxNode CreateVarDef(SyntaxNode id, SyntaxNode val)
         {
             return new VariableDefinitionNode((IdentifierNode)id, val);
@@ -94,6 +100,7 @@ namespace LeoLang.Core
 
         public void ApplyVisitor(Visitor visitor)
         {
+            Visitor = visitor;
             Visitor.Visit(this);
         }
     }
