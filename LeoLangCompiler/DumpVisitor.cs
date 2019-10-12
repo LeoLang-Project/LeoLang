@@ -1,5 +1,5 @@
 ﻿using LeoLang.Core;
-using YamlDotNet.Serialization;
+using System.Text;
 
 namespace LeoLangCompiler
 {
@@ -7,9 +7,13 @@ namespace LeoLangCompiler
     {
         public override void Visit(SyntaxNode n)
         {
-            var serializer = new SerializerBuilder().Build();
-            var yaml = serializer.Serialize(n);
-            System.Console.WriteLine(yaml);
+            System.Console.WriteLine(ObjectDumper.Dump(n));
         }
+
+        private StringBuilder _builder = new StringBuilder();
+
+        private int Indent = 0;
+
+        private string getIndent() => new string(' ', Indent);
     }
 }
