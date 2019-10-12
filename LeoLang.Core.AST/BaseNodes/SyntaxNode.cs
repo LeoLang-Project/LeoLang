@@ -92,11 +92,6 @@ namespace LeoLang.Core
             return new StringLiteralNode(value);
         }
 
-        public static SyntaxNode CreateVarDecl(SyntaxNode id, IList<string> isnullabel)
-        {
-            return new VariableDeclarationNode((IdentifierNode)id, isnullabel.Any());
-        }
-
         public static SyntaxNode CreateVarDef(SyntaxNode id, SyntaxNode val)
         {
             return new VariableDefinitionNode((IdentifierNode)id, val);

@@ -14,10 +14,6 @@ namespace LeoLang.Core
         {
         }
 
-        public virtual void Visit(VariableDeclarationNode n)
-        {
-        }
-
         public virtual void Visit(SyntaxNode n)
         {
         }
