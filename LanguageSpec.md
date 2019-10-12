@@ -27,7 +27,7 @@ But you can easily define new Operators and with a CompilerPlugin you could intr
 
 ## Planned Syntaxctic Sugar ##
 - Discriminated Unions
-- Unions for Memory like c
+- Unions for Memory like in c
 - String based Enums -> generate a struct with all boilerplate code
 - async/await -> but the heuristic should be so smart, that you dont need to use the keyword async
 - in the If Statement you can check if the value of a nullable type is true by simply use the name of the symbol. 
