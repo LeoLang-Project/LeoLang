@@ -20,10 +20,6 @@
     <Span color="Comment" ruleSet="CommentMarkerSet">
       <Begin>//</Begin>
     </Span>
-    <Span color="Comment" ruleSet="CommentMarkerSet">
-      <Begin>/*</Begin>
-      <End>*/</End>
-    </Span>
 
     <Span color="String">
       <Begin>"</Begin>
