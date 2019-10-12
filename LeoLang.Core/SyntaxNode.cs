@@ -26,9 +26,9 @@ namespace LeoLang.Core
             return new BlockNode(new[] { body });
         }
 
-        public static SyntaxNode CreateBool(bool value)
+        public static SyntaxNode CreateBool(string value)
         {
-            return new BooleanLiteralNode(value);
+            return new BooleanLiteralNode(bool.Parse(value));
         }
 
         public static SyntaxNode CreateChar(string value)
@@ -66,9 +66,9 @@ namespace LeoLang.Core
             return new MethodDefinitionNode(((IdentifierNode)name).Name, ((IdentifierNode)retType).Name, param, body);
         }
 
-        public static SyntaxNode CreateNumber(int value)
+        public static SyntaxNode CreateNumber(string value)
         {
-            return new NumberLiteralNode(value);
+            return new NumberLiteralNode(int.Parse(value));
         }
 
         public static SyntaxNode CreateParameter(SyntaxNode type, SyntaxNode name)
