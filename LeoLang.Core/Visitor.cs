@@ -10,6 +10,10 @@ namespace LeoLang.Core
         {
         }
 
+        public virtual void Visit(DefaultExpressionNode n)
+        {
+        }
+
         public virtual void Visit(SyntaxNode n)
         {
         }
@@ -38,7 +42,7 @@ namespace LeoLang.Core
         {
         }
 
-        public virtual void Visit(DefaultExpressionNode n)
+        public virtual void Visit(SizeOfExpressionNode n)
         {
         }
 

@@ -11,7 +11,7 @@ booleanLiteral<SyntaxNode> -public =  val:("true" / "false") { SyntaxNode.Create
 characterLiteral<SyntaxNode> -public = "'" c:("" [^']) "'" {SyntaxNode.CreateChar(c)}							
 stringLiteral<SyntaxNode> -public = '"' val:("" [^"]) '"' {SyntaxNode.CreateString(val)}
 
-value<SyntaxNode> = booleanLiteral / characterLiteral / stringLiteral / defaultExpression / numberLiteral / identifier
+value<SyntaxNode> = booleanLiteral / characterLiteral / stringLiteral / defaultExpression / sizeOfExpression / numberLiteral / identifier
 
 identifier<IdentifierNode> -public = id:("" ([a-zA-Z_][a-zA-Z_0-9]*)) {SyntaxNode.CreateID(id)}
 
@@ -54,6 +54,7 @@ methodDefinition<SyntaxNode> -public = ret:identifier _ id:identifier LBr param:
 
 defaultExpression<SyntaxNode> -public = "default" LBr id:identifier RBr {SyntaxNode.CreateDefault(id)}
 										/ "default" {SyntaxNode.CreateDefault(null)}
+sizeOfExpression<SyntaxNode> -public = "sizeof" LBr id:identifier RBr {SyntaxNode.CreateSizeOf(id)}
 
 goToStatement<SyntaxNode> = "goto" _ id:identifier {SyntaxNode.CreateGoTo(id)}
 returnStatement<SyntaxNode> -public = "return" _ expr:expression {SyntaxNode.CreateReturn(expr)} / "pass" {SyntaxNode.CreateReturn(null)}

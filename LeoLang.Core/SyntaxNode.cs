@@ -81,6 +81,11 @@ namespace LeoLang.Core
             return new ReturnStatementNode(expr);
         }
 
+        public static SyntaxNode CreateSizeOf(SyntaxNode id)
+        {
+            return new SizeOfExpressionNode((IdentifierNode)id);
+        }
+
         public static SyntaxNode CreateString(string value)
         {
             return new StringLiteralNode(value);
