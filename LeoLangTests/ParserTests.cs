@@ -127,6 +127,14 @@ namespace Tests
             Assert.Pass();
         }
 
+        [Test]
+        public void VarDecl_Should_Match()
+        {
+            var res = p.ParseVariableDeclaration("let num");
+
+            Assert.Pass();
+        }
+
         private LeoParser p;
     }
 }

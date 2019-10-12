@@ -3,6 +3,7 @@ using LeoLang.Core.AST.Expressions;
 using LeoLang.Core.AST.Literals;
 using LeoLang.Core.AST.Statements;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace LeoLang.Core
@@ -89,6 +90,11 @@ namespace LeoLang.Core
         public static SyntaxNode CreateString(string value)
         {
             return new StringLiteralNode(value);
+        }
+
+        public static SyntaxNode CreateVarDecl(SyntaxNode id, IList<string> isnullabel)
+        {
+            return new VariableDeclarationNode((IdentifierNode)id, isnullabel.Any());
         }
 
         public static SyntaxNode CreateVarDef(SyntaxNode id, SyntaxNode val)
