@@ -60,7 +60,7 @@ namespace LeoLang.Core
                 var objectType = element.GetType();
                 if (!typeof(IEnumerable).IsAssignableFrom(objectType))
                 {
-                    Write("{{{0}}}", objectType.FullName);
+                    Write("{0}:", objectType.Name);
                     _hashListOfFoundElements.Add(element.GetHashCode());
                     _level++;
                 }
@@ -108,7 +108,7 @@ namespace LeoLang.Core
                         else
                         {
                             var isEnumerable = typeof(IEnumerable).IsAssignableFrom(type);
-                            Write("{0}: {1}", memberInfo.Name, isEnumerable ? "..." : "{ }");
+                            Write("{0}:", memberInfo.Name);
 
                             var alreadyTouched = !isEnumerable && AlreadyTouched(value);
                             _level++;
@@ -150,7 +150,7 @@ namespace LeoLang.Core
             if (o is IEnumerable)
                 return ("...");
 
-            return ("{ }");
+            return "";
         }
 
         private void Write(string value, params object[] args)
