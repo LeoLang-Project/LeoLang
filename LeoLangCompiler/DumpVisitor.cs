@@ -1,5 +1,4 @@
 ﻿using LeoLang.Core;
-using System.Text;
 
 namespace LeoLangCompiler
 {
