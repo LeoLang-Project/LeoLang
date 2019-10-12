@@ -1,7 +1,8 @@
 ﻿<SyntaxDefinition name="Leo" extensions=".leo" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
   <Color name="Comment" foreground="Green" exampleText="// comment" />
   <Color name="String" foreground="Magenta" exampleText="&quot;Hello, World!&quot;" />
-  <Color name="Keywords" foreground="Blue" fontWeight="bold" exampleText="true" />
+  <Color name="Keywords" foreground="Blue" fontWeight="bold" exampleText="return" />
+  <Color name="ValueKeywords" foreground="Blue" exampleText="true" />
 
   <RuleSet ignoreCase="false">
     <Keywords color="Keywords">
@@ -9,15 +10,17 @@
       <Word>bool</Word>
       <Word>char</Word>
       <Word>int</Word>
-      
+
+      <Word>let</Word>
+      <Word>meth</Word>
+      <Word>return</Word>
+    </Keywords>
+
+    <Keywords color="ValueKeywords">
       <Word>null</Word>
 
       <Word>true</Word>
       <Word>false</Word>
-
-      <Word>let</Word>
-      <Word>meth</Word>
-  	  <Word>return</Word>
     </Keywords>
 
     <Span color="Comment" ruleSet="CommentMarkerSet">
