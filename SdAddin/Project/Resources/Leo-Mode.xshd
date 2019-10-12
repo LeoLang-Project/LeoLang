@@ -17,6 +17,7 @@
 
       <Word>let</Word>
       <Word>meth</Word>
+  	  <Word>return</Word>
     </Keywords>
 
     <Span color="Comment" ruleSet="CommentMarkerSet">
