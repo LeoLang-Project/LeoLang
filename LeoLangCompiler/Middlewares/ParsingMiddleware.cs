@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using LeoLang.Core;
+using LeoLang.Core.AST;
 using PipelineNet.Middleware;
 
 namespace LeoLangCompiler.Middlewares

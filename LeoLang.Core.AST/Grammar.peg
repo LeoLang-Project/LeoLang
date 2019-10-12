@@ -1,4 +1,4 @@
-﻿@namespace LeoLang.Core
+﻿@namespace LeoLang.Core.AST
 @classname LeoParser
 @using LeoLang.Core.AST
 @using LeoLang.Core.AST.Expressions

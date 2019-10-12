@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Grammar.peg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Pegasus" Version="4.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PegGrammar Include="Grammar.peg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LeoLang.Core\LeoLang.Core.csproj" />
+  </ItemGroup>
+
+</Project>
