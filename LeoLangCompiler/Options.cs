@@ -5,6 +5,9 @@ namespace LeoLangCompiler
 {
     public class Options
     {
+        [Option("ast", HelpText = "Save the generated AST to file")]
+        public string AstFilename { get; set; }
+
         [Option('i', "input", HelpText = "Input file to compile", Required = true)]
         public string Input { get; set; }
 

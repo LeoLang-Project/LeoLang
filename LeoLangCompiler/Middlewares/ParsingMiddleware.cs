@@ -18,6 +18,11 @@ namespace LeoLangCompiler.Middlewares
 
             arg.AST.ApplyVisitor(dumper);
 
+            if (arg.CmdArgs.AstFilename != null)
+            {
+                File.WriteAllText(arg.CmdArgs.AstFilename, ObjectDumper.Dump(arg.AST));
+            }
+
             next(arg);
         }
     }
