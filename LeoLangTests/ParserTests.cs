@@ -113,6 +113,14 @@ namespace Tests
         }
 
         [Test]
+        public void StringLiteral_Should_Match()
+        {
+            var res = p.ParseStringLiteral("\"hello world\"");
+
+            Assert.Pass();
+        }
+
+        [Test]
         public void Test1()
         {
             var result = p.Parse("void main(int count) {let x = true;};");

@@ -11,7 +11,7 @@ numberLiteral<SyntaxNode> -public = integerLiteral
 
 booleanLiteral<SyntaxNode> -public =  val:("true" / "false") { SyntaxNode.CreateBool(val) }
 characterLiteral<SyntaxNode> -public = "'" c:("" [^']) "'" {SyntaxNode.CreateChar(c)}							
-stringLiteral<SyntaxNode> -public = '"' val:("" [^"]) '"' {SyntaxNode.CreateString(val)}
+stringLiteral<SyntaxNode> -public = '"' val:("" simpleDoubleQuotedCharacter*) '"' {SyntaxNode.CreateString(val)}
 
 value<SyntaxNode> = booleanLiteral / characterLiteral / stringLiteral / defaultExpression / sizeOfExpression / numberLiteral / identifier
 
@@ -69,8 +69,11 @@ RCb -lexical = '}'
 Semi -lexical = ';'
 Colon -lexical = ':'
 
+simpleDoubleQuotedCharacter
+  = !('"' / "\\" / eolChar) char:. { @char }
+
 whitespace = [\t ] / EOL
-_ -memoize = (whitespace / EOL / comment)+
+_ -memoize = (whitespace / EOL / comment)*
 
 comment -memoize = singleLineComment / multiLineComment
 
