@@ -9,11 +9,5 @@ namespace LeoLangCompiler
         {
             System.Console.WriteLine(ObjectDumper.Dump(n));
         }
-
-        private StringBuilder _builder = new StringBuilder();
-
-        private int Indent = 0;
-
-        private string getIndent() => new string(' ', Indent);
     }
 }
