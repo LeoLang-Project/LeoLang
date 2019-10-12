@@ -70,7 +70,7 @@ Semi -lexical = ';'
 Colon -lexical = ':'
 
 whitespace = [\t ] / EOL
-_ -memoize = (whitespace / EOL / comment)*
+_ -memoize = (whitespace / EOL / comment)+
 
 comment -memoize = singleLineComment / multiLineComment
 
