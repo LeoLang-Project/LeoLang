@@ -14,11 +14,11 @@ booleanLiteral<SyntaxNode> -public =  val:("true" / "false") { SyntaxNode.Create
 characterLiteral<SyntaxNode> -public = "'" c:("" [^']) "'" {SyntaxNode.CreateChar(c)}							
 stringLiteral<SyntaxNode> -public = '"' val:("" simpleDoubleQuotedCharacter*) '"' {SyntaxNode.CreateString(val)}
 
-value<SyntaxNode> = booleanLiteral / characterLiteral / stringLiteral / defaultExpression / sizeOfExpression / numberLiteral / identifier
+value<SyntaxNode> -memoize = booleanLiteral / characterLiteral / stringLiteral / defaultExpression / sizeOfExpression / numberLiteral / identifier
 
 identifier<IdentifierNode> -public = id:("" ([a-zA-Z_][a-zA-Z_0-9]*)) {SyntaxNode.CreateID(id)}
 
-expression<SyntaxNode> = binaryExpression / value
+expression<SyntaxNode> = binaryExpression / ternaryExpression/ value
 
 binaryOperator<BinaryOperator> = "<=" {BinaryOperator.LessEq}
 							   / ">=" {BinaryOperator.GreaterEq}
@@ -28,7 +28,7 @@ binaryOperator<BinaryOperator> = "<=" {BinaryOperator.LessEq}
 
 binaryExpression<SyntaxNode> -public = lhs:value _? op:binaryOperator _? rhs:value {SyntaxNode.CreateBinary(lhs, op, rhs)}
 
-ternaryExpression<SyntaxNode> -public = cond:expression _? "?" _? truePart:expression _? ":" _? falsePart:expression
+ternaryExpression<SyntaxNode> -memoize -public = cond:binaryExpression _? "?" _? truePart:expression _? ":" _? falsePart:expression
 										{SyntaxNode.CreateTernary(cond, truePart, falsePart)}
 variableDefinition<SyntaxNode> = "let" _ id:identifier _ "=" _ val:expression 
 										{SyntaxNode.CreateVarDef(id, val)}

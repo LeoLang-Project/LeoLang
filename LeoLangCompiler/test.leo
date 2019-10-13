@@ -1,6 +1,6 @@
 int hello(void) {
 	let x = "hello world";
-	let y = null;
+	let y = x ? "t": "f";
 
 	return false;
 };
