@@ -98,6 +98,11 @@ namespace LeoLang.Core
             return new StringLiteralNode(value);
         }
 
+        public static SyntaxNode CreateTernary(SyntaxNode cond, SyntaxNode tp, SyntaxNode fp)
+        {
+            return new TernaryExpressionNode(cond, tp, fp);
+        }
+
         public static SyntaxNode CreateVarDef(SyntaxNode id, SyntaxNode val)
         {
             return new VariableDefinitionNode((IdentifierNode)id, val);

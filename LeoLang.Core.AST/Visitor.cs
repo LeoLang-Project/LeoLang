@@ -10,6 +10,10 @@ namespace LeoLang.Core
         {
         }
 
+        public virtual void Visit(TernaryExpressionNode n)
+        {
+        }
+
         public virtual void Visit(DefaultExpressionNode n)
         {
         }

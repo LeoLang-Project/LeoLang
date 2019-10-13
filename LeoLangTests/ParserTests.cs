@@ -129,6 +129,14 @@ namespace Tests
         }
 
         [Test]
+        public void TernaryParse_Should_Match()
+        {
+            var result = p.ParseTernaryExpression("true ? 't' : 'f'");
+
+            Assert.IsTrue(result.GetHashCode() == new BooleanLiteralNode(true).GetHashCode());
+        }
+
+        [Test]
         public void Test1()
         {
             var result = p.Parse("void main(int count) {let x = true;};");

@@ -28,6 +28,8 @@ binaryOperator<BinaryOperator> = "<=" {BinaryOperator.LessEq}
 
 binaryExpression<SyntaxNode> -public = lhs:value _? op:binaryOperator _? rhs:value {SyntaxNode.CreateBinary(lhs, op, rhs)}
 
+ternaryExpression<SyntaxNode> -public = cond:expression _? "?" _? truePart:expression _? ":" _? falsePart:expression
+										{SyntaxNode.CreateTernary(cond, truePart, falsePart)}
 variableDefinition<SyntaxNode> = "let" _ id:identifier _ "=" _ val:expression 
 										{SyntaxNode.CreateVarDef(id, val)}
 
