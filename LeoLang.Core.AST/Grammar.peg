@@ -6,8 +6,9 @@
 @start methodDefinition
 
 //Literals
-integerLiteral<SyntaxNode> = value:("" [0-9]+) {SyntaxNode.CreateNumber(value)}
-numberLiteral<SyntaxNode> -public = integerLiteral
+integerLiteral<SyntaxNode> = value:("" [0-9]+) {SyntaxNode.CreateInteger(value)}
+decimalLiteral<SyntaxNode> -public = value:("" [0-9]+ "." [0-9]+) {SyntaxNode.CreateDecimal(value)}
+numberLiteral<SyntaxNode> -public = integerLiteral / decimalLiteral
 
 booleanLiteral<SyntaxNode> -public =  val:("true" / "false") { SyntaxNode.CreateBool(val) }
 characterLiteral<SyntaxNode> -public = "'" c:("" [^']) "'" {SyntaxNode.CreateChar(c)}							

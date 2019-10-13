@@ -4,6 +4,7 @@ using LeoLang.Core.AST.Literals;
 using LeoLang.Core.AST.Statements;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 
 namespace LeoLang.Core
@@ -37,6 +38,11 @@ namespace LeoLang.Core
             return new CharLiteralNode(value.First());
         }
 
+        public static SyntaxNode CreateDecimal(string value)
+        {
+            return new DecimalLiteralNode(double.Parse(value, CultureInfo.InvariantCulture));
+        }
+
         public static SyntaxNode CreateDefault(SyntaxNode id)
         {
             return new DefaultExpressionNode((IdentifierNode)id);
@@ -57,6 +63,11 @@ namespace LeoLang.Core
             return new IfStatementNode((BinaryExpressionNode)cond, (BlockNode)body);
         }
 
+        public static SyntaxNode CreateInteger(string value)
+        {
+            return new IntegerLiteralNode(int.Parse(value));
+        }
+
         public static SyntaxNode CreateLabel(SyntaxNode id)
         {
             return new LabelDefinitionNode((IdentifierNode)id);
@@ -65,11 +76,6 @@ namespace LeoLang.Core
         public static SyntaxNode CreateMethod(SyntaxNode name, SyntaxNode retType, SyntaxNode param, SyntaxNode body)
         {
             return new MethodDefinitionNode(((IdentifierNode)name).Name, ((IdentifierNode)retType).Name, param, body);
-        }
-
-        public static SyntaxNode CreateNumber(string value)
-        {
-            return new NumberLiteralNode(int.Parse(value));
         }
 
         public static SyntaxNode CreateParameter(SyntaxNode type, SyntaxNode name)

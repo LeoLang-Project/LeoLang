@@ -13,9 +13,9 @@ namespace Tests
         {
             var result = p.ParseBinaryExpression("65 == 65");
             var toTest = new BinaryExpressionNode(
-                    new NumberLiteralNode(65),
+                    new IntegerLiteralNode(65),
                     BinaryOperator.Equal,
-                    new NumberLiteralNode(65));
+                    new IntegerLiteralNode(65));
 
             Assert.IsTrue(result.GetHashCode() == toTest.GetHashCode());
         }
@@ -46,6 +46,14 @@ namespace Tests
         }
 
         [Test]
+        public void DecimalParse_Should_Match()
+        {
+            var result = p.ParseDecimalLiteral("42.1");
+
+            Assert.IsTrue(((DecimalLiteralNode)result).Value == 42.1);
+        }
+
+        [Test]
         public void DefaultParse_Should_Match()
         {
             var result = p.ParseDefaultExpression("default(int)");
@@ -68,10 +76,18 @@ namespace Tests
             var result = p.ParseIfStatement("if(65 == 65) \n {\nlet x = true;\n};");
             var toTest = new IfStatementNode(
                 new BinaryExpressionNode(
-                    new NumberLiteralNode(65), BinaryOperator.Equal, new NumberLiteralNode(65)),
+                    new IntegerLiteralNode(65), BinaryOperator.Equal, new IntegerLiteralNode(65)),
                 new BlockNode(new[] { new VariableDefinitionNode(new IdentifierNode("x"), new BooleanLiteralNode(true)) }));
 
             Assert.IsTrue(result.GetHashCode() == toTest.GetHashCode());
+        }
+
+        [Test]
+        public void IntegerParse_Should_Match()
+        {
+            var result = p.ParseNumberLiteral("65");
+
+            Assert.IsTrue(((IntegerLiteralNode)result).Value == 65);
         }
 
         [Test]
@@ -91,19 +107,11 @@ namespace Tests
         }
 
         [Test]
-        public void NumberParse_Should_Match()
-        {
-            var result = p.ParseNumberLiteral("65");
-
-            Assert.IsTrue(((NumberLiteralNode)result).Value == 65);
-        }
-
-        [Test]
         public void ReturnParse_Should_Match()
         {
             var result = p.ParseReturnStatement("return 0");
 
-            Assert.IsTrue(result.GetHashCode() == new ReturnStatementNode(new NumberLiteralNode(0)).GetHashCode());
+            Assert.IsTrue(result.GetHashCode() == new ReturnStatementNode(new IntegerLiteralNode(0)).GetHashCode());
         }
 
         [SetUp]

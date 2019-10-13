@@ -1,8 +1,8 @@
 ﻿namespace LeoLang.Core.AST
 {
-    public class NumberLiteralNode : LiteralNode<int>
+    public class IntegerLiteralNode : LiteralNode<int>
     {
-        public NumberLiteralNode(int value) : base(value)
+        public IntegerLiteralNode(int value) : base(value)
         {
         }
 

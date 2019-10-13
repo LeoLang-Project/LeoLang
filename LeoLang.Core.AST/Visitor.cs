@@ -22,6 +22,10 @@ namespace LeoLang.Core
         {
         }
 
+        public virtual void Visit(DecimalLiteralNode n)
+        {
+        }
+
         public virtual void Visit(GoToStatementNode n)
         {
         }
@@ -70,7 +74,7 @@ namespace LeoLang.Core
         {
         }
 
-        public virtual void Visit(NumberLiteralNode n)
+        public virtual void Visit(IntegerLiteralNode n)
         {
         }
     }
