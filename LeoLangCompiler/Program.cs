@@ -23,6 +23,7 @@ namespace LeoLangCompiler
 
             pipeline.Add<ConfigureMiddleware>();
             pipeline.Add<ParsingMiddleware>();
+            pipeline.Add<SemanticMiddleware>();
             pipeline.Add<LoweringMiddleware>();
             pipeline.Add<OptimizeAstMiddleware>();
             pipeline.Add<EmitMiddleware>();
