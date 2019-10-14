@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <Folder Include="Strategies\Lowering\" />
-    <Folder Include="Strategies\Optimizing\" />
   </ItemGroup>
 
   <ItemGroup>
