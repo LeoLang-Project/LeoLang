@@ -28,6 +28,15 @@ namespace LeoLang.Core
             return this;
         }
 
+        public IEnumerable<T> FindChildrenOfType<T>()
+                            where T : SyntaxNode
+        {
+            foreach (var child in Body)
+            {
+                if (child is T) yield return child as T;
+            }
+        }
+
         public override int GetHashCode()
         {
             return HashCode.Combine(Body);
