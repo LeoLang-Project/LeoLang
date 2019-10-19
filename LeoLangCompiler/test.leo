@@ -1,4 +1,4 @@
-int hello(void) {
+int hello(int[] args) {
 	let x = "hello world";
 	let y = x ? "t": "f";
 

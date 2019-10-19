@@ -109,7 +109,7 @@ namespace Tests
         [Test]
         public void ParameterListParse_Should_Match()
         {
-            var result = p.ParseParameterContent("int x, long y, bool z, float f1");
+            var result = p.ParseParameterContent("int[] x, long y, bool z, float f1");
         }
 
         [Test]

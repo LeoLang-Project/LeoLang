@@ -78,9 +78,9 @@ namespace LeoLang.Core
             return new MethodDefinitionNode(((IdentifierNode)name).Name, ((IdentifierNode)retType).Name, param, body);
         }
 
-        public static SyntaxNode CreateParameter(SyntaxNode type, SyntaxNode name)
+        public static SyntaxNode CreateParameter(SyntaxNode type, SyntaxNode name, IList<string> isarray)
         {
-            return new ParameterDefinitionNode(((IdentifierNode)type).Name, ((IdentifierNode)name).Name);
+            return new ParameterDefinitionNode(((IdentifierNode)type).Name, ((IdentifierNode)name).Name, isarray.Any());
         }
 
         public static ParameterListDefinitionNode CreateParameter(SyntaxNode parameter)
