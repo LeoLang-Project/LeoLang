@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace LeoLang.Core.AST
 {
@@ -27,8 +25,8 @@ namespace LeoLang.Core.AST
         public SyntaxNode Concat(SyntaxNode p)
         {
             var tmp = new List<SyntaxNode>(Parameters);
-            tmp.Add(((ParameterListDefinitionNode)p).Parameters.First());
 
+            tmp.AddRange(((ParameterListDefinitionNode)p).Parameters);
             Parameters = tmp;
 
             return this;
