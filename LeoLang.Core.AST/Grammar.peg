@@ -47,7 +47,7 @@ blockContent<SyntaxNode>
 
 	
 parameterContent<SyntaxNode> -public
-    = _? head:paramDef _? "," tail:parameterContent { SyntaxNode.CreateParameter(head).Concat(tail) }
+    = _? head:paramDef _? "," _? tail:parameterContent { SyntaxNode.CreateParameter(head).Concat(tail) }
     / line:paramDef { SyntaxNode.CreateParameter(line) }
 
 

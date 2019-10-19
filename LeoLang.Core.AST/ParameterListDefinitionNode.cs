@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace LeoLang.Core.AST
@@ -25,7 +26,10 @@ namespace LeoLang.Core.AST
 
         public SyntaxNode Concat(SyntaxNode p)
         {
-            Parameters.Add(p);
+            var tmp = new List<SyntaxNode>(Parameters);
+            tmp.Add(((ParameterListDefinitionNode)p).Parameters.First());
+
+            Parameters = tmp;
 
             return this;
         }
