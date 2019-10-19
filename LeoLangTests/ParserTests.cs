@@ -107,6 +107,12 @@ namespace Tests
         }
 
         [Test]
+        public void ParameterListParse_Should_Match()
+        {
+            var result = p.ParseParameterContent("int x, long y, bool z");
+        }
+
+        [Test]
         public void ReturnParse_Should_Match()
         {
             var result = p.ParseReturnStatement("return 0");

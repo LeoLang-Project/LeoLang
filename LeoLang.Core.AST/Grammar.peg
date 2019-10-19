@@ -45,12 +45,17 @@ blockContent<SyntaxNode>
     = _? head:StatementLine _? tail:blockContent { SyntaxNode.CreateBlock(head).Concat(tail) }
     / line:StatementLine { SyntaxNode.CreateBlock(line) }
 
+	
+parameterContent<SyntaxNode> -public
+    = _? head:paramDef _? "," tail:parameterContent { SyntaxNode.CreateParameter(head).Concat(tail) }
+    / line:paramDef { SyntaxNode.CreateParameter(line) }
+
 
 Statement<SyntaxNode> -public = goToStatement / variableDefinition / returnStatement / ifStatement / whileStatement
 StatementLine<SyntaxNode> -public = stmt:Statement Semi {stmt}
 
 paramDef<SyntaxNode> = type:identifier _ name:identifier {SyntaxNode.CreateParameter(type, name)}
-paramList<SyntaxNode> -memoize = paramDef / paramListVoid
+paramList<SyntaxNode> -memoize -public = parameterContent / paramListVoid
 paramListVoid<SyntaxNode> = "void" {null}
 
 methodDefinition<SyntaxNode> -public = ret:identifier _ id:identifier LBr param:paramList RBr body:Block
