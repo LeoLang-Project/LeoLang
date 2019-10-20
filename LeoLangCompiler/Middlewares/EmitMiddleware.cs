@@ -44,7 +44,7 @@ namespace LeoLangCompiler.Middlewares
 
             if (arg.AST is MethodDefinitionNode methdef)
             {
-                var m = new MethodDefUser(methdef.Name, MethodSig.CreateStatic(mod.CorLibTypes.Void),
+                var m = new MethodDefUser((string)methdef.Name, MethodSig.CreateStatic(mod.CorLibTypes.Void),
                            MethodImplAttributes.IL | MethodImplAttributes.Managed,
                            MethodAttributes.Public | MethodAttributes.Static);
 

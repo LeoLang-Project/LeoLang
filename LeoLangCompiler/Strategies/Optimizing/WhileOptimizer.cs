@@ -9,9 +9,9 @@ namespace LeoLangCompiler.Strategies.Optimizing
     {
         public SyntaxNode Do(SyntaxNode arg)
         {
-            if (arg is WhileStatementNode node)
+            if (arg is StatementNode node && node.Name == "while")
             {
-                if (node.Condition is BooleanLiteralNode cond)
+                if (node.Expression is BooleanLiteralNode cond)
                 {
                     if (!cond.Value)
                     {

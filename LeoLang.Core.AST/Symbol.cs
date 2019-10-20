@@ -9,7 +9,7 @@ namespace LeoLang.Core.AST
     /// Call GSymbol.Get() to create a Symbol from a string, or GSymbol.GetIfExists()
     /// to find a Symbol that has already been created.
     /// </remarks>
-    public class GSymbol
+    public static class GSymbol
     {
         #region Public static members
 
@@ -22,7 +22,7 @@ namespace LeoLang.Core.AST
             Pool = new SymbolPool(0, 0);
             Empty = Pool.Get("");
             Debug.Assert(Empty.Id == 0 && Empty.Name == "");
-            Debug.Assert(((Symbol)Empty).Pool == Pool);
+            Debug.Assert(Empty.Pool == Pool);
         }
 
         static public Symbol Get(string name)
@@ -73,6 +73,11 @@ namespace LeoLang.Core.AST
         public bool IsGlobal { [DebuggerStepThrough] get { return _pool == GSymbol.Pool; } }
         public string Name { [DebuggerStepThrough] get { return _name; } }
         public SymbolPool Pool { [DebuggerStepThrough] get { return _pool; } }
+
+        public static implicit operator string(Symbol s)
+        {
+            return s.Name;
+        }
 
         public static implicit operator Symbol(string src)
         {
@@ -177,8 +182,7 @@ namespace LeoLang.Core.AST
         /// </remarks>
         public Symbol Get(string name)
         {
-            Symbol result;
-            Get(name, out result);
+            Get(name, out Symbol result);
             return result;
         }
 
@@ -208,7 +212,7 @@ namespace LeoLang.Core.AST
                     return _list[index];
                 }
             }
-            throw new ArgumentException("Invalid Symbol ID " + id.ToString(), "id");
+            throw new ArgumentException("Invalid Symbol ID " + id.ToString(), nameof(id));
         }
 
         public IEnumerator<Symbol> GetEnumerator()
@@ -237,12 +241,11 @@ namespace LeoLang.Core.AST
         /// was not found, or if the name itself was null.</returns>
         public Symbol GetIfExists(string name)
         {
-            Symbol sym;
             if (name == null)
                 return null;
             else lock (_map)
                 {
-                    _map.TryGetValue(name, out sym);
+                    _map.TryGetValue(name, out Symbol sym);
                     return sym;
                 }
         }
