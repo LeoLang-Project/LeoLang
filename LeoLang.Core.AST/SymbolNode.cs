@@ -30,7 +30,7 @@ namespace LeoLang.Core.AST
             return Symbol.GetHashCode();
         }
 
-        public SyntaxNode SetInfix(IList<SymbolPrefix> pre, IList<SymbolSuffix> suf)
+        public SymbolNode SetInfix(IList<SymbolPrefix> pre, IList<SymbolSuffix> suf)
         {
             Prefix = pre.Any() ? pre.First() : SymbolPrefix.None;
             Suffix = suf.Any() ? CombineSuffix(suf) : SymbolSuffix.None;

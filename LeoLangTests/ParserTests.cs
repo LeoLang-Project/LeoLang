@@ -49,7 +49,7 @@ namespace Tests
         [Test]
         public void Test1()
         {
-            var result = p.ParseVariableSymbol("int?[]");
+            var result = p.ParseInfixedSymbol("int?[]");
             Assert.Pass();
         }
 

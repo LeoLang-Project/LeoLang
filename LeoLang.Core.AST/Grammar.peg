@@ -12,7 +12,7 @@ hexLiteral<SyntaxNode> = "0x" value:("" [0-9A-Za-z]+) {SyntaxNode.CreateHexInteg
 binLiteral<SyntaxNode> -public = "0b" value:("" [01_]+) {SyntaxNode.CreateBinInteger(value)}
 numberLiteral<SyntaxNode> = integerLiteral / decimalLiteral / hexLiteral / binLiteral
 
-variableSymbol<SyntaxNode> -public = sp:symbolPrefix? id:identifier ss:symbolSuffix<0, 2> {((SymbolNode)id).SetInfix(sp, ss)}
+infixedSymbol<SymbolNode> -public = sp:symbolPrefix? id:identifier ss:symbolSuffix<0, 2> {((SymbolNode)id).SetInfix(sp, ss)}
 symbolPrefix<SymbolPrefix> = pre:("++" / "--" / "-") {SyntaxNode.GetSymbolPrefix(pre)}
 symbolSuffix<SymbolSuffix> = suf:("++" / "--" / "?" / "[]") {SyntaxNode.GetSymbolSuffix(suf)}
 
@@ -36,7 +36,7 @@ binaryExpression<SyntaxNode> = lhs:value _? op:binaryOperator _? rhs:value {Synt
 
 ternaryExpression<SyntaxNode> -memoize = cond:binaryExpression _? "?" _? truePart:expression _? ":" _? falsePart:expression
 										{SyntaxNode.CreateTernary(cond, truePart, falsePart)}
-variableDefinition<SyntaxNode> = "let" _ id:identifier _ "=" _ val:expression 
+variableDefinition<SyntaxNode> = "let" _ id:infixedSymbol _ "=" _ val:expression 
 										{SyntaxNode.CreateVarDef(id, val)}
 
 label<SyntaxNode> = id:identifier Colon {SyntaxNode.CreateLabel(id)}
@@ -62,7 +62,7 @@ paramDef<SyntaxNode> = type:identifier array:"[]"? _ name:identifier {SyntaxNode
 paramList<SyntaxNode> -memoize -public = parameterContent / paramListVoid
 paramListVoid<SyntaxNode> = "void" {null}
 
-methodDefinition<SyntaxNode> -public = ret:identifier _ id:identifier LBr param:paramList RBr body:Block
+methodDefinition<SyntaxNode> -public = ret:infixedSymbol _ id:identifier LBr param:paramList RBr body:Block
 										{SyntaxNode.CreateMethod(id, ret, param, body)}	
 
 defaultExpression<SyntaxNode> -public = "default" LBr id:identifier RBr {SyntaxNode.CreateDefault(id)}
