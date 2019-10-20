@@ -57,17 +57,9 @@ namespace Tests
         public void DefaultParse_Should_Match()
         {
             var result = p.ParseDefaultExpression("default(int)");
-            var toTest = new DefaultExpressionNode(new IdentifierNode("int"));
+            var toTest = new DefaultExpressionNode("int");
 
             Assert.IsTrue(result.GetHashCode() == toTest.GetHashCode());
-        }
-
-        [Test]
-        public void IdentifierParse_Should_Match()
-        {
-            var result = p.ParseIdentifier("_abc123");
-
-            Assert.IsTrue(result.GetHashCode() == new IdentifierNode("_abc123").GetHashCode());
         }
 
         [Test]
@@ -76,22 +68,6 @@ namespace Tests
             var result = p.ParseNumberLiteral("65");
 
             Assert.IsTrue(((IntegerLiteralNode)result).Value == 65);
-        }
-
-        [Test]
-        public void MethodParse_Main_Should_Match()
-        {
-            var result = p.ParseMethodDefinition("int main(void) {return 0;};");
-
-            Assert.IsTrue(((MethodDefinitionNode)result).Name == "main");
-        }
-
-        [Test]
-        public void MethodParse_Should_Match()
-        {
-            var result = p.ParseMethodDefinition("void main(void) {};");
-
-            Assert.IsTrue(((MethodDefinitionNode)result).Name == "main");
         }
 
         [Test]

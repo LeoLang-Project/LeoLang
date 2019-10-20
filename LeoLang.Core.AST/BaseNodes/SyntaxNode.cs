@@ -43,19 +43,14 @@ namespace LeoLang.Core
             return new DecimalLiteralNode(double.Parse(value, CultureInfo.InvariantCulture));
         }
 
-        public static SyntaxNode CreateDefault(SyntaxNode id)
+        public static SyntaxNode CreateDefault(Symbol id)
         {
-            return new DefaultExpressionNode((IdentifierNode)id);
+            return new DefaultExpressionNode(id);
         }
 
-        public static SyntaxNode CreateGoTo(SyntaxNode id)
+        public static SyntaxNode CreateGoTo(Symbol id)
         {
-            return new GoToStatementNode((IdentifierNode)id);
-        }
-
-        public static IdentifierNode CreateID(string value)
-        {
-            return new IdentifierNode(value);
+            return new GoToStatementNode(id);
         }
 
         public static SyntaxNode CreateInteger(string value)
@@ -63,19 +58,19 @@ namespace LeoLang.Core
             return new IntegerLiteralNode(int.Parse(value));
         }
 
-        public static SyntaxNode CreateLabel(SyntaxNode id)
+        public static SyntaxNode CreateLabel(Symbol id)
         {
-            return new LabelDefinitionNode((IdentifierNode)id);
+            return new LabelDefinitionNode(id);
         }
 
-        public static SyntaxNode CreateMethod(SyntaxNode name, SyntaxNode retType, SyntaxNode param, SyntaxNode body)
+        public static SyntaxNode CreateMethod(Symbol name, Symbol retType, SyntaxNode param, SyntaxNode body)
         {
-            return new MethodDefinitionNode(((IdentifierNode)name).Name, ((IdentifierNode)retType).Name, param, body);
+            return new MethodDefinitionNode(name, retType, param, body);
         }
 
-        public static SyntaxNode CreateParameter(SyntaxNode type, SyntaxNode name, IList<string> isarray)
+        public static SyntaxNode CreateParameter(Symbol type, Symbol name, IList<string> isarray)
         {
-            return new ParameterDefinitionNode(((IdentifierNode)type).Name, ((IdentifierNode)name).Name, isarray.Any());
+            return new ParameterDefinitionNode(type, name, isarray.Any());
         }
 
         public static ParameterListDefinitionNode CreateParameter(SyntaxNode parameter)
@@ -88,12 +83,12 @@ namespace LeoLang.Core
             return new ReturnStatementNode(expr);
         }
 
-        public static SyntaxNode CreateSizeOf(SyntaxNode id)
+        public static SyntaxNode CreateSizeOf(Symbol id)
         {
-            return new SizeOfExpressionNode((IdentifierNode)id);
+            return new SizeOfExpressionNode(id);
         }
 
-        public static SyntaxNode CreateStatement(SyntaxNode name, SyntaxNode expr, SyntaxNode body)
+        public static SyntaxNode CreateStatement(Symbol name, SyntaxNode expr, SyntaxNode body)
         {
             return new StatementNode(name, expr, (BlockNode)body);
         }
@@ -108,9 +103,9 @@ namespace LeoLang.Core
             return new TernaryExpressionNode(cond, tp, fp);
         }
 
-        public static SyntaxNode CreateVarDef(SyntaxNode id, SyntaxNode val)
+        public static SyntaxNode CreateVarDef(Symbol id, SyntaxNode val)
         {
-            return new VariableDefinitionNode((IdentifierNode)id, val);
+            return new VariableDefinitionNode(id, val);
         }
 
         public abstract void Accept(Visitor visitor);

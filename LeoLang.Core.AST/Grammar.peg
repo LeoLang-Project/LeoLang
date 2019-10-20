@@ -16,7 +16,7 @@ stringLiteral<SyntaxNode> -public = '"' val:("" simpleDoubleQuotedCharacter*) '"
 
 value<SyntaxNode> -memoize = booleanLiteral / characterLiteral / stringLiteral / defaultExpression / sizeOfExpression / numberLiteral / identifier
 
-identifier<IdentifierNode> -public = id:("" ([a-zA-Z_][a-zA-Z_0-9]*)) {SyntaxNode.CreateID(id)}
+identifier<SymbolNode> -public = id:("" ([a-zA-Z_][a-zA-Z_0-9]*)) {new SymbolNode(GSymbol.Get(id))}
 
 expression<SyntaxNode> = binaryExpression / ternaryExpression/ value
 
@@ -39,13 +39,13 @@ Block<SyntaxNode> -public = _? LCb _? block:blockContent _? RCb Semi
 					{block}
 
 blockContent<SyntaxNode> 
-    = _? head:StatementLine _? tail:blockContent { SyntaxNode.CreateBlock(head).Concat(tail) }
-    / line:StatementLine { SyntaxNode.CreateBlock(line) }
+	= _? head:StatementLine _? tail:blockContent { SyntaxNode.CreateBlock(head).Concat(tail) }
+	/ line:StatementLine { SyntaxNode.CreateBlock(line) }
 
 	
 parameterContent<SyntaxNode> -public
-    = _? head:paramDef _? "," _? tail:parameterContent { SyntaxNode.CreateParameter(head).Concat(tail) }
-    / line:paramDef { SyntaxNode.CreateParameter(line) }
+	= _? head:paramDef _? "," _? tail:parameterContent { SyntaxNode.CreateParameter(head).Concat(tail) }
+	/ line:paramDef { SyntaxNode.CreateParameter(line) }
 
 
 Statement<SyntaxNode> -public = goToStatement / variableDefinition / returnStatement / genericStatementBlock

@@ -6,11 +6,11 @@ namespace LeoLang.Core
     {
         public BlockNode Body { get; set; }
         public SyntaxNode Expression { get; set; }
-        public IdentifierNode Name { get; set; }
+        public Symbol Name { get; set; }
 
-        public StatementNode(SyntaxNode name, SyntaxNode expression, BlockNode body)
+        public StatementNode(Symbol name, SyntaxNode expression, BlockNode body)
         {
-            Name = (IdentifierNode)name;
+            Name = name;
             Body = body;
             Expression = expression;
         }

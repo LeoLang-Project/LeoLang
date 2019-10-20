@@ -50,7 +50,7 @@ namespace LeoLangCompiler.Middlewares
 
                 if (methdef.Body is VariableDefinitionNode vardef)
                 {
-                    body.Variables.Add(new Local(mod.CorLibTypes.Int32, vardef.ID));
+                    body.Variables.Add(new Local(mod.CorLibTypes.Int32, vardef.Name));
                     body.InitLocals = true;
                     body.MaxStack = 2;
                     body.Instructions.Add(OpCodes.Ret.ToInstruction());

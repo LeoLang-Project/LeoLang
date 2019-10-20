@@ -6,7 +6,7 @@ namespace LeoLang.Core
 {
     public class Visitor
     {
-        public virtual void Visit(IdentifierNode n)
+        public virtual void Visit(Symbol s)
         {
         }
 

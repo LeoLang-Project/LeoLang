@@ -4,12 +4,12 @@ namespace LeoLang.Core.AST
 {
     public class VariableDefinitionNode : SyntaxNode
     {
-        public string ID { get; set; }
+        public Symbol Name { get; set; }
         public SyntaxNode Value { get; set; }
 
-        public VariableDefinitionNode(IdentifierNode id, SyntaxNode val)
+        public VariableDefinitionNode(Symbol id, SyntaxNode val)
         {
-            ID = id.Name;
+            Name = id;
             Value = val;
         }
 
@@ -20,7 +20,7 @@ namespace LeoLang.Core.AST
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(ID, Value);
+            return HashCode.Combine(Name, Value);
         }
     }
 }

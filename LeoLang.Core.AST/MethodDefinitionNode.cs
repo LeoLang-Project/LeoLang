@@ -6,12 +6,12 @@ namespace LeoLang.Core.AST
     {
         public SyntaxNode Body { get; set; }
 
-        public string Name { get; set; }
+        public Symbol Name { get; set; }
 
         public SyntaxNode Parameter { get; set; }
-        public string ReturnType { get; set; }
+        public Symbol ReturnType { get; set; }
 
-        public MethodDefinitionNode(string name, string returnType, SyntaxNode param, SyntaxNode body)
+        public MethodDefinitionNode(Symbol name, Symbol returnType, SyntaxNode param, SyntaxNode body)
         {
             Name = name;
             ReturnType = returnType;

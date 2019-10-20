@@ -4,11 +4,11 @@ namespace LeoLang.Core.AST
 {
     public class GoToStatementNode : SyntaxNode
     {
-        public string LabelName { get; set; }
+        public Symbol LabelName { get; set; }
 
-        public GoToStatementNode(IdentifierNode id)
+        public GoToStatementNode(Symbol id)
         {
-            LabelName = id.Name;
+            LabelName = id;
         }
 
         public override void Accept(Visitor visitor)

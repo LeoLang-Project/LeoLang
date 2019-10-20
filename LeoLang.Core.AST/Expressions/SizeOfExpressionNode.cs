@@ -4,9 +4,9 @@ namespace LeoLang.Core.AST.Expressions
 {
     public class SizeOfExpressionNode : SyntaxNode
     {
-        public IdentifierNode Type { get; set; }
+        public Symbol Type { get; set; }
 
-        public SizeOfExpressionNode(IdentifierNode type)
+        public SizeOfExpressionNode(Symbol type)
         {
             Type = type;
         }

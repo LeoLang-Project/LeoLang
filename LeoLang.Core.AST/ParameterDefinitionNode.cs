@@ -5,11 +5,11 @@ namespace LeoLang.Core.AST
     public class ParameterDefinitionNode : SyntaxNode
     {
         public bool IsArray { get; set; }
-        public string Name { get; set; }
+        public Symbol Name { get; set; }
 
-        public string ReturnType { get; set; }
+        public Symbol ReturnType { get; set; }
 
-        public ParameterDefinitionNode(string returnType, string name, bool isarray)
+        public ParameterDefinitionNode(Symbol returnType, Symbol name, bool isarray)
         {
             ReturnType = returnType;
             Name = name;

@@ -4,9 +4,9 @@ namespace LeoLang.Core.AST
 {
     public class LabelDefinitionNode : SyntaxNode
     {
-        public string Name { get; set; }
+        public Symbol Name { get; set; }
 
-        public LabelDefinitionNode(IdentifierNode id)
+        public LabelDefinitionNode(Symbol id)
         {
             Name = id.Name;
         }
