@@ -5,6 +5,10 @@
   <Color name="ValueKeywords" foreground="Blue" exampleText="true" />
 
   <RuleSet ignoreCase="false">
+    <Rule color="Keywords">
+      ([a-zA-Z]+)\(
+    </Rule>
+
     <Keywords color="Keywords">
       <Word>void</Word>
       <Word>bool</Word>
