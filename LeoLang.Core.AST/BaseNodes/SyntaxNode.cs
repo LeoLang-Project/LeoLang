@@ -9,6 +9,19 @@ using System.Linq;
 
 namespace LeoLang.Core
 {
+    [Flags]
+    public enum SymbolPrefix { None, Increment, Decrement, Negate }
+
+    [Flags]
+    public enum SymbolSuffix
+    {
+        None = 0,
+        Array = 2,
+        Nullable = 4,
+        Increment = 8,
+        Decrement = 16
+    }
+
     public abstract class SyntaxNode
     {
         public static Visitor Visitor;
@@ -116,6 +129,31 @@ namespace LeoLang.Core
         public static SyntaxNode CreateVarDef(Symbol id, SyntaxNode val)
         {
             return new VariableDefinitionNode(id, val);
+        }
+
+        public static SymbolPrefix GetSymbolPrefix(string op)
+        {
+            switch (op)
+            {
+                case "--": return SymbolPrefix.Decrement;
+                case "-": return SymbolPrefix.Negate;
+                case "++": return SymbolPrefix.Increment;
+            }
+
+            return SymbolPrefix.None;
+        }
+
+        public static SymbolSuffix GetSymbolSuffix(string op)
+        {
+            switch (op)
+            {
+                case "--": return SymbolSuffix.Decrement;
+                case "++": return SymbolSuffix.Increment;
+                case "?": return SymbolSuffix.Nullable;
+                case "[]": return SymbolSuffix.Array;
+            }
+
+            return SymbolSuffix.None;
         }
 
         public abstract void Accept(Visitor visitor);
