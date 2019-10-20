@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 
 namespace LeoLang.Core.AST
 {
@@ -30,6 +30,11 @@ namespace LeoLang.Core.AST
             Parameters = tmp;
 
             return this;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Parameters);
         }
     }
 }

@@ -42,14 +42,6 @@ namespace LeoLang.Core
         {
         }
 
-        public virtual void Visit(IfStatementNode n)
-        {
-        }
-
-        public virtual void Visit(WhileStatementNode n)
-        {
-        }
-
         public virtual void Visit(SizeOfExpressionNode n)
         {
         }

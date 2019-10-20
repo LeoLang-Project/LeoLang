@@ -71,18 +71,6 @@ namespace Tests
         }
 
         [Test]
-        public void IfParse_Should_Match()
-        {
-            var result = p.ParseIfStatement("if(65 == 65) \n {\nlet x = true;\n};");
-            var toTest = new IfStatementNode(
-                new BinaryExpressionNode(
-                    new IntegerLiteralNode(65), BinaryOperator.Equal, new IntegerLiteralNode(65)),
-                new BlockNode(new[] { new VariableDefinitionNode(new IdentifierNode("x"), new BooleanLiteralNode(true)) }));
-
-            Assert.IsTrue(result.GetHashCode() == toTest.GetHashCode());
-        }
-
-        [Test]
         public void IntegerParse_Should_Match()
         {
             var result = p.ParseNumberLiteral("65");
@@ -145,7 +133,7 @@ namespace Tests
         [Test]
         public void Test1()
         {
-            var result = p.Parse("void main(int count) {let x = true;};");
+            var result = p.ParseGenericStatementBlock("while(65 == 65) {let x = true;};");
             Assert.Pass();
         }
 

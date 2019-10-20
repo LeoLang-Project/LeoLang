@@ -35,9 +35,6 @@ variableDefinition<SyntaxNode> = "let" _ id:identifier _ "=" _ val:expression
 
 label<SyntaxNode> = id:identifier Colon {SyntaxNode.CreateLabel(id)}
 
-ifStatement<SyntaxNode> -public = "if" _? LBr _? cond:binaryExpression _? RBr _? body:Block {SyntaxNode.CreateIf(cond, body)}
-whileStatement<SyntaxNode> -public = "while" _? LBr _? cond:binaryExpression _? RBr _? body:Block {SyntaxNode.CreateWhile(cond, body)}
-
 Block<SyntaxNode> -public = _? LCb _? block:blockContent _? RCb Semi
 					{block}
 
@@ -51,8 +48,9 @@ parameterContent<SyntaxNode> -public
     / line:paramDef { SyntaxNode.CreateParameter(line) }
 
 
-Statement<SyntaxNode> -public = goToStatement / variableDefinition / returnStatement / ifStatement / whileStatement
+Statement<SyntaxNode> -public = goToStatement / variableDefinition / returnStatement / genericStatementBlock
 StatementLine<SyntaxNode> -public = stmt:Statement Semi {stmt}
+genericStatementBlock<SyntaxNode> -public = name:identifier _? LBr _? expr:expression _? RBr _? body:Block {SyntaxNode.CreateStatement(name, expr, body)}
 
 paramDef<SyntaxNode> = type:identifier array:"[]"? _ name:identifier {SyntaxNode.CreateParameter(type, name, array)}
 paramList<SyntaxNode> -memoize -public = parameterContent / paramListVoid

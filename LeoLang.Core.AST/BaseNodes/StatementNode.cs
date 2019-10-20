@@ -1,14 +1,28 @@
-﻿namespace LeoLang.Core
+﻿using LeoLang.Core.AST;
+
+namespace LeoLang.Core
 {
-    public abstract class StatementNode : SyntaxNode
+    public class StatementNode : SyntaxNode
     {
         public BlockNode Body { get; set; }
+        public SyntaxNode Expression { get; set; }
+        public IdentifierNode Name { get; set; }
 
-        public abstract override void Accept(Visitor visitor);
-
-        protected StatementNode(BlockNode body)
+        public StatementNode(SyntaxNode name, SyntaxNode expression, BlockNode body)
         {
+            Name = (IdentifierNode)name;
             Body = body;
+            Expression = expression;
+        }
+
+        public override void Accept(Visitor visitor)
+        {
+            visitor.Visit(this);
+        }
+
+        public override int GetHashCode()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

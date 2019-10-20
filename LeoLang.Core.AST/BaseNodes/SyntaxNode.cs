@@ -58,11 +58,6 @@ namespace LeoLang.Core
             return new IdentifierNode(value);
         }
 
-        public static SyntaxNode CreateIf(SyntaxNode cond, SyntaxNode body)
-        {
-            return new IfStatementNode((BinaryExpressionNode)cond, (BlockNode)body);
-        }
-
         public static SyntaxNode CreateInteger(string value)
         {
             return new IntegerLiteralNode(int.Parse(value));
@@ -98,6 +93,11 @@ namespace LeoLang.Core
             return new SizeOfExpressionNode((IdentifierNode)id);
         }
 
+        public static SyntaxNode CreateStatement(SyntaxNode name, SyntaxNode expr, SyntaxNode body)
+        {
+            return new StatementNode(name, expr, (BlockNode)body);
+        }
+
         public static SyntaxNode CreateString(string value)
         {
             return new StringLiteralNode(value);
@@ -113,11 +113,6 @@ namespace LeoLang.Core
             return new VariableDefinitionNode((IdentifierNode)id, val);
         }
 
-        public static SyntaxNode CreateWhile(SyntaxNode cond, SyntaxNode body)
-        {
-            return new WhileStatementNode((BinaryExpressionNode)cond, (BlockNode)body);
-        }
-
         public abstract void Accept(Visitor visitor);
 
         public void ApplyVisitor(Visitor visitor)
@@ -125,5 +120,7 @@ namespace LeoLang.Core
             Visitor = visitor;
             Visitor.Visit(this);
         }
+
+        public override abstract int GetHashCode();
     }
 }
