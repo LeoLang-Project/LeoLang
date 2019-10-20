@@ -3,7 +3,6 @@ using LeoLang.Core.AST.Expressions;
 using LeoLang.Core.AST.Literals;
 using LeoLang.Core.AST.Statements;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 
@@ -51,6 +50,11 @@ namespace LeoLang.Core
         public static SyntaxNode CreateGoTo(Symbol id)
         {
             return new GoToStatementNode(id);
+        }
+
+        public static SyntaxNode CreateHexInteger(string value)
+        {
+            return new IntegerLiteralNode(int.Parse(value, NumberStyles.HexNumber));
         }
 
         public static SyntaxNode CreateInteger(string value)

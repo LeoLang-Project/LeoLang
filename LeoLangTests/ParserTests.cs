@@ -49,7 +49,7 @@ namespace Tests
         [Test]
         public void Test1()
         {
-            var result = p.ParseGenericStatementBlock("while(65 == 65) {let x = true;};");
+            var result = p.ParseHexLiteral("0x2a");
             Assert.Pass();
         }
 
