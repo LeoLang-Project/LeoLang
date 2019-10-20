@@ -20,7 +20,7 @@ namespace LeoLang.Core
 
         public static SyntaxNode CreateBinInteger(string value)
         {
-            return new IntegerLiteralNode(Convert.ToInt32(value, 2));
+            return new IntegerLiteralNode(Convert.ToInt32(value.Replace("_", ""), 2));
         }
 
         public static SyntaxNode CreateBlock(IEnumerable<SyntaxNode> body)
