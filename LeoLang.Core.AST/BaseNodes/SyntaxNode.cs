@@ -2,6 +2,7 @@
 using LeoLang.Core.AST.Expressions;
 using LeoLang.Core.AST.Literals;
 using LeoLang.Core.AST.Statements;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -15,6 +16,11 @@ namespace LeoLang.Core
         public static SyntaxNode CreateBinary(SyntaxNode l, BinaryOperator op, SyntaxNode r)
         {
             return new BinaryExpressionNode(l, op, r);
+        }
+
+        public static SyntaxNode CreateBinInteger(string value)
+        {
+            return new IntegerLiteralNode(Convert.ToInt32(value, 2));
         }
 
         public static SyntaxNode CreateBlock(IEnumerable<SyntaxNode> body)

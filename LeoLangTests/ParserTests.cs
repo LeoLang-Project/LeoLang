@@ -49,7 +49,7 @@ namespace Tests
         [Test]
         public void Test1()
         {
-            var result = p.ParseHexLiteral("0x2a");
+            var result = p.ParseBinLiteral("0b10101");
             Assert.Pass();
         }
 

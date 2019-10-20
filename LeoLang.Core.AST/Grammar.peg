@@ -8,8 +8,9 @@
 //Literals
 integerLiteral<SyntaxNode> = value:("" [0-9]+) {SyntaxNode.CreateInteger(value)}
 decimalLiteral<SyntaxNode> = value:("" [0-9]+ "." [0-9]+) {SyntaxNode.CreateDecimal(value)}
-hexLiteral<SyntaxNode> -public = "0x" value:("" [0-9A-Za-z]+) {SyntaxNode.CreateHexInteger(value)}
-numberLiteral<SyntaxNode> = integerLiteral / decimalLiteral / hexLiteral
+hexLiteral<SyntaxNode> = "0x" value:("" [0-9A-Za-z]+) {SyntaxNode.CreateHexInteger(value)}
+binLiteral<SyntaxNode> -public = "0b" value:("" [01]+) {SyntaxNode.CreateBinInteger(value)}
+numberLiteral<SyntaxNode> = integerLiteral / decimalLiteral / hexLiteral / binLiteral
 
 booleanLiteral<SyntaxNode> =  val:("true" / "false") { SyntaxNode.CreateBool(val) }
 characterLiteral<SyntaxNode> = "'" c:("" [^']) "'" {SyntaxNode.CreateChar(c)}							
