@@ -10,9 +10,12 @@
       <Word>bool</Word>
       <Word>char</Word>
       <Word>int</Word>
+      <Word>string</Word>
+      <Word>long</Word>
+      <Word>byte</Word>
+      <Word>double</Word>
 
       <Word>let</Word>
-      <Word>meth</Word>
       <Word>return</Word>
     </Keywords>
 

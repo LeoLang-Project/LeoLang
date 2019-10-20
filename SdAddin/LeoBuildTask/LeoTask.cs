@@ -17,6 +17,12 @@ namespace ICSharpCode.Build.Tasks
 
         public string TargetType { get; set; }
 
+        public override bool Execute()
+        {
+            //ToDo: call compiler
+            return base.Execute();
+        }
+
         protected override string ToolName
         {
             get
