@@ -10,7 +10,7 @@ using System.Linq;
 namespace LeoLang.Core
 {
     [Flags]
-    public enum SymbolPrefix { None, Increment, Decrement, Negate }
+    public enum SymbolPrefix { None, Increment, Decrement, Negate, Deref }
 
     [Flags]
     public enum SymbolSuffix
@@ -19,7 +19,8 @@ namespace LeoLang.Core
         Array = 2,
         Nullable = 4,
         Increment = 8,
-        Decrement = 16
+        Decrement = 16,
+        PointerDecl = 32,
     }
 
     public abstract class SyntaxNode
