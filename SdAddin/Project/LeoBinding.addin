@@ -3,7 +3,7 @@
 			 description = "Backing binding for Leo">
 
   <Manifest>
-    <Identity name = "ICSharpCode.LeoBinding" />
+    <Identity name = "Furesoft.LeoBinding" />
   </Manifest>
 
   <Runtime>
@@ -27,7 +27,7 @@
   </Path>
 
   <Path name = "/SharpDevelop/MSBuildEngine/AdditionalProperties">
-    <String id="LeoAddInPath" text = "${AddInPath:ICSharpCode.LeoBinding}" />
+    <String id="LeoAddInPath" text = "${AddInPath:Furesoft.LeoBinding}" />
   </Path>
 
   <Path name = "/SharpDevelop/MSBuildEngine/CompileTaskNames">
@@ -43,7 +43,7 @@
     <SyntaxMode id         = "Leo Syntax Mode"
 								name       = "Leo"
 								extensions = ".leo"
-								resource   = "ICSharpCode.LeoBinding.Resources.Leo-Mode.xshd" />
+								resource   = "Furesoft.LeoBinding.Resources.Leo-Mode.xshd" />
   </Path>
 
   <Path path = "/SharpDevelop/BackendBindings/ProjectOptions/Leo">
@@ -57,17 +57,17 @@
 										guid                 = "{DFF77257-A62E-4181-9276-0C7CB94E79FE}"
 										supportedextensions  = ".leo"
 										projectfileextension = ".leoproj"
-										class                = "ICSharpCode.LeoBinding.LeoProjectBinding" />
+										class                = "Furesoft.LeoBinding.LeoProjectBinding" />
   </Path>
 
   <Path name="/SharpDevelop/Workbench/LanguageBindings">
     <LanguageBinding
 			id="Leo"
-			class="ICSharpCode.LeoBinding.LeoLanguageBinding"
+			class="Furesoft.LeoBinding.LeoLanguageBinding"
 			extensions=".leo" />
   </Path>
 
   <Path name = "/SharpDevelop/ViewContent/TextEditor/CodeCompletion">
-    <CodeCompletionBinding id = "Leo" extensions = ".leo" class = "ICSharpCode.LeoBinding.LeoCompletionBinding" />
+    <CodeCompletionBinding id = "Leo" extensions = ".leo" class = "Furesoft.LeoBinding.Completion.LeoCompletionBinding" />
   </Path>
 </AddIn>

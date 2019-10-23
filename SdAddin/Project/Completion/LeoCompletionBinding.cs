@@ -1,7 +1,7 @@
 ﻿using ICSharpCode.SharpDevelop.Editor;
 using ICSharpCode.SharpDevelop.Editor.CodeCompletion;
 
-namespace ICSharpCode.LeoBinding
+namespace Furesoft.LeoBinding.Completion
 {
     public class LeoCompletionBinding : ICodeCompletionBinding
     {

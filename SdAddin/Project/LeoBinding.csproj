@@ -6,7 +6,7 @@
     <ProductVersion>8.0.40607</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{6E59AF58-F635-459A-9A35-C9AC41C00339}</ProjectGuid>
-    <RootNamespace>ICSharpCode.LeoBinding</RootNamespace>
+    <RootNamespace>Furesoft.LeoBinding</RootNamespace>
     <AssemblyName>LeoBinding</AssemblyName>
     <OutputTarget>Library</OutputTarget>
     <WarningLevel>4</WarningLevel>
@@ -55,14 +55,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Src\LeoCompletionBinding.cs" />
-    <Compile Include="Src\LeoLanguageBinding.cs" />
-    <Compile Include="Src\LeoProjectBinding.cs" />
+    <Compile Include="Completion\LeoCompletionBinding.cs" />
+    <Compile Include="LeoLanguageBinding.cs" />
+    <Compile Include="LeoProjectBinding.cs" />
     <EmbeddedResource Include="Resources\Leo-Mode.xshd" />
     <None Include="LeoBinding.addin">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Compile Include="Src\LeoProject.cs" />
+    <Compile Include="LeoProject.cs" />
     <Content Include="Templates\Library.xpt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

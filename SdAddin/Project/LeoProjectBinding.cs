@@ -7,7 +7,7 @@
 
 using ICSharpCode.SharpDevelop.Project;
 
-namespace ICSharpCode.LeoBinding
+namespace Furesoft.LeoBinding
 {
     public class LeoProjectBinding : IProjectBinding
     {

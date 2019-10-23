@@ -9,7 +9,7 @@ using System;
 using System.IO;
 using ICSharpCode.SharpDevelop.Project;
 
-namespace ICSharpCode.LeoBinding
+namespace Furesoft.LeoBinding
 {
     public class LeoProject : CompilableProject
     {

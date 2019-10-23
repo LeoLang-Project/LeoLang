@@ -1,6 +1,6 @@
 ﻿using ICSharpCode.SharpDevelop;
 
-namespace ICSharpCode.LeoBinding
+namespace Furesoft.LeoBinding
 {
     public class LeoLanguageBinding : DefaultLanguageBinding
     {
