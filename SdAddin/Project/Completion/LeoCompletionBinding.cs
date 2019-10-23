@@ -1,5 +1,6 @@
 ﻿using ICSharpCode.SharpDevelop.Editor;
 using ICSharpCode.SharpDevelop.Editor.CodeCompletion;
+using LeoLang.Core.AST;
 
 namespace Furesoft.LeoBinding.Completion
 {
@@ -27,6 +28,7 @@ namespace Furesoft.LeoBinding.Completion
         {
             DefaultCompletionItemList list = new DefaultCompletionItemList();
             list.Items.Add(new DefaultCompletionItem("while"));
+
             if (list.Items.Count > 0)
             {
                 list.SortItems();

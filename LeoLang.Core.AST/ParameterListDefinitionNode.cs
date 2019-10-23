@@ -31,10 +31,5 @@ namespace LeoLang.Core.AST
 
             return this;
         }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Parameters);
-        }
     }
 }

@@ -164,7 +164,5 @@ namespace LeoLang.Core
             Visitor = visitor;
             Visitor.Visit(this);
         }
-
-        public override abstract int GetHashCode();
     }
 }

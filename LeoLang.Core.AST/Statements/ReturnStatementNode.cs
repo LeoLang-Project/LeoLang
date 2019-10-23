@@ -15,10 +15,5 @@ namespace LeoLang.Core.AST.Statements
         {
             visitor.Visit(this);
         }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Expression);
-        }
     }
 }

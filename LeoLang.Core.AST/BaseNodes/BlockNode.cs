@@ -36,10 +36,5 @@ namespace LeoLang.Core
                 if (child is T) yield return child as T;
             }
         }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Body);
-        }
     }
 }

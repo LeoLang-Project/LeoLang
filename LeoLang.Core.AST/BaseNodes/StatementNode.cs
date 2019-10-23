@@ -19,10 +19,5 @@ namespace LeoLang.Core
         {
             visitor.Visit(this);
         }
-
-        public override int GetHashCode()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }
