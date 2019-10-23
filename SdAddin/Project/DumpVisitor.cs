@@ -8,7 +8,6 @@ namespace LeoLangCompiler
     {
         public override void Visit(SyntaxNode n)
         {
-            File.WriteAllText(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\editor.txt", ObjectDumper.Dump(n));
         }
     }
 }

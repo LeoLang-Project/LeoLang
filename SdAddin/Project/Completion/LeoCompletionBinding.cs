@@ -1,12 +1,28 @@
-﻿using ICSharpCode.SharpDevelop.Editor;
+﻿using ICSharpCode.NRefactory.Editor;
+using ICSharpCode.SharpDevelop;
+using ICSharpCode.SharpDevelop.Editor;
 using ICSharpCode.SharpDevelop.Editor.CodeCompletion;
+using LeoLang.Core;
 using LeoLang.Core.AST;
-using LeoLangCompiler;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Furesoft.LeoBinding.Completion
 {
     public class LeoCompletionBinding : ICodeCompletionBinding
     {
+        public LeoCompletionBinding()
+            : this(null)
+        {
+        }
+
+        public LeoCompletionBinding(ITextSource fileContent)
+        {
+            this.fileContent = fileContent;
+        }
+
         public bool CtrlSpace(ITextEditor editor)
         {
             return ShowCompletion(editor, '\0', true);
@@ -25,17 +41,50 @@ namespace Furesoft.LeoBinding.Completion
             return ShowCompletion(editor, ch, false);
         }
 
+        private ITextSource fileContent;
+
+        private IEnumerable<ICompletionItem> GetVariableNames(SyntaxNode ast)
+        {
+            if (ast is MethodDefinitionNode md)
+            {
+                var block = (BlockNode)md.Body;
+
+                foreach (var variable in block.Body)
+                {
+                    if (variable is VariableDefinitionNode vd)
+                    {
+                        yield return new DefaultCompletionItem(vd.Name.Name);
+                    }
+                }
+            }
+        }
+
         private bool ShowCompletion(ITextEditor editor, char v1, bool v2)
         {
             DefaultCompletionItemList list = new DefaultCompletionItemList();
             list.Items.Add(new DefaultCompletionItem("while"));
+            list.Items.Add(new DefaultCompletionItem("if"));
+            list.Items.Add(new DefaultCompletionItem("unless"));
+            list.Items.Add(new DefaultCompletionItem("for"));
 
-            var p = new LeoParser();
-            var ast = p.Parse(editor.PrimaryView.SelectedText);
-            //ToDo: load all methodnames, variablenames to completionlist
-            //ToDo: load all predefined keywords to completionlist
-            var d = new DumpVisitor();
-            ast.ApplyVisitor(d);
+            var txt = editor.
+                Document.CreateSnapshot().Text;
+
+            try
+            {
+                var p = new LeoParser();
+
+                var ast = p.Parse(txt);
+
+                list.Items.AddRange(GetVariableNames(ast));
+
+                //ToDo: load all methodnames, variablenames to completionlist
+                //ToDo: load all predefined keywords to completionlist
+            }
+            catch (FormatException ex)
+            {
+                SD.Log.Debug(ex.Message);
+            }
 
             if (list.Items.Count > 0)
             {
