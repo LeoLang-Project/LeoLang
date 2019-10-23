@@ -1,6 +1,7 @@
 ﻿using ICSharpCode.SharpDevelop.Editor;
 using ICSharpCode.SharpDevelop.Editor.CodeCompletion;
 using LeoLang.Core.AST;
+using LeoLangCompiler;
 
 namespace Furesoft.LeoBinding.Completion
 {
@@ -31,6 +32,10 @@ namespace Furesoft.LeoBinding.Completion
 
             var p = new LeoParser();
             var ast = p.Parse(editor.PrimaryView.SelectedText);
+            //ToDo: load all methodnames, variablenames to completionlist
+            //ToDo: load all predefined keywords to completionlist
+            var d = new DumpVisitor();
+            ast.ApplyVisitor(d);
 
             if (list.Items.Count > 0)
             {

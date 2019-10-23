@@ -54,6 +54,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DumpVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Completion\LeoCompletionBinding.cs" />
     <Compile Include="LeoLanguageBinding.cs" />
@@ -76,6 +77,10 @@
     <ProjectReference Include="..\..\LeoLang.Core.AST\LeoLang.Core.AST.csproj">
       <Project>{428d3e20-8488-4f5a-9e8a-ed7872f3923c}</Project>
       <Name>LeoLang.Core.AST</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\LeoLang.Core\LeoLang.Core.csproj">
+      <Project>{74cb41a4-fcc7-4df2-9b29-ae9398e78a5b}</Project>
+      <Name>LeoLang.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
