@@ -50,12 +50,6 @@
     <OptionPanel id    = "Application"
 								 label = "${res:Dialog.ProjectOptions.ApplicationSettings}"
 								 class = "ICSharpCode.SharpDevelop.Gui.OptionPanels.ApplicationSettings" />
-    <OptionPanel id    = "BuildEvents"
-								 label = "${res:Dialog.ProjectOptions.BuildEvents}"
-								 class = "ICSharpCode.SharpDevelop.Gui.OptionPanels.BuildEvents" />
-    <OptionPanel id    = "DebugOptions"
-								 label = "${res:Dialog.ProjectOptions.DebugOptions}"
-								 class = "ICSharpCode.SharpDevelop.Gui.OptionPanels.DebugOptions" />
   </Path>
 
   <Path name = "/SharpDevelop/Workbench/ProjectBindings">
@@ -64,5 +58,16 @@
 										supportedextensions  = ".leo"
 										projectfileextension = ".leoproj"
 										class                = "ICSharpCode.LeoBinding.LeoProjectBinding" />
+  </Path>
+
+  <Path name="/SharpDevelop/Workbench/LanguageBindings">
+    <LanguageBinding
+			id="Leo"
+			class="ICSharpCode.LeoBinding.LeoLanguageBinding"
+			extensions=".leo" />
+  </Path>
+
+  <Path name = "/SharpDevelop/ViewContent/TextEditor/CodeCompletion">
+    <CodeCompletionBinding id = "Leo" extensions = ".leo" class = "ICSharpCode.LeoBinding.LeoCompletionBinding" />
   </Path>
 </AddIn>

@@ -5,8 +5,6 @@
 //     <version>$Revision$</version>
 // </file>
 
-using System;
-using System.Xml;
 using ICSharpCode.SharpDevelop.Project;
 
 namespace ICSharpCode.LeoBinding

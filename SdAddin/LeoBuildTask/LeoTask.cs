@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using CommandLine;
@@ -35,6 +34,7 @@ namespace ICSharpCode.Build.Tasks
         {
             //ToDo: fix commandline args in leotask
             var opt = new Options();
+
             if (((OutputAssembly == null) && (Sources != null)) && (Sources.Length > 0))
             {
                 OutputAssembly = new TaskItem(Path.GetFileNameWithoutExtension(this.Sources[0].ItemSpec));

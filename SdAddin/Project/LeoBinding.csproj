@@ -55,6 +55,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Src\LeoCompletionBinding.cs" />
+    <Compile Include="Src\LeoLanguageBinding.cs" />
     <Compile Include="Src\LeoProjectBinding.cs" />
     <EmbeddedResource Include="Resources\Leo-Mode.xshd" />
     <None Include="LeoBinding.addin">
