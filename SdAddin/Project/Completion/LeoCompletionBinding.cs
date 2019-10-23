@@ -29,6 +29,9 @@ namespace Furesoft.LeoBinding.Completion
             DefaultCompletionItemList list = new DefaultCompletionItemList();
             list.Items.Add(new DefaultCompletionItem("while"));
 
+            var p = new LeoParser();
+            var ast = p.Parse(editor.PrimaryView.SelectedText);
+
             if (list.Items.Count > 0)
             {
                 list.SortItems();
