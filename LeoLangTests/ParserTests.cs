@@ -12,7 +12,7 @@ namespace Tests
         public void BlockParse_Should_Match()
         {
             //BUG: block ignores second statement
-            var result = p.ParseBlock("{ let x = true; let mal = false;};");
+            var result = p.ParseBlock("{ let x = true; let mal = false; let last = false;};");
 
             Assert.IsTrue(result.GetHashCode() == new BooleanLiteralNode(true).GetHashCode());
         }
