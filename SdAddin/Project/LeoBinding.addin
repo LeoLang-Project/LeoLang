@@ -18,6 +18,14 @@
 								extensions = "*.leo" />
   </Path>
 
+<Path name = "/AddIns/FileTypeRegisterer/FileTypes">
+		<FiletypeAssociation
+			id = "leo"
+			autoRegister = "True"
+			icon = "${AddInPath:ICSharpCode.FiletypeRegisterer}/filetypes/cmbx.ico"
+			text = "LeoLang Source"/>
+			</Path>
+			
   <Path name = "/SharpDevelop/Workbench/Combine/FileFilter">
     <FileFilter id         = "LeoProject"
 								insertbefore="AllFiles"
