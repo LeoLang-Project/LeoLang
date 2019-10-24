@@ -55,7 +55,7 @@ namespace ICSharpCode.Build.Tasks
             opt.Input = Sources.First().ItemSpec;
 
             var cmdline = Parser.Default.FormatCommandLine<Options>(opt);
-            File.WriteAllText(@"C:\Users\filmee24\Documents\cmd.txt", cmdline);
+
             return cmdline;
         }
 

@@ -83,7 +83,7 @@ namespace Furesoft.LeoBinding.Completion
             }
             catch (FormatException ex)
             {
-                SD.Log.Debug(ex.Message);
+                SD.Log.Error(ex.Message);
             }
 
             if (list.Items.Count > 0)
