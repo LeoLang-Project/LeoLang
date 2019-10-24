@@ -9,6 +9,8 @@ using System.Linq;
 
 namespace LeoLang.Core
 {
+    public enum Modifier { Public, Private = 0, Shared }
+
     [Flags]
     public enum SymbolPrefix { None, Increment, Decrement, Negate, Deref }
 
@@ -87,9 +89,14 @@ namespace LeoLang.Core
             return new LabelDefinitionNode(id);
         }
 
-        public static SyntaxNode CreateMethod(Symbol name, Symbol retType, SyntaxNode param, SyntaxNode body)
+        public static SyntaxNode CreateMethod(IList<Modifier> mod, Symbol name, Symbol retType, SyntaxNode param, SyntaxNode body)
         {
-            return new MethodDefinitionNode(name, retType, param, body);
+            return new MethodDefinitionNode(mod.Any() ? mod.First() : Modifier.Private, name, retType, param, body);
+        }
+
+        public static Modifier CreateModifier(string mod)
+        {
+            return (Modifier)Enum.Parse(typeof(Modifier), mod, true);
         }
 
         public static SyntaxNode CreateParameter(Symbol type, Symbol name, IList<string> isarray)

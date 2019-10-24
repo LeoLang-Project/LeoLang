@@ -62,8 +62,8 @@ paramDef<SyntaxNode> = type:identifier array:"[]"? _ name:identifier {SyntaxNode
 paramList<SyntaxNode> -memoize -public = parameterContent / paramListVoid
 paramListVoid<SyntaxNode> = "void" {null}
 
-methodDefinition<SyntaxNode> -public = ret:infixedSymbol _ id:identifier LBr param:paramList RBr body:Block
-										{SyntaxNode.CreateMethod(id, ret, param, body)}	
+methodDefinition<SyntaxNode> -public = mod:modifier? ret:infixedSymbol _ id:identifier LBr param:paramList RBr body:Block
+										{SyntaxNode.CreateMethod(mod, id, ret, param, body)}	
 
 defaultExpression<SyntaxNode> -public = "default" LBr id:identifier RBr {SyntaxNode.CreateDefault(id)}
 										/ "default" {SyntaxNode.CreateDefault(null)}
@@ -72,6 +72,7 @@ sizeOfExpression<SyntaxNode> -public = "sizeof" LBr id:identifier RBr {SyntaxNod
 goToStatement<SyntaxNode> = "goto" _ id:identifier {SyntaxNode.CreateGoTo(id)}
 returnStatement<SyntaxNode> -public = "return" _ expr:expression {SyntaxNode.CreateReturn(expr)} / "pass" {SyntaxNode.CreateReturn(null)}
 
+modifier<Modifier> = mod:("public" / "private" / "shared") {SyntaxNode.CreateModifier(mod)}
 
 //Tokens
 LBr -lexical = '('

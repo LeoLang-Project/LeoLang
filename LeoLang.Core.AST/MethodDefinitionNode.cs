@@ -5,14 +5,15 @@ namespace LeoLang.Core.AST
     public class MethodDefinitionNode : SyntaxNode
     {
         public SyntaxNode Body { get; set; }
-
+        public Modifier Modifier { get; set; }
         public Symbol Name { get; set; }
 
         public SyntaxNode Parameter { get; set; }
         public Symbol ReturnType { get; set; }
 
-        public MethodDefinitionNode(Symbol name, Symbol returnType, SyntaxNode param, SyntaxNode body)
+        public MethodDefinitionNode(Modifier mod, Symbol name, Symbol returnType, SyntaxNode param, SyntaxNode body)
         {
+            Modifier = mod;
             Name = name;
             ReturnType = returnType;
             Parameter = param;
