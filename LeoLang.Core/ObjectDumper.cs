@@ -1,15 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace LeoLang.Core
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Reflection;
-    using System.Text;
-
     public class ObjectDumper
     {
         public static string Dump(object element)
@@ -51,7 +47,7 @@ namespace LeoLang.Core
 
         private string DumpElement(object element)
         {
-            if (element == null || element is ValueType || element is string)
+            if (element == null || element is ValueType || element is string || element.GetType().Name == "Symbol")
             {
                 Write(FormatValue(element));
             }
@@ -80,8 +76,6 @@ namespace LeoLang.Core
                         {
                             if (!AlreadyTouched(item))
                                 DumpElement(item);
-                            else
-                                Write("{{{0}}} <-- bidirectional reference found", item.GetType().FullName);
                         }
                     }
                 }
@@ -114,8 +108,7 @@ namespace LeoLang.Core
                             _level++;
                             if (!alreadyTouched)
                                 DumpElement(value);
-                            else
-                                Write("{{{0}}} <-- bidirectional reference found", value.GetType().FullName);
+
                             _level--;
                         }
                     }
@@ -149,6 +142,9 @@ namespace LeoLang.Core
 
             if (o is IEnumerable)
                 return ("...");
+
+            if (o.GetType().Name == "Symbol")
+                return o.ToString();
 
             return "";
         }
