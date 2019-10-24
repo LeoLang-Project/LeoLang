@@ -78,6 +78,7 @@ namespace Furesoft.LeoBinding.Completion
 
                 list.Items.AddRange(GetVariableNames(ast));
 
+                File.WriteAllText(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\editor.txt", ObjectDumper.Dump(ast));
                 //ToDo: load all methodnames, variablenames to completionlist
                 //ToDo: load all predefined keywords to completionlist
             }
