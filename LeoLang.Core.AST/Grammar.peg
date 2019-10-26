@@ -41,13 +41,14 @@ variableDefinition<SyntaxNode> = "let" _ id:infixedSymbol _ "=" _ val:expression
 
 label<SyntaxNode> = id:identifier Colon {SyntaxNode.CreateLabel(id)}
 
-Block<SyntaxNode> -public = _o LCb _o block:blockContent _o RCb Semi
+Block<SyntaxNode> -public = _o LCb block:blockContent RCb Semi
 					{block}
 
-blockContent<SyntaxNode> 
+blockContentTmp<SyntaxNode> 
 	= _o head:StatementLine _o tail:blockContent { SyntaxNode.CreateBlock(head).Concat(tail) }
 	/ _o line:StatementLine _o { SyntaxNode.CreateBlock(line) }
 
+blockContent<SyntaxNode> -public = lines:StatementLine* {SyntaxNode.CreateBlock(lines)}
 	
 parameterContent<SyntaxNode> -public
 	= _o head:paramDef _o "," _o tail:parameterContent { SyntaxNode.CreateParameter(head).Concat(tail) }
@@ -55,14 +56,14 @@ parameterContent<SyntaxNode> -public
 
 
 Statement<SyntaxNode> -public = goToStatement / variableDefinition / returnStatement / genericStatementBlock
-StatementLine<SyntaxNode> -public = stmt:Statement Semi {stmt}
+StatementLine<SyntaxNode> -public = _o stmt:Statement _o Semi _o {stmt}
 genericStatementBlock<SyntaxNode> -public = name:identifier _o LBr _o expr:expression _o RBr _o body:Block {SyntaxNode.CreateStatement(name, expr, body)}
 
 paramDef<SyntaxNode> = type:identifier array:"[]"? _ name:identifier {SyntaxNode.CreateParameter(type, name, array)}
 paramList<SyntaxNode> -memoize -public = parameterContent / paramListVoid
 paramListVoid<SyntaxNode> = "void" {null}
 
-methodDefinition<SyntaxNode> -public = mod:modifier? ret:infixedSymbol _ id:identifier LBr param:paramList RBr body:Block
+methodDefinition<SyntaxNode> -public = mod:modifier? _ ret:infixedSymbol _ id:identifier LBr param:paramList RBr body:Block
 										{SyntaxNode.CreateMethod(mod, id, ret, param, body)}	
 
 defaultExpression<SyntaxNode> -public = "default" LBr id:identifier RBr {SyntaxNode.CreateDefault(id)}
