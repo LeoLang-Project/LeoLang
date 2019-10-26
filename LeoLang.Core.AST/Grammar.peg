@@ -55,9 +55,9 @@ parameterContent<SyntaxNode> -public
 	/ line:paramDef { SyntaxNode.CreateParameter(line) }
 
 
-Statement<SyntaxNode> -public = goToStatement / variableDefinition / returnStatement / genericStatementBlock
-StatementLine<SyntaxNode> -public = _o stmt:Statement _o Semi _o {stmt}
-genericStatementBlock<SyntaxNode> -public = name:identifier _o LBr _o expr:expression _o RBr _o body:Block {SyntaxNode.CreateStatement(name, expr, body)}
+Statement<SyntaxNode> = goToStatement / variableDefinition / returnStatement / genericStatementBlock
+StatementLine<SyntaxNode> = _o stmt:Statement _o Semi _o {stmt}
+genericStatementBlock<SyntaxNode> = name:identifier _o LBr _o expr:expression _o RBr body:Block {SyntaxNode.CreateStatement(name, expr, body)}
 
 paramDef<SyntaxNode> = type:identifier array:"[]"? _ name:identifier {SyntaxNode.CreateParameter(type, name, array)}
 paramList<SyntaxNode> -memoize -public = parameterContent / paramListVoid
@@ -66,9 +66,9 @@ paramListVoid<SyntaxNode> = "void" {null}
 methodDefinition<SyntaxNode> -public = mod:modifier? _ ret:infixedSymbol _ id:identifier LBr param:paramList RBr body:Block
 										{SyntaxNode.CreateMethod(mod, id, ret, param, body)}	
 
-defaultExpression<SyntaxNode> -public = "default" LBr id:identifier RBr {SyntaxNode.CreateDefault(id)}
+defaultExpression<SyntaxNode> = "default" LBr id:identifier RBr {SyntaxNode.CreateDefault(id)}
 										/ "default" {SyntaxNode.CreateDefault(null)}
-sizeOfExpression<SyntaxNode> -public = "sizeof" LBr id:identifier RBr {SyntaxNode.CreateSizeOf(id)}
+sizeOfExpression<SyntaxNode> = "sizeof" LBr id:identifier RBr {SyntaxNode.CreateSizeOf(id)}
 
 goToStatement<SyntaxNode> = "goto" _ id:identifier {SyntaxNode.CreateGoTo(id)}
 returnStatement<SyntaxNode> -public = "return" _ expr:expression {SyntaxNode.CreateReturn(expr)} / "pass" {SyntaxNode.CreateReturn(null)}
