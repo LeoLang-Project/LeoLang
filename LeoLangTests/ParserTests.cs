@@ -18,18 +18,9 @@ namespace Tests
         }
 
         [Test]
-        public void DefaultParse_Should_Match()
-        {
-            var result = p.ParseDefaultExpression("default(int)");
-            var toTest = new DefaultExpressionNode("int");
-
-            Assert.IsTrue(result.GetHashCode() == toTest.GetHashCode());
-        }
-
-        [Test]
         public void MethodDefParse()
         {
-            var result = p.ParseMethodDefinition("public int hello(void) { let x = false; return 0; if(true) { return 1; }, };");
+            var result = p.ParseMethodDefinition("public int hello(void) { let x = false; return 0; if(true) { return 1; }; };");
         }
 
         [Test]

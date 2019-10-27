@@ -57,7 +57,7 @@ parameterContent<SyntaxNode> -public
 
 Statement<SyntaxNode> = goToStatement / variableDefinition / returnStatement / genericStatementBlock
 StatementLine<SyntaxNode> = _o stmt:Statement _o Semi _o {stmt}
-genericStatementBlock<SyntaxNode> = name:identifier _o LBr _o expr:expression _o RBr body:Block {SyntaxNode.CreateStatement(name, expr, body)}
+genericStatementBlock<SyntaxNode> -public = name:identifier _o LBr _o expr:expression _o RBr body:Block {SyntaxNode.CreateStatement(name, expr, body)}
 
 paramDef<SyntaxNode> = type:identifier array:"[]"? _ name:identifier {SyntaxNode.CreateParameter(type, name, array)}
 paramList<SyntaxNode> -memoize -public = parameterContent / paramListVoid
