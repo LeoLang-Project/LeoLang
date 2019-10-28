@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AssemblyName>LLC</AssemblyName>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <StartupObject>LeoLangCompiler.Program</StartupObject>
   </PropertyGroup>
 
