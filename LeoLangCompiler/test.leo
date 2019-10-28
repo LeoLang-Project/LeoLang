@@ -1,7 +1,10 @@
 int Main(string[] args) {
     let fff = true;
     let m = false;
-    let hello = true; 
+
+    if(true) {
+		return 1;
+	};
     
 	return 0;
 };

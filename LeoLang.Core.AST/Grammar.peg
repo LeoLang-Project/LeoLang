@@ -41,7 +41,7 @@ variableDefinition<SyntaxNode> = "let" _ id:infixedSymbol _ "=" _ val:expression
 
 label<SyntaxNode> = id:identifier Colon {SyntaxNode.CreateLabel(id)}
 
-Block<SyntaxNode> -public = _o LCb block:blockContent RCb Semi
+Block<SyntaxNode> -public = _o LCb block:blockContent _o RCb _o Semi
 					{block}
 
 blockContentTmp<SyntaxNode> 
