@@ -13,7 +13,7 @@ binLiteral<SyntaxNode> -public = "0b" value:("" [01_]+) {SyntaxNode.CreateBinInt
 numberLiteral<SyntaxNode> = integerLiteral / decimalLiteral / hexLiteral / binLiteral
 
 infixedSymbol<SymbolNode> -public = sp:symbolPrefix? id:identifier ss:symbolSuffix<0, 2> {((SymbolNode)id).SetInfix(sp, ss)}
-symbolPrefix<SymbolPrefix> = pre:("++" / "--" / "-" / "*") {SyntaxNode.GetSymbolPrefix(pre)}
+symbolPrefix<SymbolPrefix> = pre:("++" / "--" / "-" / "*" / "&") {SyntaxNode.GetSymbolPrefix(pre)}
 symbolSuffix<SymbolSuffix> = suf:("++" / "--" / "?" / "[]" / "*") {SyntaxNode.GetSymbolSuffix(suf)}
 
 booleanLiteral<SyntaxNode> =  val:("true" / "false") { SyntaxNode.CreateBool(val) }

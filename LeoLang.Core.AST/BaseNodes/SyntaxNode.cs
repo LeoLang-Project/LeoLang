@@ -12,7 +12,7 @@ namespace LeoLang.Core
     public enum Modifier { Public, Private = 0, Shared }
 
     [Flags]
-    public enum SymbolPrefix { None, Increment, Decrement, Negate, Deref }
+    public enum SymbolPrefix { None, Increment, Decrement, Negate, Deref, Address }
 
     [Flags]
     public enum SymbolSuffix
@@ -146,6 +146,7 @@ namespace LeoLang.Core
                 case "--": return SymbolPrefix.Decrement;
                 case "-": return SymbolPrefix.Negate;
                 case "++": return SymbolPrefix.Increment;
+                case "&": return SymbolPrefix.Address;
             }
 
             return SymbolPrefix.None;
