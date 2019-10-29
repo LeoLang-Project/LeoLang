@@ -1,11 +1,11 @@
-@namespace LeoLang.Core.AST
+﻿@namespace LeoLang.Core.AST
 @classname LeoParser
 @using LeoLang.Core.AST
 @using LeoLang.Core.AST.Expressions
 
 @start CompilationUnit
 
-CompilationUnit<SyntaxNode> = _o methd:methodDefinition* _o {SyntaxNode.CreateBlock(methd)}
+CompilationUnit<SyntaxNode> -public = _o methd:methodDefinition* _o {SyntaxNode.CreateBlock(methd)}
 
 //Literals
 integerLiteral<SyntaxNode> = value:("" [0-9]+) {SyntaxNode.CreateInteger(value)}
