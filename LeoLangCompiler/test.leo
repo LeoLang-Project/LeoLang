@@ -1,9 +1,9 @@
 int Main(string[] args) {
-    let fff = true;
+	let fff = true;
 
-    if(true) {
+	if(true) {
 		return 1;
 	};
-    
+	
 	return 0;
 };
