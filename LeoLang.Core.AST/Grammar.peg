@@ -3,16 +3,18 @@
 @using LeoLang.Core.AST
 @using LeoLang.Core.AST.Expressions
 
-@start methodDefinition
+@start CompilationUnit
+
+CompilationUnit<SyntaxNode> = _o methd:methodDefinition* _o {SyntaxNode.CreateBlock(methd)}
 
 //Literals
 integerLiteral<SyntaxNode> = value:("" [0-9]+) {SyntaxNode.CreateInteger(value)}
 decimalLiteral<SyntaxNode> = value:("" [0-9]+ "." [0-9]+) {SyntaxNode.CreateDecimal(value)}
 hexLiteral<SyntaxNode> = "0x" value:("" [0-9A-Za-z]+) {SyntaxNode.CreateHexInteger(value)}
-binLiteral<SyntaxNode> -public = "0b" value:("" [01_]+) {SyntaxNode.CreateBinInteger(value)}
+binLiteral<SyntaxNode> = "0b" value:("" [01_]+) {SyntaxNode.CreateBinInteger(value)}
 numberLiteral<SyntaxNode> = integerLiteral / decimalLiteral / hexLiteral / binLiteral
 
-infixedSymbol<SymbolNode> -public = sp:symbolPrefix? id:identifier ss:symbolSuffix<0, 2> {((SymbolNode)id).SetInfix(sp, ss)}
+infixedSymbol<SymbolNode> = sp:symbolPrefix? id:identifier ss:symbolSuffix<0, 2> {((SymbolNode)id).SetInfix(sp, ss)}
 symbolPrefix<SymbolPrefix> = pre:("++" / "--" / "-" / "*" / "&") {SyntaxNode.GetSymbolPrefix(pre)}
 symbolSuffix<SymbolSuffix> = suf:("++" / "--" / "?" / "[]" / "*") {SyntaxNode.GetSymbolSuffix(suf)}
 
@@ -44,26 +46,22 @@ label<SyntaxNode> = id:identifier Colon {SyntaxNode.CreateLabel(id)}
 Block<SyntaxNode> -public = _o LCb block:blockContent _o RCb _o Semi _o
 					{block}
 
-blockContentTmp<SyntaxNode> 
-	= _o head:StatementLine _o tail:blockContent { SyntaxNode.CreateBlock(head).Concat(tail) }
-	/ _o line:StatementLine _o { SyntaxNode.CreateBlock(line) }
-
-blockContent<SyntaxNode> -public = lines:(StatementLine / genericStatementBlock)* {SyntaxNode.CreateBlock(lines)}
+blockContent<SyntaxNode> = lines:(StatementLine / genericStatementBlock)* {SyntaxNode.CreateBlock(lines)}
 	
-parameterContent<SyntaxNode> -public
+parameterContent<SyntaxNode>
 	= _o head:paramDef _o "," _o tail:parameterContent { SyntaxNode.CreateParameter(head).Concat(tail) }
 	/ line:paramDef { SyntaxNode.CreateParameter(line) }
 
 
-Statement<SyntaxNode> = goToStatement / variableDefinition / returnStatement 
+Statement<SyntaxNode> = label / goToStatement / variableDefinition / returnStatement 
 StatementLine<SyntaxNode> = _o stmt:Statement _o Semi _o {stmt}
-genericStatementBlock<SyntaxNode> -public = name:identifier _o LBr _o expr:expression _o RBr body:Block {SyntaxNode.CreateStatement(name, expr, body)}
+genericStatementBlock<SyntaxNode> = name:identifier _o LBr _o expr:expression _o RBr body:Block {SyntaxNode.CreateStatement(name, expr, body)}
 
 paramDef<SyntaxNode> = type:identifier array:"[]"? _ name:identifier {SyntaxNode.CreateParameter(type, name, array)}
-paramList<SyntaxNode> -memoize -public = parameterContent / paramListVoid
+paramList<SyntaxNode> -memoize = parameterContent / paramListVoid
 paramListVoid<SyntaxNode> = "void" {null}
 
-methodDefinition<SyntaxNode> -public = mod:modifier? _ ret:infixedSymbol _ id:identifier LBr param:paramList RBr body:Block
+methodDefinition<SyntaxNode> = mod:modifier? _ ret:infixedSymbol _ id:identifier LBr param:paramList RBr body:Block
 										{SyntaxNode.CreateMethod(mod, id, ret, param, body)}	
 
 defaultExpression<SyntaxNode> = "default" LBr id:identifier RBr {SyntaxNode.CreateDefault(id)}
@@ -71,7 +69,7 @@ defaultExpression<SyntaxNode> = "default" LBr id:identifier RBr {SyntaxNode.Crea
 sizeOfExpression<SyntaxNode> = "sizeof" LBr id:identifier RBr {SyntaxNode.CreateSizeOf(id)}
 
 goToStatement<SyntaxNode> = "goto" _ id:identifier {SyntaxNode.CreateGoTo(id)}
-returnStatement<SyntaxNode> -public = "return" _ expr:expression {SyntaxNode.CreateReturn(expr)} / "pass" {SyntaxNode.CreateReturn(null)}
+returnStatement<SyntaxNode> = "return" _ expr:expression {SyntaxNode.CreateReturn(expr)} / "pass" {SyntaxNode.CreateReturn(null)}
 
 modifier<Modifier> = mod:("public" / "private" / "shared") {SyntaxNode.CreateModifier(mod)}
 

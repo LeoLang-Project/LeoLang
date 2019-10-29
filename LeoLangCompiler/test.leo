@@ -7,3 +7,7 @@ int Main(string[] args) {
 	
 	return 0;
 };
+
+int GetAwnser() {
+	return 42;
+};
