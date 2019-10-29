@@ -71,7 +71,7 @@ sizeOfExpression<SyntaxNode> = "sizeof" LBr id:identifier RBr {SyntaxNode.Create
 goToStatement<SyntaxNode> = "goto" _ id:identifier {SyntaxNode.CreateGoTo(id)}
 returnStatement<SyntaxNode> = "return" _ expr:expression {SyntaxNode.CreateReturn(expr)} / "pass" {SyntaxNode.CreateReturn(null)}
 
-modifier<Modifier> = mod:("public" / "private" / "shared") {SyntaxNode.CreateModifier(mod)}
+modifier<Symbol> = mod:("public" / "private" / "shared" / unexpected:&("" .*) #error{ "LLC0002: Unexpected Modifier '" + unexpected + "'" }) {SyntaxNode.CreateModifier(mod)}
 
 //Tokens
 LBr -lexical = '('
