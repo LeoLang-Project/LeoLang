@@ -8,6 +8,6 @@ int Main(string[] args) {
 	return 0;
 };
 
-int GetAwnser() {
+public int GetAwnser(void) {
 	return 42;
 };
