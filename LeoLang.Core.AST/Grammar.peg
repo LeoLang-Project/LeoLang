@@ -97,4 +97,4 @@ multiLineComment -lexical  = "/*" (!"*/" .)* "*/"
 eolChar = [\n\r\u2028\u2029]
 
 EOL = '\n' / '\r' / '\r\n'
-EOF = !.  / unexpected:&. #error{ "PEG0008: Unexpected '" + unexpected + "'" }
+EOF = !.  / unexpected:&. #error{ "LLC0001: Unexpected '" + unexpected + "'" }
