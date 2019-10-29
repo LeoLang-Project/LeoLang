@@ -41,21 +41,21 @@ variableDefinition<SyntaxNode> = "let" _ id:infixedSymbol _ "=" _ val:expression
 
 label<SyntaxNode> = id:identifier Colon {SyntaxNode.CreateLabel(id)}
 
-Block<SyntaxNode> -public = _o LCb block:blockContent _o RCb _o Semi
+Block<SyntaxNode> -public = _o LCb block:blockContent _o RCb _o Semi _o
 					{block}
 
 blockContentTmp<SyntaxNode> 
 	= _o head:StatementLine _o tail:blockContent { SyntaxNode.CreateBlock(head).Concat(tail) }
 	/ _o line:StatementLine _o { SyntaxNode.CreateBlock(line) }
 
-blockContent<SyntaxNode> -public = lines:StatementLine* {SyntaxNode.CreateBlock(lines)}
+blockContent<SyntaxNode> -public = lines:(StatementLine / genericStatementBlock)* {SyntaxNode.CreateBlock(lines)}
 	
 parameterContent<SyntaxNode> -public
 	= _o head:paramDef _o "," _o tail:parameterContent { SyntaxNode.CreateParameter(head).Concat(tail) }
 	/ line:paramDef { SyntaxNode.CreateParameter(line) }
 
 
-Statement<SyntaxNode> = goToStatement / variableDefinition / returnStatement / genericStatementBlock
+Statement<SyntaxNode> = goToStatement / variableDefinition / returnStatement 
 StatementLine<SyntaxNode> = _o stmt:Statement _o Semi _o {stmt}
 genericStatementBlock<SyntaxNode> -public = name:identifier _o LBr _o expr:expression _o RBr body:Block {SyntaxNode.CreateStatement(name, expr, body)}
 
