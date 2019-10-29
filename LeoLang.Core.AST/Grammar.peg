@@ -38,8 +38,8 @@ binaryExpression<SyntaxNode> = lhs:value _o op:binaryOperator _o rhs:value {Synt
 
 ternaryExpression<SyntaxNode> -memoize = cond:binaryExpression _o "?" _o truePart:expression _o ":" _o falsePart:expression
 										{SyntaxNode.CreateTernary(cond, truePart, falsePart)}
-variableDefinition<SyntaxNode> = "let" _ id:infixedSymbol _ "=" _ val:expression 
-										{SyntaxNode.CreateVarDef(id, val)}
+variableDefinition<SyntaxNode> = type:identifier _ id:infixedSymbol _ "=" _ val:expression 
+										{SyntaxNode.CreateVarDef(type, id, val)}
 
 label<SyntaxNode> = id:identifier Colon {SyntaxNode.CreateLabel(id)}
 

@@ -132,9 +132,9 @@ namespace LeoLang.Core
             return new TernaryExpressionNode(cond, tp, fp);
         }
 
-        public static SyntaxNode CreateVarDef(Symbol id, SyntaxNode val)
+        public static SyntaxNode CreateVarDef(Symbol type, Symbol id, SyntaxNode val)
         {
-            return new VariableDefinitionNode(id, val);
+            return new VariableDefinitionNode(type, id, val);
         }
 
         public static SymbolPrefix GetSymbolPrefix(string op)

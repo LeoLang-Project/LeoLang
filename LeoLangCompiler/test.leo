@@ -1,5 +1,5 @@
 int Main(string[] args) {
-	let fff = true;
+	var fff = true;
 
 	if(true) {
 		return 1;
