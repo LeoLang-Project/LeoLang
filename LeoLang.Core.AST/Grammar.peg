@@ -58,7 +58,7 @@ StatementLine<SyntaxNode> = _o stmt:Statement _o Semi _o {stmt}
 genericStatementBlock<SyntaxNode> = name:identifier _o LBr _o expr:expression _o RBr body:Block {SyntaxNode.CreateStatement(name, expr, body)}
 
 paramDef<SyntaxNode> = type:identifier array:"[]"? _ name:identifier {SyntaxNode.CreateParameter(type, name, array)}
-paramList<SyntaxNode> -memoize = parameterContent / paramListVoid / unexpected:&. #error{ "PEG0008: Unexpected '" + unexpected + "'" }
+paramList<SyntaxNode> -memoize = parameterContent / paramListVoid / unexpected:&. #error{ "LLC0003: Expected void got '" + unexpected + "'" }
 paramListVoid<SyntaxNode> = "void" {null}
 
 methodDefinition<SyntaxNode> = mod:modifier? _ ret:infixedSymbol _ id:identifier LBr param:paramList RBr body:Block
