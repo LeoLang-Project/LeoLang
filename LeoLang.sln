@@ -24,8 +24,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeoLang.Core.AST", "LeoLang
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeoLang.Library", "LeoLang.Library\LeoLang.Library.csproj", "{D8F14C15-81C4-42A8-AE55-5A2E9FD5B346}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IDE", "IDE", "{AAAB65D9-9DA1-423B-A560-1BFD4951F3B1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
