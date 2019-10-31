@@ -8,9 +8,6 @@
     <Rule color="Keywords">
       ([a-zA-Z]+)\(
     </Rule>
-    <Rule foreground="Black">
-      \(
-    </Rule>
 
     <Keywords color="Keywords">
       <Word>void</Word>
@@ -27,7 +24,11 @@
       <Word>while</Word>
       <Word>if</Word>
       <Word>unless</Word>
-      <Word>using</Word>
+      <Word>enum</Word>
+
+      <Word>public</Word>
+      <Word>private</Word>
+      <Word>shared</Word>
     </Keywords>
 
     <Keywords color="ValueKeywords">
