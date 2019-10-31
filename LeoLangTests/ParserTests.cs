@@ -20,6 +20,12 @@ namespace Tests
             p = new LeoParser();
         }
 
+        [Test]
+        public void unparsed_test()
+        {
+            var res = p.ParseUnparsedBlock("dom { <xml><child /></xml> }");
+        }
+
         private LeoParser p;
     }
 }

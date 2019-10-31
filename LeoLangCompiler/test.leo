@@ -5,6 +5,8 @@ int Main(string[] args) {
 		return 1;
 	};
 	
+	var xml = dom { <xml><child /></xml> };
+
 	return 0;
 };
 

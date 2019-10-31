@@ -137,6 +137,11 @@ namespace LeoLang.Core
             return new TernaryExpressionNode(cond, tp, fp);
         }
 
+        public static SyntaxNode CreateUnparsedBlockExpression(Symbol id, string body)
+        {
+            return new UnparsedBlockExpression(id, body.Trim());
+        }
+
         public static SyntaxNode CreateVarDef(Symbol type, Symbol id, SyntaxNode val)
         {
             return new VariableDefinitionNode(type, id, val);
