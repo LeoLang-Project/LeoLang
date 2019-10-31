@@ -5,14 +5,15 @@
 
 @start CompilationUnit
 
-CompilationUnit<SyntaxNode> -public = _o methd:methodDefinition* _o {SyntaxNode.CreateBlock(methd)}
+CompilationUnitLine<SyntaxNode> = enumDefinition / methodDefinition
+CompilationUnit<SyntaxNode> -public = _o line:CompilationUnitLine* _o {SyntaxNode.CreateBlock(line)}
 
 //Literals
 integerLiteral<SyntaxNode> = value:("" [0-9]+) {SyntaxNode.CreateInteger(value)}
 decimalLiteral<SyntaxNode> = value:("" [0-9]+ "." [0-9]+) {SyntaxNode.CreateDecimal(value)}
 hexLiteral<SyntaxNode> = "0x" value:("" [0-9A-Za-z]+) {SyntaxNode.CreateHexInteger(value)}
 binLiteral<SyntaxNode> = "0b" value:("" [01_]+) {SyntaxNode.CreateBinInteger(value)}
-numberLiteral<SyntaxNode> = integerLiteral / decimalLiteral / hexLiteral / binLiteral
+numberLiteral<SyntaxNode> = hexLiteral / binLiteral / decimalLiteral / integerLiteral
 symbolLiteral<SyntaxNode> = ":" id:identifier {SyntaxNode.CreateSymbolLiteral(id)}
 
 infixedSymbol<SymbolNode> = sp:symbolPrefix? id:identifier ss:symbolSuffix<0, 2> {((SymbolNode)id).SetInfix(sp, ss)}
@@ -65,12 +66,12 @@ paramDef<SyntaxNode> = type:identifier array:"[]"? _ name:identifier {SyntaxNode
 paramList<SyntaxNode> -memoize = parameterContent / paramListVoid / unexpected:&. #error{ "LLC0003: Expected void got '" + unexpected + "'" }
 paramListVoid<SyntaxNode> = "void" {null}
 
-methodDefinition<SyntaxNode> = mod:modifier? _ ret:infixedSymbol _ id:identifier LBr param:paramList RBr body:Block
+methodDefinition<SyntaxNode> = mod:modifier? _o ret:infixedSymbol _ id:identifier LBr param:paramList RBr body:Block
 										{SyntaxNode.CreateMethod(mod, id, ret, param, body)}	
 
-enumDefinition<SyntaxNode> -public = "enum" _ id:identifier _ LCb body:enumLine* _o RCb Semi
-									{SyntaxNode.CreateEnum(id, body)}
-enumLine<PairSyntaxNode> = id:identifier _o "=" _o val:enumValue _o Comma
+enumDefinition<SyntaxNode> -public = mod:modifier? _o "enum" _ id:identifier _ LCb _o body:enumLine* _o RCb Semi
+									{SyntaxNode.CreateEnum(mod, id, body)}
+enumLine<PairSyntaxNode> = _o id:identifier _o "=" _o val:enumValue _o Comma?
 					   {SyntaxNode.CreatePair(id, val)}
 enumValue<SyntaxNode> = stringLiteral / characterLiteral / numberLiteral
 
