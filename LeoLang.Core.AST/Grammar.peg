@@ -71,8 +71,10 @@ methodDefinition<SyntaxNode> = mod:modifier? _o ret:infixedSymbol _ id:identifie
 
 enumDefinition<SyntaxNode> -public = mod:modifier? _o "enum" _ id:identifier _ LCb _o body:enumLine* _o RCb Semi
 									{SyntaxNode.CreateEnum(mod, id, body)}
-enumLine<PairSyntaxNode> = _o id:identifier _o "=" _o val:enumValue _o Comma?
-					   {SyntaxNode.CreatePair(id, val)}
+enumLine<SyntaxNode> = _o decl:enumFieldDeclaration _o Comma?
+					   {decl}
+enumFieldDeclaration<SyntaxNode> = enumFieldDefinition / id:identifier 
+enumFieldDefinition<SyntaxNode> = id:identifier _o "=" _o val:enumValue {SyntaxNode.CreatePair(id, val)}
 enumValue<SyntaxNode> = stringLiteral / characterLiteral / numberLiteral
 
 defaultExpression<SyntaxNode> = "default" LBr id:identifier RBr {SyntaxNode.CreateDefault(id)}

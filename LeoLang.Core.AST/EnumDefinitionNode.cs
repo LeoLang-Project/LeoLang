@@ -4,11 +4,11 @@ namespace LeoLang.Core.AST
 {
     public class EnumDefinitionNode : SyntaxNode
     {
-        public IEnumerable<PairSyntaxNode> Body { get; set; }
+        public IEnumerable<SyntaxNode> Body { get; set; }
         public Symbol ID { get; set; }
         public Symbol Modifier { get; set; }
 
-        public EnumDefinitionNode(Symbol mod, Symbol iD, IEnumerable<PairSyntaxNode> body)
+        public EnumDefinitionNode(Symbol mod, Symbol iD, IEnumerable<SyntaxNode> body)
         {
             Modifier = mod;
             ID = iD;

@@ -1,7 +1,7 @@
 public enum color {
-	red = 0x0,
-	blue = 0x1,
-	green = 0x2,
+	red,
+	blue,
+	green,
 };
 
 int Main(string[] args) {
