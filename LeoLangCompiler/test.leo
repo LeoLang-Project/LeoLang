@@ -30,3 +30,5 @@ void lowestTest(void) {
 		goto loop;
 		return;
 };
+
+public field double PI = 3.14;

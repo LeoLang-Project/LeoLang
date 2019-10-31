@@ -20,6 +20,12 @@ namespace Tests
             var res = p.ParseEnumDefinition("enum hello { red = 0, blue = 1, };");
         }
 
+        [Test]
+        public void field_test()
+        {
+            var res = p.ParseFieldDeklaration("public field double PI = 3.14;");
+        }
+
         [SetUp]
         public void Setup()
         {

@@ -72,6 +72,11 @@ namespace LeoLang.Core
             return new EnumDefinitionNode(type.Any() ? type.First() : (Symbol)"byte", mod.Any() ? mod.First() : (Symbol)"private", id, body);
         }
 
+        public static SyntaxNode CreateField(IList<Symbol> mod, Symbol type, Symbol name, SyntaxNode value)
+        {
+            return new FieldDefinitionNode(mod.Any() ? mod.First() : (Symbol)"private", type, name, value);
+        }
+
         public static SyntaxNode CreateGoTo(Symbol id)
         {
             return new GoToStatementNode(id);
