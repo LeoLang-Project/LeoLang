@@ -67,9 +67,9 @@ namespace LeoLang.Core
             return new DefaultExpressionNode(id);
         }
 
-        public static SyntaxNode CreateEnum(IEnumerable<Symbol> mod, Symbol id, IEnumerable<SyntaxNode> body)
+        public static SyntaxNode CreateEnum(IEnumerable<Symbol> mod, Symbol id, IEnumerable<Symbol> type, IEnumerable<SyntaxNode> body)
         {
-            return new EnumDefinitionNode(mod.Any() ? mod.First() : (Symbol)"private", id, body);
+            return new EnumDefinitionNode(type.Any() ? type.First() : (Symbol)"byte", mod.Any() ? mod.First() : (Symbol)"private", id, body);
         }
 
         public static SyntaxNode CreateGoTo(Symbol id)

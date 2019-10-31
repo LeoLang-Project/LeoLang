@@ -7,9 +7,11 @@ namespace LeoLang.Core.AST
         public IEnumerable<SyntaxNode> Body { get; set; }
         public Symbol ID { get; set; }
         public Symbol Modifier { get; set; }
+        public Symbol Type { get; set; }
 
-        public EnumDefinitionNode(Symbol mod, Symbol iD, IEnumerable<SyntaxNode> body)
+        public EnumDefinitionNode(Symbol type, Symbol mod, Symbol iD, IEnumerable<SyntaxNode> body)
         {
+            Type = type;
             Modifier = mod;
             ID = iD;
             Body = body;

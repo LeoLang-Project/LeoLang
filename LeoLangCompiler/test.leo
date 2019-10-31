@@ -4,6 +4,11 @@ public enum color {
 	green,
 };
 
+enum symboltable : string {
+	identifier,
+	unknown
+};
+
 int Main(string[] args) {
 	var fff = true;
 
