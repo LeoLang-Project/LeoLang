@@ -14,16 +14,16 @@ namespace Tests
             var res = p.ParseCompilationUnit("void hello(void) { var x = false; }; void world(void) { var y = true; };");
         }
 
+        [Test]
+        public void enum_test()
+        {
+            var res = p.ParseEnumDefinition("enum hello { red = 0, blue = 1, };");
+        }
+
         [SetUp]
         public void Setup()
         {
             p = new LeoParser();
-        }
-
-        [Test]
-        public void unparsed_test()
-        {
-            var res = p.ParseUnparsedBlock("dom { <xml><child /></xml> }");
         }
 
         private LeoParser p;

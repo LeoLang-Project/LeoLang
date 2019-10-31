@@ -67,6 +67,11 @@ namespace LeoLang.Core
             return new DefaultExpressionNode(id);
         }
 
+        public static SyntaxNode CreateEnum(Symbol id, IEnumerable<PairSyntaxNode> body)
+        {
+            return new EnumDefinitionNode(id, body);
+        }
+
         public static SyntaxNode CreateGoTo(Symbol id)
         {
             return new GoToStatementNode(id);
@@ -95,6 +100,11 @@ namespace LeoLang.Core
         public static Symbol CreateModifier(string mod)
         {
             return mod;
+        }
+
+        public static PairSyntaxNode CreatePair(SyntaxNode key, SyntaxNode value)
+        {
+            return new PairSyntaxNode(key, value);
         }
 
         public static SyntaxNode CreateParameter(Symbol type, Symbol name, IList<string> isarray)

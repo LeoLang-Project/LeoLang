@@ -23,6 +23,10 @@ namespace LeoLang.Core
         {
         }
 
+        public virtual void Visit(EnumDefinitionNode n)
+        {
+        }
+
         public virtual void Visit(UnparsedBlockExpression n)
         {
         }

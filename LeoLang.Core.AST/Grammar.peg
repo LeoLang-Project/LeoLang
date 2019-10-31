@@ -68,6 +68,12 @@ paramListVoid<SyntaxNode> = "void" {null}
 methodDefinition<SyntaxNode> = mod:modifier? _ ret:infixedSymbol _ id:identifier LBr param:paramList RBr body:Block
 										{SyntaxNode.CreateMethod(mod, id, ret, param, body)}	
 
+enumDefinition<SyntaxNode> -public = "enum" _ id:identifier _ LCb body:enumLine* _o RCb Semi
+									{SyntaxNode.CreateEnum(id, body)}
+enumLine<PairSyntaxNode> = id:identifier _o "=" _o val:enumValue _o Comma
+					   {SyntaxNode.CreatePair(id, val)}
+enumValue<SyntaxNode> = stringLiteral / characterLiteral / numberLiteral
+
 defaultExpression<SyntaxNode> = "default" LBr id:identifier RBr {SyntaxNode.CreateDefault(id)}
 										/ "default" {SyntaxNode.CreateDefault(null)}
 sizeOfExpression<SyntaxNode> = "sizeof" LBr id:identifier RBr {SyntaxNode.CreateSizeOf(id)}
@@ -84,6 +90,7 @@ LCb -lexical = '{'
 RCb -lexical = '}'
 Semi -lexical = ';'
 Colon -lexical = ':'
+Comma -lexical = ','
 
 simpleDoubleQuotedCharacter
   = !('"' / "\\" / eolChar) char:. { @char }
