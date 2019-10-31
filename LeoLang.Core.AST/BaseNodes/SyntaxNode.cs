@@ -142,6 +142,11 @@ namespace LeoLang.Core
             return new StringLiteralNode(value);
         }
 
+        public static SyntaxNode CreateStruct(IList<Symbol> mod, Symbol name, SyntaxNode body)
+        {
+            return new StructNode(mod.Any() ? mod.First() : (Symbol)"private", name, (BlockNode)body);
+        }
+
         public static SyntaxNode CreateSymbolLiteral(Symbol id)
         {
             return new SymbolLiteralNode(id);

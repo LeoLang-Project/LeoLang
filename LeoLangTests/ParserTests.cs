@@ -14,22 +14,16 @@ namespace Tests
             var res = p.ParseCompilationUnit("void hello(void) { var x = false; }; void world(void) { var y = true; };");
         }
 
-        [Test]
-        public void enum_test()
-        {
-            var res = p.ParseEnumDefinition("enum hello { red = 0, blue = 1, };");
-        }
-
-        [Test]
-        public void field_test()
-        {
-            var res = p.ParseFieldDeklaration("public field double PI = 3.14;");
-        }
-
         [SetUp]
         public void Setup()
         {
             p = new LeoParser();
+        }
+
+        [Test]
+        public void struct_test()
+        {
+            var res = p.ParseStructDeklaration("struct hello { field int mynum = 5; };");
         }
 
         private LeoParser p;

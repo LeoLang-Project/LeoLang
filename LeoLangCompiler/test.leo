@@ -31,4 +31,6 @@ void lowestTest(void) {
 		return;
 };
 
-public field double PI = 3.14;
+struct myData {
+	field double PI = 3.14;
+};

@@ -5,7 +5,7 @@
 
 @start CompilationUnit
 
-CompilationUnitLine<SyntaxNode> = fieldDeklaration / enumDefinition / methodDefinition
+CompilationUnitLine<SyntaxNode> = structDeklaration / fieldDeklaration / enumDefinition / methodDefinition
 CompilationUnit<SyntaxNode> -public = _o line:CompilationUnitLine* _o {SyntaxNode.CreateBlock(line)}
 
 //Literals
@@ -32,8 +32,12 @@ expression<SyntaxNode> = binaryExpression / ternaryExpression/ value
 unparsedBlock<SyntaxNode> -public = id:identifier _o LCb body:("" [^}]*) _o RCb _o
 							{SyntaxNode.CreateUnparsedBlockExpression(id, body)}
 
-fieldDeklaration<SyntaxNode> -public = mod:modifier? _o "field"_o type:identifier _ id:infixedSymbol _ "=" _ val:expression _o Semi
+fieldDeklaration<SyntaxNode> = mod:modifier? _o "field" _o type:identifier _ id:infixedSymbol _ "=" _ val:expression _o Semi
 								{SyntaxNode.CreateField(mod, type, id, val)}
+
+structDeklaration<SyntaxNode> -public = mod:modifier? _o "struct" _o id:identifier _o body:structBody
+								{SyntaxNode.CreateStruct(mod, id, body)}
+structBody<SyntaxNode> = f:fieldDeklaration* {SyntaxNode.CreateBlock(f)}								
 
 binaryOperator<BinaryOperator> = "<=" {BinaryOperator.LessEq}
 							   / ">=" {BinaryOperator.GreaterEq}
