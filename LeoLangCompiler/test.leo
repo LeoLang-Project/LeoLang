@@ -11,3 +11,8 @@ int Main(string[] args) {
 public int GetAwnser(void) {
 	return 42;
 };
+
+void lowestTest(void) {
+		var x = :hello;
+		goto loop;
+};

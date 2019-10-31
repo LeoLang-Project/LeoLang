@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace LeoLang.Library
+namespace LeoLang.Core.AST
 {
     /// <summary>This class produces global symbols.</summary>
     /// <remarks>

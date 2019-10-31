@@ -1,5 +1,6 @@
 ﻿using LeoLang.Core.AST;
 using LeoLang.Core.AST.Expressions;
+using LeoLang.Core.AST.Literals;
 using LeoLang.Core.AST.Statements;
 
 namespace LeoLang.Core
@@ -19,6 +20,10 @@ namespace LeoLang.Core
         }
 
         public virtual void Visit(SyntaxNode n)
+        {
+        }
+
+        public virtual void Visit(SymbolLiteralNode n)
         {
         }
 

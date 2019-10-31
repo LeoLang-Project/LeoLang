@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace LeoLang.Core.AST
+namespace LeoLang.Library
 {
     /// <summary>This type of SymbolPool helps create more strongly typed Symbols
     /// that simulate enums, but provide extensibility. Specifically, it

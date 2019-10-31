@@ -127,6 +127,11 @@ namespace LeoLang.Core
             return new StringLiteralNode(value);
         }
 
+        public static SyntaxNode CreateSymbolLiteral(Symbol id)
+        {
+            return new SymbolLiteralNode(id);
+        }
+
         public static SyntaxNode CreateTernary(SyntaxNode cond, SyntaxNode tp, SyntaxNode fp)
         {
             return new TernaryExpressionNode(cond, tp, fp);
