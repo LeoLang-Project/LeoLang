@@ -28,4 +28,5 @@ public int GetAwnser(void) {
 void lowestTest(void) {
 		var x = :hello;
 		goto loop;
+		return;
 };
