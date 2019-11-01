@@ -5,7 +5,7 @@
 
 @start CompilationUnit
 
-CompilationUnitLine<SyntaxNode> = structDeklaration / fieldDeklaration / enumDefinition / methodDefinition
+CompilationUnitLine<SyntaxNode> = usingDeclaration  / enumDefinition / methodDefinition / structDeklaration / fieldDeklaration
 CompilationUnit<SyntaxNode> -public = _o line:CompilationUnitLine* _o {SyntaxNode.CreateBlock(line)}
 
 //Literals
@@ -31,6 +31,12 @@ identifier<SymbolNode> = id:("" ([a-zA-Z_][a-zA-Z_0-9]*)) {new SymbolNode(GSymbo
 expression<SyntaxNode> = binaryExpression / ternaryExpression/ value
 unparsedBlock<SyntaxNode> -public = id:identifier _o LCb body:("" [^}]*) _o RCb _o
 							{SyntaxNode.CreateUnparsedBlockExpression(id, body)}
+
+usingDeclaration<SyntaxNode> -public = _o "using" _ ns:namespaceRule _o Semi
+									{SyntaxNode.CreateUsing(ns)}
+
+namespaceRule<SymbolNode>
+	= f:identifier "." s:namespaceRule {SymbolNode.Join(f, s, '.')} / id:identifier
 
 fieldDeklaration<SyntaxNode> = mod:modifier? _o "field" _o type:identifier _ id:infixedSymbol _ "=" _ val:expression _o Semi
 								{SyntaxNode.CreateField(mod, type, id, val)}

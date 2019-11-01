@@ -23,6 +23,10 @@ namespace LeoLang.Core
         {
         }
 
+        public virtual void Visit(UsingDeclarationNode n)
+        {
+        }
+
         public virtual void Visit(StructNode n)
         {
         }

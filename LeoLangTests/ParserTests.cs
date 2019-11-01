@@ -8,12 +8,6 @@ namespace Tests
 {
     public class ParserTests
     {
-        [Test]
-        public void CompilationUnit_Should_Pass()
-        {
-            var res = p.ParseCompilationUnit("void hello(void) { var x = false; }; void world(void) { var y = true; };");
-        }
-
         [SetUp]
         public void Setup()
         {
@@ -24,6 +18,12 @@ namespace Tests
         public void struct_test()
         {
             var res = p.ParseStructDeklaration("struct hello { field int mynum = 5; };");
+        }
+
+        [Test]
+        public void using_test()
+        {
+            var res = p.ParseUsingDeclaration("using System.Runtime.Compilerservice;");
         }
 
         private LeoParser p;

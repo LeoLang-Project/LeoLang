@@ -162,6 +162,11 @@ namespace LeoLang.Core
             return new UnparsedBlockExpression(id, body.Trim());
         }
 
+        public static SyntaxNode CreateUsing(Symbol ns)
+        {
+            return new UsingDeclarationNode(ns);
+        }
+
         public static SyntaxNode CreateVarDef(Symbol type, Symbol id, SyntaxNode val)
         {
             return new VariableDefinitionNode(type, id, val);

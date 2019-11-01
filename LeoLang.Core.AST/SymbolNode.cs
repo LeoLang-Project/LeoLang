@@ -20,6 +20,11 @@ namespace LeoLang.Core.AST
             return n.Symbol;
         }
 
+        public static SymbolNode Join(SymbolNode first, SymbolNode second, char seperator)
+        {
+            return new SymbolNode(first.Symbol.Name + seperator + second.Symbol.Name);
+        }
+
         public override void Accept(Visitor visitor)
         {
             visitor.Visit(Symbol);

@@ -1,3 +1,7 @@
+using System;
+using System.Core;
+using LeoLang;
+
 public enum color {
 	red,
 	blue,
@@ -27,7 +31,6 @@ public int GetAwnser(void) {
 
 void lowestTest(void) {
 		var x = :hello;
-		goto loop;
 		return;
 };
 
