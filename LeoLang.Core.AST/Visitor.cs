@@ -11,15 +11,15 @@ namespace LeoLang.Core
         {
         }
 
+        public virtual void Visit(SyntaxNode n)
+        {
+        }
+
         public virtual void Visit(TernaryExpressionNode n)
         {
         }
 
         public virtual void Visit(DefaultExpressionNode n)
-        {
-        }
-
-        public virtual void Visit(SyntaxNode n)
         {
         }
 
