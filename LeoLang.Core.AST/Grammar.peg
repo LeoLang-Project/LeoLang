@@ -38,6 +38,9 @@ usingDeclaration<SyntaxNode> -public = _o "using" _ ns:namespaceRule _o Semi
 namespaceRule<SymbolNode>
 	= f:identifier "." s:namespaceRule {SymbolNode.Join(f, s, '.')} / id:identifier
 
+callExpression<SyntaxNode> -public = id:identifier _o LBr _o args:callparamlist _o RBr {SyntaxNode.CreateCall(id, args)}
+callparamlist<IEnumerable<SyntaxNode>> = f:value _o "," _o s:callparamlist {SyntaxNode.Combine(f, s)} / v:value {SyntaxNode.Combine(v) }
+
 fieldDeklaration<SyntaxNode> = mod:modifier? _o "field" _o type:identifier _ id:infixedSymbol _ "=" _ val:expression _o Semi
 								{SyntaxNode.CreateField(mod, type, id, val)}
 

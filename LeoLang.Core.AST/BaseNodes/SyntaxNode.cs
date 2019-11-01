@@ -27,6 +27,25 @@ namespace LeoLang.Core
     {
         public static Visitor Visitor;
 
+        public static IEnumerable<SyntaxNode> Combine(SyntaxNode f, SyntaxNode s)
+        {
+            return new SyntaxNode[] { f, s };
+        }
+
+        public static IEnumerable<SyntaxNode> Combine(SyntaxNode f, IEnumerable<SyntaxNode> s)
+        {
+            var r = new List<SyntaxNode>();
+            r.Add(f);
+            r.AddRange(s);
+
+            return r;
+        }
+
+        public static IEnumerable<SyntaxNode> Combine(SyntaxNode v)
+        {
+            return new SyntaxNode[] { v };
+        }
+
         public static SyntaxNode CreateBinary(SyntaxNode l, BinaryOperator op, SyntaxNode r)
         {
             return new BinaryExpressionNode(l, op, r);
@@ -50,6 +69,11 @@ namespace LeoLang.Core
         public static SyntaxNode CreateBool(string value)
         {
             return new BooleanLiteralNode(bool.Parse(value));
+        }
+
+        public static SyntaxNode CreateCall(Symbol name, IEnumerable<SyntaxNode> args)
+        {
+            return new CallNode(name, args);
         }
 
         public static SyntaxNode CreateChar(string value)

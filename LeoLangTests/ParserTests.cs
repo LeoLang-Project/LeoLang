@@ -8,6 +8,12 @@ namespace Tests
 {
     public class ParserTests
     {
+        [Test]
+        public void call_test()
+        {
+            var res = p.ParseCallExpression("print(12, 5, 4)");
+        }
+
         [SetUp]
         public void Setup()
         {
@@ -18,12 +24,6 @@ namespace Tests
         public void struct_test()
         {
             var res = p.ParseStructDeklaration("struct hello { field int mynum = 5; };");
-        }
-
-        [Test]
-        public void using_test()
-        {
-            var res = p.ParseUsingDeclaration("using System.Runtime.Compilerservice;");
         }
 
         private LeoParser p;
