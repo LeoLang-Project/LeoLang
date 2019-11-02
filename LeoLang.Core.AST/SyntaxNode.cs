@@ -54,9 +54,9 @@ namespace LeoLang.Core
             return new SyntaxNode[] { v };
         }
 
-        public static LNode CreateBinary(LNode l, BinaryOperator op, LNode r)
+        public static LNode CreateBinary(LNode l, Symbol op, LNode r)
         {
-            return F.Call(CodeSymbols.Eq, LNode.List(l, r)).SetStyle(NodeStyle.Operator);
+            return F.Call(op, LNode.List(l, r)).SetStyle(NodeStyle.Operator);
         }
 
         public static LNode CreateBinInteger(string value)
@@ -68,12 +68,12 @@ namespace LeoLang.Core
 
         public static LNode CreateBlock(IEnumerable<LNode> body)
         {
-            return F.Call(CodeSymbols.Braces, F.List(body)).SetStyle(NodeStyle.Statement);
+            return F.Braces(F.List(body)).SetStyle(NodeStyle.Statement);
         }
 
         public static LNode CreateBlock(LNode body)
         {
-            return F.Call(CodeSymbols.Braces, F.List(body)).SetStyle(NodeStyle.Statement);
+            return F.Braces(F.List(body)).SetStyle(NodeStyle.Statement);
         }
 
         public static LNode CreateBool(string value)
@@ -123,6 +123,11 @@ namespace LeoLang.Core
             var val = int.Parse(value, NumberStyles.HexNumber);
 
             return F.Literal(val).WithStyle(NodeStyle.HexLiteral);
+        }
+
+        public static LNode CreateID(string src)
+        {
+            return F.Id(src);
         }
 
         public static LNode CreateInteger(string value)
