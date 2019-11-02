@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Loyc.Syntax" Version="26.8.1" />
     <PackageReference Include="Pegasus" Version="4.1.0" />
   </ItemGroup>
 

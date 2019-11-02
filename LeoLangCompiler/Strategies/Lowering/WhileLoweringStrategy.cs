@@ -1,16 +1,15 @@
 ﻿using LeoLang.Core;
-using LeoLang.Core.AST;
-using System;
-using System.Linq;
+using Loyc.Syntax;
 
 namespace LeoLangCompiler.Strategies.Lowering
 {
-    public class WhileLoweringStrategy : IStrategy<SyntaxNode>
+    public class WhileLoweringStrategy : IStrategy<LNode>
     {
         public int Counter { get; set; }
 
-        public SyntaxNode Do(SyntaxNode arg)
+        public LNode Do(LNode arg)
         {
+            /*
             BlockNode blk = (BlockNode)arg;
             var nodes = blk.FindChildrenOfType<StatementNode>().ToArray();
             for (int i = 0; i < nodes.Length; i++)
@@ -24,6 +23,7 @@ namespace LeoLangCompiler.Strategies.Lowering
                 }
             }
 
+    */
             return arg;
         }
     }

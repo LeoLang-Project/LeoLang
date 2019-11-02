@@ -1,52 +1,53 @@
 ﻿@namespace LeoLang.Core.AST
 @classname LeoParser
 @using LeoLang.Core.AST
-@using LeoLang.Core.AST.Expressions
+@using Loyc;
+@using Loyc.Syntax;
 
 @start CompilationUnit
 
-CompilationUnitLine<SyntaxNode> = usingDeclaration  / enumDefinition / methodDefinition / structDeklaration / fieldDeklaration
-CompilationUnit<SyntaxNode> -public = _o line:CompilationUnitLine* _o {SyntaxNode.CreateBlock(line)}
+CompilationUnitLine<LNode> = usingDeclaration  / enumDefinition / methodDefinition / structDeklaration / fieldDeklaration
+CompilationUnit<LNode> -public = _o line:CompilationUnitLine* _o {SyntaxNode.CreateBlock(line)}
 
 //Literals
-integerLiteral<SyntaxNode> = value:("" [0-9]+) {SyntaxNode.CreateInteger(value)}
-decimalLiteral<SyntaxNode> = value:("" [0-9]+ "." [0-9]+) {SyntaxNode.CreateDecimal(value)}
-hexLiteral<SyntaxNode> = "0x" value:("" [0-9A-Za-z]+) {SyntaxNode.CreateHexInteger(value)}
-binLiteral<SyntaxNode> = "0b" value:("" [01_]+) {SyntaxNode.CreateBinInteger(value)}
-numberLiteral<SyntaxNode> = hexLiteral / binLiteral / decimalLiteral / integerLiteral
-symbolLiteral<SyntaxNode> = ":" id:identifier {SyntaxNode.CreateSymbolLiteral(id)}
+integerLiteral<LNode> = value:("" [0-9]+) {SyntaxNode.CreateInteger(value)}
+decimalLiteral<LNode> = value:("" [0-9]+ "." [0-9]+) {SyntaxNode.CreateDecimal(value)}
+hexLiteral<LNode> = "0x" value:("" [0-9A-Za-z]+) {SyntaxNode.CreateHexInteger(value)}
+binLiteral<LNode> = "0b" value:("" [01_]+) {SyntaxNode.CreateBinInteger(value)}
+numberLiteral<LNode> = hexLiteral / binLiteral / decimalLiteral / integerLiteral
+symbolLiteral<LNode> = ":" id:identifier {SyntaxNode.CreateSymbolLiteral(id)}
 
 infixedSymbol<SymbolNode> = sp:symbolPrefix? id:identifier ss:symbolSuffix<0, 2> {((SymbolNode)id).SetInfix(sp, ss)}
 symbolPrefix<SymbolPrefix> = pre:("++" / "--" / "-" / "*" / "&") {SyntaxNode.GetSymbolPrefix(pre)}
 symbolSuffix<SymbolSuffix> = suf:("++" / "--" / "?" / "[]" / "*") {SyntaxNode.GetSymbolSuffix(suf)}
 
-booleanLiteral<SyntaxNode> =  val:("true" / "false") { SyntaxNode.CreateBool(val) }
-characterLiteral<SyntaxNode> = "'" c:("" [^']) "'" {SyntaxNode.CreateChar(c)}							
-stringLiteral<SyntaxNode> = '"' val:("" simpleDoubleQuotedCharacter*) '"' {SyntaxNode.CreateString(val)}
+booleanLiteral<LNode> =  val:("true" / "false") { SyntaxNode.CreateBool(val) }
+characterLiteral<LNode> = "'" c:("" [^']) "'" {SyntaxNode.CreateChar(c)}							
+stringLiteral<LNode> = '"' val:("" simpleDoubleQuotedCharacter*) '"' {SyntaxNode.CreateString(val)}
 
-value<SyntaxNode> -memoize = booleanLiteral / characterLiteral / stringLiteral / defaultExpression / sizeOfExpression / numberLiteral / unparsedBlock / identifier / symbolLiteral
+value<LNode> -memoize = booleanLiteral / characterLiteral / stringLiteral / defaultExpression / sizeOfExpression / numberLiteral / unparsedBlock / identifier / symbolLiteral
 
 identifier<SymbolNode> = id:("" ([a-zA-Z_][a-zA-Z_0-9]*)) {new SymbolNode(GSymbol.Get(id))}
 
-expression<SyntaxNode> = binaryExpression / ternaryExpression/ value
-unparsedBlock<SyntaxNode> -public = id:identifier _o LCb body:("" [^}]*) _o RCb _o
+expression<LNode> = binaryExpression / ternaryExpression/ value
+unparsedBlock<LNode> -public = id:identifier _o LCb body:("" [^}]*) _o RCb _o
 							{SyntaxNode.CreateUnparsedBlockExpression(id, body)}
 
-usingDeclaration<SyntaxNode> -public = _o "using" _ ns:namespaceRule _o Semi
+usingDeclaration<LNode> -public = _o "using" _ ns:namespaceRule _o Semi
 									{SyntaxNode.CreateUsing(ns)}
 
 namespaceRule<SymbolNode>
 	= f:identifier "." s:namespaceRule {SymbolNode.Join(f, s, '.')} / id:identifier
 
-callExpression<SyntaxNode> -public = id:identifier _o LBr _o args:callparamlist _o RBr {SyntaxNode.CreateCall(id, args)}
-callparamlist<IEnumerable<SyntaxNode>> = f:value _o "," _o s:callparamlist {SyntaxNode.Combine(f, s)} / v:value {SyntaxNode.Combine(v) }
+callExpression<LNode> -public = id:identifier _o LBr _o args:callparamlist _o RBr {SyntaxNode.CreateCall(id, args)}
+callparamlist<IEnumerable<LNode>> = f:value _o "," _o s:callparamlist {SyntaxNode.Combine(f, s)} / v:value {SyntaxNode.Combine(v) }
 
-fieldDeklaration<SyntaxNode> = mod:modifier? _o "field" _o type:identifier _ id:infixedSymbol _ "=" _ val:expression _o Semi
+fieldDeklaration<LNode> = mod:modifier? _o "field" _o type:identifier _ id:infixedSymbol _ "=" _ val:expression _o Semi
 								{SyntaxNode.CreateField(mod, type, id, val)}
 
-structDeklaration<SyntaxNode> -public = mod:modifier? _o "struct" _o id:identifier _o body:structBody
+structDeklaration<LNode> -public = mod:modifier? _o "struct" _o id:identifier _o body:structBody
 								{SyntaxNode.CreateStruct(mod, id, body)}
-structBody<SyntaxNode> = f:fieldDeklaration* {SyntaxNode.CreateBlock(f)}								
+structBody<LNode> = f:fieldDeklaration* {SyntaxNode.CreateBlock(f)}								
 
 binaryOperator<BinaryOperator> = "<=" {BinaryOperator.LessEq}
 							   / ">=" {BinaryOperator.GreaterEq}
@@ -54,51 +55,51 @@ binaryOperator<BinaryOperator> = "<=" {BinaryOperator.LessEq}
 							   / "<" {BinaryOperator.Less}
 							   / ">" {BinaryOperator.Greater};
 
-binaryExpression<SyntaxNode> = lhs:value _o op:binaryOperator _o rhs:value {SyntaxNode.CreateBinary(lhs, op, rhs)}
+binaryExpression<LNode> = lhs:value _o op:binaryOperator _o rhs:value {SyntaxNode.CreateBinary(lhs, op, rhs)}
 
-ternaryExpression<SyntaxNode> -memoize = cond:binaryExpression _o "?" _o truePart:expression _o ":" _o falsePart:expression
+ternaryExpression<LNode> -memoize = cond:binaryExpression _o "?" _o truePart:expression _o ":" _o falsePart:expression
 										{SyntaxNode.CreateTernary(cond, truePart, falsePart)}
-variableDefinition<SyntaxNode> = type:identifier _ id:infixedSymbol _ "=" _ val:expression 
+variableDefinition<LNode> = type:identifier _ id:infixedSymbol _ "=" _ val:expression 
 										{SyntaxNode.CreateVarDef(type, id, val)}
 
-label<SyntaxNode> = id:identifier Colon {SyntaxNode.CreateLabel(id)}
+label<LNode> = id:identifier Colon {SyntaxNode.CreateLabel(id)}
 
-Block<SyntaxNode> -public = _o LCb block:blockContent _o RCb _o Semi _o
+Block<LNode> -public = _o LCb block:blockContent _o RCb _o Semi _o
 					{block}
 
-blockContent<SyntaxNode> = lines:(StatementLine / genericStatementBlock)* {SyntaxNode.CreateBlock(lines)}
+blockContent<LNode> = lines:(StatementLine / genericStatementBlock)* {SyntaxNode.CreateBlock(lines)}
 	
-parameterContent<SyntaxNode>
+parameterContent<LNode>
 	= _o head:paramDef _o "," _o tail:parameterContent { SyntaxNode.CreateParameter(head).Concat(tail) }
 	/ line:paramDef { SyntaxNode.CreateParameter(line) }
 
 
-Statement<SyntaxNode> = label / goToStatement / callExpression / variableDefinition / returnStatement 
-StatementLine<SyntaxNode> = _o stmt:Statement _o Semi _o {stmt}
-genericStatementBlock<SyntaxNode> = name:identifier _o LBr _o expr:expression _o RBr body:Block {SyntaxNode.CreateStatement(name, expr, body)}
+Statement<LNode> = label / goToStatement / callExpression / variableDefinition / returnStatement 
+StatementLine<LNode> = _o stmt:Statement _o Semi _o {stmt}
+genericStatementBlock<LNode> = name:identifier _o LBr _o expr:expression _o RBr body:Block {SyntaxNode.CreateStatement(name, expr, body)}
 
-paramDef<SyntaxNode> = type:identifier array:"[]"? _ name:identifier {SyntaxNode.CreateParameter(type, name, array)}
-paramList<SyntaxNode> -memoize = parameterContent / paramListVoid / unexpected:&. #error{ "LLC0003: Expected void got '" + unexpected + "'" }
-paramListVoid<SyntaxNode> = "void" {null}
+paramDef<LNode> = type:identifier array:"[]"? _ name:identifier {SyntaxNode.CreateParameter(type, name, array)}
+paramList<LNode> -memoize = parameterContent / paramListVoid / unexpected:&. #error{ "LLC0003: Expected void got '" + unexpected + "'" }
+paramListVoid<LNode> = "void" {null}
 
-methodDefinition<SyntaxNode> = mod:modifier? _o ret:infixedSymbol _ id:identifier LBr param:paramList RBr body:Block
+methodDefinition<LNode> = mod:modifier? _o ret:infixedSymbol _ id:identifier LBr param:paramList RBr body:Block
 										{SyntaxNode.CreateMethod(mod, id, ret, param, body)}	
 
-enumDefinition<SyntaxNode> -public = mod:modifier? _o "enum" _ id:identifier type:enumType? _ LCb _o body:enumLine* _o RCb Semi
+enumDefinition<LNode> -public = mod:modifier? _o "enum" _ id:identifier type:enumType? _ LCb _o body:enumLine* _o RCb Semi
 									{SyntaxNode.CreateEnum(mod, id, type, body)}
 enumType<Symbol> = _o Colon _o id:identifier {id}
-enumLine<SyntaxNode> = _o decl:enumFieldDeclaration _o Comma?
+enumLine<LNode> = _o decl:enumFieldDeclaration _o Comma?
 					   {decl}
-enumFieldDeclaration<SyntaxNode> = enumFieldDefinition / id:identifier 
-enumFieldDefinition<SyntaxNode> = id:identifier _o "=" _o val:enumValue {SyntaxNode.CreatePair(id, val)}
-enumValue<SyntaxNode> = stringLiteral / characterLiteral / numberLiteral
+enumFieldDeclaration<LNode> = enumFieldDefinition / id:identifier 
+enumFieldDefinition<LNode> = id:identifier _o "=" _o val:enumValue {SyntaxNode.CreatePair(id, val)}
+enumValue<LNode> = stringLiteral / characterLiteral / numberLiteral
 
-defaultExpression<SyntaxNode> = "default" LBr id:identifier RBr {SyntaxNode.CreateDefault(id)}
+defaultExpression<LNode> = "default" LBr id:identifier RBr {SyntaxNode.CreateDefault(id)}
 										/ "default" {SyntaxNode.CreateDefault(null)}
-sizeOfExpression<SyntaxNode> = "sizeof" LBr id:identifier RBr {SyntaxNode.CreateSizeOf(id)}
+sizeOfExpression<LNode> = "sizeof" LBr id:identifier RBr {SyntaxNode.CreateSizeOf(id)}
 
-goToStatement<SyntaxNode> = "goto" _ id:identifier {SyntaxNode.CreateGoTo(id)}
-returnStatement<SyntaxNode> = "return" _ expr:expression {SyntaxNode.CreateReturn(expr)} / "return" {SyntaxNode.CreateReturn(null)}
+goToStatement<LNode> = "goto" _ id:identifier {SyntaxNode.CreateGoTo(id)}
+returnStatement<LNode> = "return" _ expr:expression {SyntaxNode.CreateReturn(expr)} / "return" {SyntaxNode.CreateReturn(null)}
 
 modifier<Symbol> = mod:("public" / "private" / "shared") {SyntaxNode.CreateModifier(mod)}
 

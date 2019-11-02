@@ -15,10 +15,6 @@ namespace LeoLangCompiler.Middlewares
 
             arg.AST = parser.Parse(content, arg.CmdArgs.Input);
 
-            var dumper = new DumpVisitor();
-
-            arg.AST.ApplyVisitor(dumper);
-
             if (arg.CmdArgs.AstFilename != null)
             {
                 File.WriteAllText(arg.CmdArgs.AstFilename, ObjectDumper.Dump(arg.AST));
