@@ -73,7 +73,7 @@ parameterContent<SyntaxNode>
 	/ line:paramDef { SyntaxNode.CreateParameter(line) }
 
 
-Statement<SyntaxNode> = label / goToStatement / variableDefinition / returnStatement 
+Statement<SyntaxNode> = label / goToStatement / callExpression / variableDefinition / returnStatement 
 StatementLine<SyntaxNode> = _o stmt:Statement _o Semi _o {stmt}
 genericStatementBlock<SyntaxNode> = name:identifier _o LBr _o expr:expression _o RBr body:Block {SyntaxNode.CreateStatement(name, expr, body)}
 
