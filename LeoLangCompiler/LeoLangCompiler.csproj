@@ -32,10 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Strategies\Lowering\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="test.leo">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -1,5 +1,6 @@
 ﻿using System;
 using LeoLang.Core;
+using LeoLangCompiler.Strategies.Lowering;
 using PipelineNet.Middleware;
 
 namespace LeoLangCompiler.Middlewares
@@ -10,6 +11,11 @@ namespace LeoLangCompiler.Middlewares
         {
             var runner = new StrategyRunner<SyntaxNode>();
             //ToDo: add lowering strategies
+
+            runner.Add(new WhileLoweringStrategy());
+
+            var loop = ((BlockNode)parameter.AST).FindChildrenOfType<StatementNode>();
+            var result = runner.Run(parameter.AST);
 
             next(parameter);
         }
