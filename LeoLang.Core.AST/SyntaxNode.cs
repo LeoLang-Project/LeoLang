@@ -35,28 +35,28 @@ namespace LeoLang.Core
         public static LNodeFactory F = new LNodeFactory(new EmptySourceFile(FileName));
         public static string FileName = "Foo.cs";
 
-        public static IEnumerable<SyntaxNode> Combine(SyntaxNode f, SyntaxNode s)
+        public static IEnumerable<LNode> Combine(LNode f, LNode s)
         {
-            return new SyntaxNode[] { f, s };
+            return new LNode[] { f, s };
         }
 
-        public static IEnumerable<SyntaxNode> Combine(SyntaxNode f, IEnumerable<SyntaxNode> s)
+        public static IEnumerable<LNode> Combine(LNode f, IEnumerable<LNode> s)
         {
-            var r = new List<SyntaxNode>();
+            var r = new List<LNode>();
             r.Add(f);
             r.AddRange(s);
 
             return r;
         }
 
-        public static IEnumerable<SyntaxNode> Combine(SyntaxNode v)
+        public static IEnumerable<LNode> Combine(LNode v)
         {
-            return new SyntaxNode[] { v };
+            return new LNode[] { v };
         }
 
-        public static LNode CreateBinary(LNode l, Symbol op, LNode r)
+        public static LNode CreateBinary(LNode l, BinaryOperator op, LNode r)
         {
-            return F.Call(op, LNode.List(l, r)).SetStyle(NodeStyle.Operator);
+            return F.Call(LNode.Id(op.ToString()), LNode.List(l, r)).SetStyle(NodeStyle.Operator);
         }
 
         public static LNode CreateBinInteger(string value)
@@ -81,7 +81,7 @@ namespace LeoLang.Core
             return F.Literal(bool.Parse(value));
         }
 
-        public static LNode CreateCall(Symbol name, IEnumerable<LNode> args)
+        public static LNode CreateCall(LNode name, IEnumerable<LNode> args)
         {
             return F.Call(name, args);
         }
@@ -96,26 +96,26 @@ namespace LeoLang.Core
             return F.Literal(double.Parse(value, CultureInfo.InvariantCulture));
         }
 
-        public static LNode CreateDefault(Symbol id)
+        public static LNode CreateDefault(LNode id)
         {
-            return F.Call(CodeSymbols.Default, LNode.List(LNode.Id(id)));
+            return F.Call(CodeSymbols.Default, LNode.List(id));
         }
 
-        public static LNode CreateEnum(Symbol mod, Symbol id, Symbol type, IEnumerable<LNode> body)
+        public static LNode CreateEnum(LNode mod, LNode id, IList<LNode> type, IEnumerable<LNode> body)
         {
-            return LNode.Call(LNode.List(LNode.Id(mod)), CodeSymbols.Enum,
-                    LNode.List(LNode.Id(id), LNode.Call(CodeSymbols.AltList,
-                    LNode.List(LNode.Id(type))), LNode.Call(CodeSymbols.Braces, LNode.List(body))));
+            return LNode.Call(LNode.List(mod), CodeSymbols.Enum,
+                    LNode.List(id, LNode.Call(CodeSymbols.AltList,
+                    LNode.List(type)), LNode.Call(CodeSymbols.Braces, LNode.List(body))));
         }
 
-        public static LNode CreateField(Symbol mod, Symbol type, Symbol name, LNode value)
+        public static LNode CreateField(LNode mod, LNode type, LNode name, LNode value)
         {
-            return LNode.Call(LNode.List(LNode.Id(mod)), CodeSymbols.Var, LNode.List(LNode.Id(type), LNode.Call(CodeSymbols.Assign, LNode.List(LNode.Id(name), value))));
+            return LNode.Call(LNode.List(mod), CodeSymbols.Var, LNode.List(type, LNode.Call(CodeSymbols.Assign, LNode.List(name, value))));
         }
 
-        public static LNode CreateGoTo(Symbol id)
+        public static LNode CreateGoTo(LNode id)
         {
-            return LNode.Call(CodeSymbols.Goto, LNode.List(LNode.Id(id)));
+            return LNode.Call(CodeSymbols.Goto, LNode.List(id));
         }
 
         public static LNode CreateHexInteger(string value)
@@ -135,14 +135,14 @@ namespace LeoLang.Core
             return F.Literal(int.Parse(value));
         }
 
-        public static LNode CreateMethod(Symbol mod, Symbol name, Symbol retType, LNode param, LNode body)
+        public static LNode CreateMethod(LNode mod, LNode name, LNode retType, LNode param, LNode body)
         {
-            return F.Fn(F.Id(retType), F.Id(name), param, body);
+            return F.Fn(retType, name, param, body);
         }
 
-        public static LNode CreateModifier(string mod)
+        public static LNode CreateModifier(IList<string> mod)
         {
-            return F.Literal(mod);
+            return mod.Any() ? F.Literal(mod) : F.Literal(CodeSymbols.Private);
         }
 
         public static LNode CreatePair(LNode key, LNode value)
@@ -150,9 +150,9 @@ namespace LeoLang.Core
             return F.Tuple(key, value);
         }
 
-        public static LNode CreateParameter(Symbol type, Symbol name, IList<string> isarray)
+        public static LNode CreateParameter(LNode type, LNode name, IList<string> isarray)
         {
-            var pDef = F.Var(F.Id(type), name);
+            var pDef = F.Var(type, name);
             if (isarray.Any())
             {
                 pDef = pDef.WithAttrs(F.Id(CodeSymbols.Array));
@@ -172,12 +172,12 @@ namespace LeoLang.Core
             return node;
         }
 
-        public static LNode CreateSizeOf(Symbol id)
+        public static LNode CreateSizeOf(LNode id)
         {
-            return F.Call(CodeSymbols.Sizeof, F.List(F.Id(id)));
+            return F.Call(CodeSymbols.Sizeof, F.List(id));
         }
 
-        public static LNode CreateStatement(Symbol name, LNode expr, LNode body)
+        public static LNode CreateStatement(LNode name, LNode expr, LNode body)
         {
             return F.Call(name, F.List(expr, body));
         }
@@ -187,14 +187,14 @@ namespace LeoLang.Core
             return F.Literal(value);
         }
 
-        public static LNode CreateStruct(Symbol mod, Symbol name, LNode body)
+        public static LNode CreateStruct(LNode mod, LNode name, LNode body)
         {
-            return LNode.Call(LNode.List(LNode.Id(mod)), CodeSymbols.Struct, LNode.List(LNode.Id(name), LNode.Call(CodeSymbols.AltList), body));
+            return LNode.Call(LNode.List(mod), CodeSymbols.Struct, LNode.List(name, LNode.Call(CodeSymbols.AltList), body));
         }
 
-        public static LNode CreateSymbolLiteral(Symbol id)
+        public static LNode CreateSymbolLiteral(LNode id)
         {
-            return F.Id(id);
+            return id;
         }
 
         public static LNode CreateTernary(LNode cond, LNode tp, LNode fp)
@@ -202,19 +202,19 @@ namespace LeoLang.Core
             return LNode.Call(CodeSymbols.Result, LNode.List(LNode.Call(CodeSymbols.QuestionMark, LNode.List(cond, tp, fp)).SetStyle(NodeStyle.Operator)));
         }
 
-        public static LNode CreateUnparsedBlockExpression(Symbol id, string body)
+        public static LNode CreateUnparsedBlockExpression(LNode id, string body)
         {
             return LNode.Call(id, LNode.List(F.Literal(body)));
         }
 
-        public static LNode CreateUsing(Symbol ns)
+        public static LNode CreateUsing(LNode ns)
         {
-            return LNode.Call(CodeSymbols.Import, LNode.List(LNode.Id(ns)));
+            return LNode.Call(CodeSymbols.Import, LNode.List(ns));
         }
 
-        public static LNode CreateVarDef(Symbol type, Symbol id, LNode val)
+        public static LNode CreateVarDef(LNode type, LNode id, LNode val)
         {
-            return LNode.Call(CodeSymbols.Var, LNode.List(LNode.Id(type), LNode.Call(CodeSymbols.Assign, LNode.List(LNode.Id(id), val))));
+            return LNode.Call(CodeSymbols.Var, LNode.List(type, LNode.Call(CodeSymbols.Assign, LNode.List(id, val))));
         }
 
         public static SymbolPrefix GetSymbolPrefix(string op)
@@ -241,6 +241,19 @@ namespace LeoLang.Core
             }
 
             return SymbolSuffix.None;
+        }
+
+        public static LNode JoinNodes(LNode f, LNode s, char seperator)
+        {
+            var first = (IdNode)f;
+            var second = (IdNode)s;
+
+            return F.Id(first.Name.Name + seperator + second.Name.Name);
+        }
+
+        public static LNode SetInfix(LNode id, IList<SymbolPrefix> pre, IList<SymbolSuffix> suf)
+        {
+            return id.WithAttrs(F.Literal(pre), F.Literal(suf));
         }
     }
 }
