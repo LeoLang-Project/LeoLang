@@ -4,6 +4,7 @@ using ICSharpCode.SharpDevelop.Editor;
 using ICSharpCode.SharpDevelop.Editor.CodeCompletion;
 using LeoLang.Core;
 using LeoLang.Core.AST;
+using Loyc.Syntax;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -43,9 +44,9 @@ namespace Furesoft.LeoBinding.Completion
 
         private ITextSource fileContent;
 
-        private IEnumerable<ICompletionItem> GetVariableNames(SyntaxNode ast)
+        private IEnumerable<ICompletionItem> GetVariableNames(LNode ast)
         {
-            if (ast is MethodDefinitionNode md)
+            /*if (ast is MethodDefinitionNode md)
             {
                 var block = (BlockNode)md.Body;
 
@@ -57,6 +58,9 @@ namespace Furesoft.LeoBinding.Completion
                     }
                 }
             }
+            */
+
+            return null;
         }
 
         private bool ShowCompletion(ITextEditor editor, char v1, bool v2)

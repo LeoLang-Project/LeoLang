@@ -35,18 +35,18 @@ namespace LeoLang.Core
         public static LNodeFactory F = new LNodeFactory(new EmptySourceFile(FileName));
         public static string FileName = "Foo.cs";
 
-        public static IEnumerable<LNode> Combine(LNode f, LNode s)
+        public static LNode Combine(LNode f, LNode s)
         {
-            return new LNode[] { f, s };
+            return F.List(f, s);
         }
 
-        public static IEnumerable<LNode> Combine(LNode f, IEnumerable<LNode> s)
+        public static LNode Combine(LNode f, IEnumerable<LNode> s)
         {
             var r = new List<LNode>();
             r.Add(f);
             r.AddRange(s);
 
-            return r;
+            return F.List(r);
         }
 
         public static IEnumerable<LNode> Combine(LNode v)
@@ -150,15 +150,9 @@ namespace LeoLang.Core
             return F.Tuple(key, value);
         }
 
-        public static LNode CreateParameter(LNode type, LNode name, IList<string> isarray)
+        public static LNode CreateParameter(LNode type, LNode name)
         {
-            var pDef = F.Var(type, name);
-            if (isarray.Any())
-            {
-                pDef = pDef.WithAttrs(F.Id(CodeSymbols.Array));
-            }
-
-            return pDef;
+            return F.Var(type, name);
         }
 
         public static LNode CreateReturn(LNode expr)

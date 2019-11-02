@@ -42,7 +42,7 @@ namespace LeoLangCompiler.Middlewares
 
             entryPoint.Body = body = new CilBody();
 
-            if (arg.AST is MethodDefinitionNode methdef)
+            /*if (arg.AST is MethodDefinitionNode methdef)
             {
                 var m = new MethodDefUser((string)methdef.Name, MethodSig.CreateStatic(mod.CorLibTypes.Void),
                            MethodImplAttributes.IL | MethodImplAttributes.Managed,
@@ -58,6 +58,7 @@ namespace LeoLangCompiler.Middlewares
 
                 main.Methods.Add(m);
             }
+            */
 
             // Save the assembly
             mod.Write(arg.CmdArgs.Output);

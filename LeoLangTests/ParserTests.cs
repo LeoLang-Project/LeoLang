@@ -8,7 +8,7 @@ namespace Tests
         [Test]
         public void call_test()
         {
-            var res = p.ParseCallExpression("print(12, 5, 4)");
+            var res = p.ParseMethodDefinition("void main(int count) { var l = true; };");
         }
 
         [SetUp]

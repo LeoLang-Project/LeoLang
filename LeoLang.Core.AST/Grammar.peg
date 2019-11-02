@@ -7,7 +7,7 @@
 @start CompilationUnit
 
 CompilationUnitLine<LNode> = usingDeclaration  / enumDefinition / methodDefinition / structDeklaration / fieldDeklaration
-CompilationUnit<LNode> -public = _o line:CompilationUnitLine* _o {SyntaxNode.CreateBlock(line)}
+CompilationUnit<LNode> -public = _o line:CompilationUnitLine* _o EOF {SyntaxNode.CreateBlock(line)}
 
 //Literals
 integerLiteral<LNode> = value:("" [0-9]+) {SyntaxNode.CreateInteger(value)}
@@ -33,13 +33,13 @@ expression<LNode> = binaryExpression / ternaryExpression/ value
 unparsedBlock<LNode> -public = id:identifier _o LCb body:("" [^}]*) _o RCb _o
 							{SyntaxNode.CreateUnparsedBlockExpression(id, body)}
 
-usingDeclaration<LNode> -public = _o "using" _ ns:namespaceRule _o Semi
+usingDeclaration<LNode> = _o "using" _ ns:namespaceRule _o Semi
 									{SyntaxNode.CreateUsing(ns)}
 
 namespaceRule<LNode>
 	= f:identifier "." s:namespaceRule {SyntaxNode.JoinNodes(f, s, '.')} / id:identifier
 
-callExpression<LNode> -public = id:identifier _o LBr _o args:callparamlist _o RBr {SyntaxNode.CreateCall(id, args)}
+callExpression<LNode> = id:identifier _o LBr _o args:callparamlist _o RBr {SyntaxNode.CreateCall(id, args)}
 callparamlist<IEnumerable<LNode>> = f:value _o "," _o s:callparamlist {SyntaxNode.Combine(f, s)} / v:value {SyntaxNode.Combine(v) }
 
 fieldDeklaration<LNode> = mod:modifier _o "field" _o type:identifier _ id:infixedSymbol _ "=" _ val:expression _o Semi
@@ -69,21 +69,21 @@ blockContent<LNode> = lines:(StatementLine / genericStatementBlock)* {SyntaxNode
 	
 parameterContent<LNode>
 	= _o head:paramDef _o "," _o tail:parameterContent { SyntaxNode.Combine(head, tail) }
-	/ line:paramDef { SyntaxNode.CreateParameter(line) }
+	/ line:paramDef { line }
 
 
 Statement<LNode> = goToStatement / callExpression / variableDefinition / returnStatement 
 StatementLine<LNode> = _o stmt:Statement _o Semi _o {stmt}
 genericStatementBlock<LNode> = name:identifier _o LBr _o expr:expression _o RBr body:Block {SyntaxNode.CreateStatement(name, expr, body)}
 
-paramDef<LNode> = type:identifier array:"[]"? _ name:identifier {SyntaxNode.CreateParameter(type, name, array)}
+paramDef<LNode> = type:infixedSymbol _ name:identifier {SyntaxNode.CreateParameter(type, name)}
 paramList<LNode> -memoize = parameterContent / paramListVoid / unexpected:&. #error{ "LLC0003: Expected void got '" + unexpected + "'" }
 paramListVoid<LNode> = "void" {null}
 
-methodDefinition<LNode> = mod:modifier _o ret:infixedSymbol _ id:identifier LBr param:paramList RBr body:Block
+methodDefinition<LNode> -public = mod:modifier _o ret:infixedSymbol _ id:identifier LBr param:paramList RBr body:Block
 										{SyntaxNode.CreateMethod(mod, id, ret, param, body)}	
 
-enumDefinition<LNode> -public = mod:modifier _o "enum" _ id:identifier type:enumType? _ LCb _o body:enumLine* _o RCb Semi
+enumDefinition<LNode> = mod:modifier _o "enum" _ id:identifier type:enumType? _ LCb _o body:enumLine* _o RCb Semi
 									{SyntaxNode.CreateEnum(mod, id, type, body)}
 enumType<LNode> = _o Colon _o id:identifier {id}
 enumLine<LNode> = _o decl:enumFieldDeclaration _o Comma?

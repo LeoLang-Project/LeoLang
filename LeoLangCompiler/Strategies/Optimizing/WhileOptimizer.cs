@@ -1,7 +1,4 @@
 ﻿using LeoLang.Core;
-using LeoLang.Core.AST;
-using LeoLang.Core.AST.Statements;
-using System;
 
 namespace LeoLangCompiler.Strategies.Optimizing
 {
@@ -9,7 +6,7 @@ namespace LeoLangCompiler.Strategies.Optimizing
     {
         public SyntaxNode Do(SyntaxNode arg)
         {
-            if (arg is StatementNode node && node.Name == "while")
+            /*if (arg is StatementNode node && node.Name == "while")
             {
                 if (node.Expression is BooleanLiteralNode cond)
                 {
@@ -18,7 +15,7 @@ namespace LeoLangCompiler.Strategies.Optimizing
                         return null;
                     }
                 }
-            }
+            }*/
 
             return arg;
         }
