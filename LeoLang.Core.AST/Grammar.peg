@@ -27,7 +27,7 @@ stringLiteral<LNode> = '"' val:("" simpleDoubleQuotedCharacter*) '"' {SyntaxNode
 
 value<LNode> -memoize = booleanLiteral / characterLiteral / stringLiteral / defaultExpression / sizeOfExpression / numberLiteral / unparsedBlock / identifier / symbolLiteral
 
-identifier<SymbolNode> = id:("" ([a-zA-Z_][a-zA-Z_0-9]*)) {new SymbolNode(GSymbol.Get(id))}
+identifier<LNode> = id:("" ([a-zA-Z_][a-zA-Z_0-9]*)) {SyntaxNode.CreateID(id)}
 
 expression<LNode> = binaryExpression / ternaryExpression/ value
 unparsedBlock<LNode> -public = id:identifier _o LCb body:("" [^}]*) _o RCb _o
@@ -36,7 +36,7 @@ unparsedBlock<LNode> -public = id:identifier _o LCb body:("" [^}]*) _o RCb _o
 usingDeclaration<LNode> -public = _o "using" _ ns:namespaceRule _o Semi
 									{SyntaxNode.CreateUsing(ns)}
 
-namespaceRule<SymbolNode>
+namespaceRule<LNode>
 	= f:identifier "." s:namespaceRule {SymbolNode.Join(f, s, '.')} / id:identifier
 
 callExpression<LNode> -public = id:identifier _o LBr _o args:callparamlist _o RBr {SyntaxNode.CreateCall(id, args)}
