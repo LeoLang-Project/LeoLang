@@ -1,7 +1,3 @@
-using System;
-using System.Core;
-using LeoLang;
-
 public enum color {
 	red,
 	blue,
@@ -18,6 +14,10 @@ int Main(string[] args) {
 
 	if(true) {
 		return 1;
+	};
+
+	while(true) {
+		return 0;
 	};
 	
 	var xml = dom { <xml><child /></xml> };
