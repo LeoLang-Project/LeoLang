@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LeoLang.Core.AST;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,7 +35,37 @@ namespace LeoLang.Core
             foreach (var child in Body)
             {
                 if (child is T) yield return child as T;
+                if (child is BlockNode n)
+                {
+                    var buffer = n.FindChildrenOfType<T>();
+                    foreach (var b in buffer)
+                    {
+                        yield return b;
+                    }
+                }
+
+                if (child is StatementNode s)
+                {
+                    var buffer = s.Body.FindChildrenOfType<T>();
+                    foreach (var b in buffer)
+                    {
+                        yield return b;
+                    }
+                }
+                if (child is MethodDefinitionNode m)
+                {
+                    var buffer = ((BlockNode)m.Body).FindChildrenOfType<T>();
+                    foreach (var b in buffer)
+                    {
+                        yield return b;
+                    }
+                }
             }
+        }
+
+        public void ReplaceNode(ref SyntaxNode root, SyntaxNode toReplace)
+        {
+            root = toReplace;
         }
     }
 }
