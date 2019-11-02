@@ -68,7 +68,7 @@ Block<LNode> -public = _o LCb block:blockContent _o RCb _o Semi _o
 blockContent<LNode> = lines:(StatementLine / genericStatementBlock)* {SyntaxNode.CreateBlock(lines)}
 	
 parameterContent<LNode>
-	= _o head:paramDef _o "," _o tail:parameterContent { SyntaxNode.CreateParameter(head).Concat(tail) }
+	= _o head:paramDef _o "," _o tail:parameterContent { SyntaxNode.Combine(head, tail) }
 	/ line:paramDef { SyntaxNode.CreateParameter(line) }
 
 
