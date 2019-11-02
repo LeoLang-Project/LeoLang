@@ -135,9 +135,9 @@ namespace LeoLang.Core
             return F.Fn(F.Id(retType), F.Id(name), param, body);
         }
 
-        public static Symbol CreateModifier(string mod)
+        public static LNode CreateModifier(string mod)
         {
-            return GSymbol.Get(mod);
+            return F.Literal(mod);
         }
 
         public static LNode CreatePair(LNode key, LNode value)

@@ -42,10 +42,10 @@ namespaceRule<SymbolNode>
 callExpression<LNode> -public = id:identifier _o LBr _o args:callparamlist _o RBr {SyntaxNode.CreateCall(id, args)}
 callparamlist<IEnumerable<LNode>> = f:value _o "," _o s:callparamlist {SyntaxNode.Combine(f, s)} / v:value {SyntaxNode.Combine(v) }
 
-fieldDeklaration<LNode> = mod:modifier? _o "field" _o type:identifier _ id:infixedSymbol _ "=" _ val:expression _o Semi
+fieldDeklaration<LNode> = mod:modifier _o "field" _o type:identifier _ id:infixedSymbol _ "=" _ val:expression _o Semi
 								{SyntaxNode.CreateField(mod, type, id, val)}
 
-structDeklaration<LNode> -public = mod:modifier? _o "struct" _o id:identifier _o body:structBody
+structDeklaration<LNode> -public = mod:modifier _o "struct" _o id:identifier _o body:structBody
 								{SyntaxNode.CreateStruct(mod, id, body)}
 structBody<LNode> = f:fieldDeklaration* {SyntaxNode.CreateBlock(f)}								
 
@@ -82,10 +82,10 @@ paramDef<LNode> = type:identifier array:"[]"? _ name:identifier {SyntaxNode.Crea
 paramList<LNode> -memoize = parameterContent / paramListVoid / unexpected:&. #error{ "LLC0003: Expected void got '" + unexpected + "'" }
 paramListVoid<LNode> = "void" {null}
 
-methodDefinition<LNode> = mod:modifier? _o ret:infixedSymbol _ id:identifier LBr param:paramList RBr body:Block
+methodDefinition<LNode> = mod:modifier _o ret:infixedSymbol _ id:identifier LBr param:paramList RBr body:Block
 										{SyntaxNode.CreateMethod(mod, id, ret, param, body)}	
 
-enumDefinition<LNode> -public = mod:modifier? _o "enum" _ id:identifier type:enumType? _ LCb _o body:enumLine* _o RCb Semi
+enumDefinition<LNode> -public = mod:modifier _o "enum" _ id:identifier type:enumType? _ LCb _o body:enumLine* _o RCb Semi
 									{SyntaxNode.CreateEnum(mod, id, type, body)}
 enumType<Symbol> = _o Colon _o id:identifier {id}
 enumLine<LNode> = _o decl:enumFieldDeclaration _o Comma?
@@ -101,7 +101,7 @@ sizeOfExpression<LNode> = "sizeof" LBr id:identifier RBr {SyntaxNode.CreateSizeO
 goToStatement<LNode> = "goto" _ id:identifier {SyntaxNode.CreateGoTo(id)}
 returnStatement<LNode> = "return" _ expr:expression {SyntaxNode.CreateReturn(expr)} / "return" {SyntaxNode.CreateReturn(null)}
 
-modifier<Symbol> = mod:("public" / "private" / "shared") {SyntaxNode.CreateModifier(mod)}
+modifier<LNode> = mod:("public" / "private" / "shared")? {SyntaxNode.CreateModifier(mod)}
 
 //Tokens
 LBr -lexical = '('
