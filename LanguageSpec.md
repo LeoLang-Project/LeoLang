@@ -9,6 +9,7 @@
 - You can use inline il to use new instructions that the Compiler doesnt support.
 - The Compiler does not prohibit you. You can use Pointers, if you want. Without unsafe keyword. 
 - The Optimization Pipeline is full controlled by the developer. You can allow/disallow any Optimazation
+- LeoLang can use Transactional Memory
 
 ## Accesibility ##
 - LeoLang introduces a new Accesibility concept. Some old like (public, private) and new Modifiers like (shared).
