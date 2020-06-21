@@ -11,6 +11,8 @@
         OpenParenthiseToken,
         StarToken,
         BadToken,
-        EndOfFileToken
+        EndOfFileToken,
+        NumberExpression,
+        BinaryExpression
     }
 }
