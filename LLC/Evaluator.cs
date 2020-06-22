@@ -1,4 +1,6 @@
 ﻿using System;
+using LLC.Syntax;
+
 namespace LLC
 {
     class Evaluator
@@ -43,6 +45,10 @@ namespace LLC
                 {
                     throw new Exception($"unepected binary operator {d.OperatorToken.Kind}");
                 }               
+            }
+            if (root is ParenthesizedExpressionSyntax p)
+            {
+                return EvaluateExpression(p.Expression);
             }
 
             throw new Exception($"unexpeced node {root.Kind}");

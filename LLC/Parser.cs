@@ -95,8 +95,22 @@ namespace LLC
             return left;
         }
 
+        private ExpressionSyntax ParseExpression()
+        {
+            return ParseTerm();
+        }
+
         private ExpressionSyntax ParsePrimaryExpression()
         {
+            if(Current.Kind == SyntaxKind.OpenParenthiseToken)
+            {
+                var left = NextToken();
+                var expr = ParseExpression();
+                var right = Match(SyntaxKind.CloseParenthiseToken);
+
+                return new ParenthesizedExpressionSyntax(left, expr, right);
+            }
+
             var numberToken = Match(SyntaxKind.NumberToken);
             return new NumberExpressionSyntax(numberToken);
         }
