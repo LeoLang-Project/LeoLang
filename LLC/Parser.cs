@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using LLC.Syntax;
@@ -52,14 +52,24 @@ namespace LLC
         private SyntaxToken Match(SyntaxKind kind)
         {
             if (Current.Kind == kind) return NextToken();
+
+            Diagnostics.Add($"Error: unexpected Token <{Current.Kind}> expected <{kind}>");
             return new SyntaxToken(kind, Current.Position, "", null);
         }
 
-        public ExpressionSyntax Parse()
+        public SyntaxTree Parse()
+        {
+            var expression = ParseExpression();
+            var eofToken = Match(SyntaxKind.EndOfFileToken);
+
+            return new SyntaxTree(Diagnostics, expression, eofToken);
+        }
+
+        private ExpressionSyntax ParseExpression()
         {
             var left = ParsePrimaryExpression();
 
-            while(Current.Kind == SyntaxKind.PlusToken || Current.Kind == SyntaxKind.MinusToken)
+            while (Current.Kind == SyntaxKind.PlusToken || Current.Kind == SyntaxKind.MinusToken)
             {
                 var operatorToken = NextToken();
                 var right = ParsePrimaryExpression();
