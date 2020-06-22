@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using LLC.Syntax;
 
 namespace LLC
 {
@@ -8,6 +9,7 @@ namespace LLC
     {
         private readonly SyntaxToken[] _tokens;
         private int _position;
+        public List<string> Diagnostics = new List<string>();
 
         public Parser(string text)
         {
@@ -25,6 +27,7 @@ namespace LLC
             } while (token.Kind != SyntaxKind.EndOfFileToken);
 
             _tokens = tokens.ToArray();
+            Diagnostics.AddRange(lexer.Diagnostics);
         }
 
         private SyntaxToken Peek(int offset)
