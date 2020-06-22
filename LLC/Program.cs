@@ -23,9 +23,21 @@ namespace LLC
             }
         }
 
-        static void PrettyPrint(SyntaxNode node, string indent = "")
+        static void PrettyPrint(SyntaxNode node, string indent = "", bool last = false)
         {
+            Console.WriteLine();
             Console.Write(indent);
+            if (last)
+            {
+                Console.Write("\\-");
+                indent += "  ";
+            }
+            else
+            {
+                Console.Write("└──");
+                indent += "  ";
+            }
+
             Console.Write(node.Kind);
 
             if(node is SyntaxToken t && t.Value != null)
@@ -33,11 +45,8 @@ namespace LLC
                 Console.Write(" ");
                 Console.Write(t.Value);
             }
-            Console.WriteLine();
 
-            indent += "    ";
-
-            foreach(var child in node.GetChildren())
+            foreach (var child in node.GetChildren())
             {
                 PrettyPrint(child, indent);
             }
