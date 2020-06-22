@@ -1,4 +1,6 @@
-﻿namespace LLC
+﻿using System.Collections.Generic;
+
+namespace LLC
 {
     class Lexer
     {
@@ -8,6 +10,8 @@
         {
             _text = text;
         }
+
+        public List<string> Diagnostics = new List<string>();
 
         private char Current
         {
@@ -82,6 +86,7 @@
                 return new SyntaxToken(SyntaxKind.CloseParenthiseToken, _position++, Current.ToString(), null);
             }
 
+            Diagnostics.Add($"Error Bad Character in input: '{Current}'");
             return new SyntaxToken(SyntaxKind.BadToken, _position++, _text.Substring(_position - 1, 1), null);
         }
     }
