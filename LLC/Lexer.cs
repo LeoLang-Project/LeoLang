@@ -44,7 +44,10 @@ namespace LLC
 
                 var length = _position - start;
                 var text = _text.Substring(start, length);
-                int.TryParse(text, out var value);
+                if(!int.TryParse(text, out var value))
+                {
+                    Diagnostics.Add($"Error: The number {text} cant be represented by int32");
+                }
 
                 return new SyntaxToken(SyntaxKind.NumberToken, start, text, value);
             }

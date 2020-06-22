@@ -27,6 +27,13 @@ namespace LLC
                         Console.WriteLine(err);
                     }
                 }
+                else
+                {
+                    var evaluator = new Evaluator(syntaxtree.Root);
+                    var result = evaluator.Evaluate();
+
+                    Console.WriteLine(result);
+                }
 
                 PrettyPrint(syntaxtree.Root);
                 Console.WriteLine();
