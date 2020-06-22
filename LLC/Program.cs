@@ -9,7 +9,7 @@ namespace LLC
 
             while(true) {
                 Console.Write("> ");
-                var line = "1 - 2 + 3"; //Console.ReadLine();
+                var line = Console.ReadLine();
 
                 if (string.IsNullOrWhiteSpace(line))
                 {
@@ -25,7 +25,7 @@ namespace LLC
 
         static void PrettyPrint(SyntaxNode node, string indent = "")
         {
-            //ToDo: continue
+            Console.Write(indent);
             Console.Write(node.Kind);
 
             if(node is SyntaxToken t && t.Value != null)
@@ -33,6 +33,7 @@ namespace LLC
                 Console.Write(" ");
                 Console.Write(t.Value);
             }
+            Console.WriteLine();
 
             indent += "    ";
 
