@@ -9,36 +9,37 @@ namespace LLC
 
             while(true) {
                 Console.Write("> ");
-                var line = Console.ReadLine();
-                var lexer = new Lexer(line);
-                while(true)
-                {
-                    var token = lexer.NextToken();
-                    if(token.Kind == SyntaxKind.EndOfFileToken)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        Console.Write($"{token.Kind}: '{token.Text}'");
-                        if(token.Value != null)
-                        {
-                            Console.Write($" {token.Value}");
-                        }
+                var line = "1 - 2 + 3"; //Console.ReadLine();
 
-                        Console.WriteLine();
-                    }
-                }
-                if (string.IsNullOrWhiteSpace(line)) {
+                if (string.IsNullOrWhiteSpace(line))
+                {
                     return;
                 }
 
+                var parser = new Parser(line);
+                var expression = parser.Parse();
+
+                PrettyPrint(expression);
             }
         }
 
-        static void PrettyPrint(string indent, SyntaxNode node)
+        static void PrettyPrint(SyntaxNode node, string indent = "")
         {
             //ToDo: continue
+            Console.Write(node.Kind);
+
+            if(node is SyntaxToken t && t.Value != null)
+            {
+                Console.Write(" ");
+                Console.Write(t.Value);
+            }
+
+            indent += "    ";
+
+            foreach(var child in node.GetChildren())
+            {
+                PrettyPrint(child, indent);
+            }
         }
     }
 }
