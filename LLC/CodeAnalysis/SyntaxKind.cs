@@ -1,4 +1,4 @@
-﻿namespace LLC
+﻿namespace Leo.CodeAnalysis
 {
     enum SyntaxKind
     {

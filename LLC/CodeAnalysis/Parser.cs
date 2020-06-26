@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using LLC.Syntax;
+﻿using System.Collections.Generic;
 
-namespace LLC
+namespace Leo.CodeAnalysis
 {
     class Parser
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LLC.Syntax
+namespace Leo.CodeAnalysis
 {
     class SyntaxTree
     {
@@ -16,5 +16,11 @@ namespace LLC.Syntax
         public IReadOnlyList<string> Diagnostics { get; }
         public ExpressionSyntax Root { get; }
         public SyntaxToken EndoffileToken { get; }
+
+        public static SyntaxTree Parse(string line)
+        {
+            var parser = new Parser(line);
+            return parser.Parse();
+        }
     }
 }

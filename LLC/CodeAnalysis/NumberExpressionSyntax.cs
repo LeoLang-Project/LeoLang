@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace LLC
+namespace Leo.CodeAnalysis
 {
     sealed class NumberExpressionSyntax : ExpressionSyntax
     {

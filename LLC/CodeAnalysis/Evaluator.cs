@@ -1,7 +1,6 @@
 ﻿using System;
-using LLC.Syntax;
 
-namespace LLC
+namespace Leo.CodeAnalysis
 {
     class Evaluator
     {
