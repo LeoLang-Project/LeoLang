@@ -12,7 +12,7 @@
         StarToken,
         BadToken,
         EndOfFileToken,
-        NumberExpression,
+        LiteralExpression,
         BinaryExpression,
         ParenthesizedExpression
     }
