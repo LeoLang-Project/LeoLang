@@ -64,29 +64,21 @@ namespace Leo.CodeAnalysis
 
                 return new SyntaxToken(SyntaxKind.WhitespaceToken, start, text, null);
             }
-            if (Current == '+')
+
+            switch (Current)
             {
-                return new SyntaxToken(SyntaxKind.PlusToken, _position++, Current.ToString(), null);
-            }
-            if (Current == '-')
-            {
-                return new SyntaxToken(SyntaxKind.MinusToken, _position++, Current.ToString(), null);
-            }
-            if (Current == '*')
-            {
-                return new SyntaxToken(SyntaxKind.StarToken, _position++, Current.ToString(), null);
-            }
-            if (Current == '/')
-            {
-                return new SyntaxToken(SyntaxKind.SlashToken, _position++, Current.ToString(), null);
-            }
-            if (Current == '(')
-            {
-                return new SyntaxToken(SyntaxKind.OpenParenthiseToken, _position++, Current.ToString(), null);
-            }
-            if (Current == ')')
-            {
-                return new SyntaxToken(SyntaxKind.CloseParenthiseToken, _position++, Current.ToString(), null);
+                case '+':
+                    return new SyntaxToken(SyntaxKind.PlusToken, _position++, Current.ToString(), null);
+                case '-':
+                    return new SyntaxToken(SyntaxKind.MinusToken, _position++, Current.ToString(), null);
+                case '*':
+                    return new SyntaxToken(SyntaxKind.StarToken, _position++, Current.ToString(), null);
+                case '/':
+                    return new SyntaxToken(SyntaxKind.SlashToken, _position++, Current.ToString(), null);
+                case '(':
+                    return new SyntaxToken(SyntaxKind.OpenParenthiseToken, _position++, Current.ToString(), null);
+                case ')':
+                    return new SyntaxToken(SyntaxKind.CloseParenthiseToken, _position++, Current.ToString(), null);
             }
 
             Diagnostics.Add($"Error Bad Character in input: '{Current}'");
