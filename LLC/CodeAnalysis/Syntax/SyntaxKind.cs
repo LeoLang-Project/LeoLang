@@ -1,4 +1,4 @@
-﻿namespace Leo.CodeAnalysis
+﻿namespace Leo.CodeAnalysis.Syntax
 {
     public enum SyntaxKind
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Leo.CodeAnalysis
+namespace Leo.CodeAnalysis.Syntax
 {
     public class ParenthesizedExpressionSyntax : ExpressionSyntax
     {

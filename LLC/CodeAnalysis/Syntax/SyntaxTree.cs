@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Leo.CodeAnalysis
+namespace Leo.CodeAnalysis.Syntax
 {
     public class SyntaxTree
     {

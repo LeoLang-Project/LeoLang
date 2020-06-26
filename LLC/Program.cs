@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Leo.CodeAnalysis;
+using Leo.CodeAnalysis.Syntax;
 
 namespace LLC
 {

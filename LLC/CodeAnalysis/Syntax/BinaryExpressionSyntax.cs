@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Leo.CodeAnalysis
+namespace Leo.CodeAnalysis.Syntax
 {
     public sealed class BinaryExpressionSyntax : ExpressionSyntax
     {

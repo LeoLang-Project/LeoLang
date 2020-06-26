@@ -1,4 +1,4 @@
-﻿namespace Leo.CodeAnalysis
+﻿namespace Leo.CodeAnalysis.Syntax
 {
     internal static class SyntaxFacts
     {
