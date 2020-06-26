@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Leo.CodeAnalysis
 {
-    class SyntaxTree
+    public class SyntaxTree
     {
         public SyntaxTree(IEnumerable<string> diagnostics, ExpressionSyntax root, SyntaxToken endoffileToken)
         {

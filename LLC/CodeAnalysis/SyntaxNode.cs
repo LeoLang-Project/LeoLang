@@ -2,7 +2,7 @@
 
 namespace Leo.CodeAnalysis
 {
-    abstract class SyntaxNode
+    public abstract class SyntaxNode
     {
         public abstract SyntaxKind Kind { get; }
 

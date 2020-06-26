@@ -2,7 +2,7 @@
 
 namespace Leo.CodeAnalysis
 {
-    class Evaluator
+    public sealed class Evaluator
     {
         public Evaluator(ExpressionSyntax root)
         {
@@ -16,10 +16,21 @@ namespace Leo.CodeAnalysis
             return EvaluateExpression(Root);
         }
 
-        private int EvaluateExpression(ExpressionSyntax root)
+        private int EvaluateExpression(ExpressionSyntax node)
         {
-            if (root is NumberExpressionSyntax n) return (int)n.NumberToken.Value;
-            if(root is BinaryExpressionSyntax d)
+            if (node is LiteralExpressionSyntax n) return (int)n.LiteralToken.Value;
+            if (node is UnaryExpressionSyntax u)
+            {
+                var operand = EvaluateExpression(u.Operand);
+
+                if (u.OperatorToken.Kind == SyntaxKind.PlusToken)
+                    return operand;
+                else if (u.OperatorToken.Kind == SyntaxKind.MinusToken)
+                    return -operand;
+                else
+                    throw new Exception($"Unexpected unary operator {u.OperatorToken.Kind}");
+            }
+            if (node is BinaryExpressionSyntax d)
             {
                 var left = EvaluateExpression(d.Left);
                 var right = EvaluateExpression(d.Right);
@@ -45,12 +56,12 @@ namespace Leo.CodeAnalysis
                     throw new Exception($"unepected binary operator {d.OperatorToken.Kind}");
                 }               
             }
-            if (root is ParenthesizedExpressionSyntax p)
+            if (node is ParenthesizedExpressionSyntax p)
             {
                 return EvaluateExpression(p.Expression);
             }
 
-            throw new Exception($"unexpeced node {root.Kind}");
+            throw new Exception($"unexpeced node {node.Kind}");
         }
     }
 }
