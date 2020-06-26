@@ -18,7 +18,7 @@ namespace Leo.CodeAnalysis
 
         private int EvaluateExpression(ExpressionSyntax root)
         {
-            if (root is NumberExpressionSyntax n) return (int)n.NumberToken.Value;
+            if (root is LiteralExpressionSyntax n) return (int)n.LiteralToken.Value;
             if(root is BinaryExpressionSyntax d)
             {
                 var left = EvaluateExpression(d.Left);
