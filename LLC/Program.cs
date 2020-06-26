@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using LLC.Syntax;
 
 namespace LLC
 {
@@ -17,12 +18,11 @@ namespace LLC
                     return;
                 }
 
-                var parser = new Parser(line);
-                var syntaxtree = parser.Parse();
+                var syntaxtree = SyntaxTree.Parse(line);
 
                 if(syntaxtree.Diagnostics.Any())
                 {
-                    foreach (var err in parser.Diagnostics)
+                    foreach (var err in syntaxtree.Diagnostics)
                     {
                         Console.WriteLine(err);
                     }
