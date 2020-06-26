@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Leo.CodeAnalysis
 {
-    class ParenthesizedExpressionSyntax : ExpressionSyntax
+    public class ParenthesizedExpressionSyntax : ExpressionSyntax
     {
         public ParenthesizedExpressionSyntax(SyntaxToken openParenthesizeToken, ExpressionSyntax expression, SyntaxToken closeParenthesizeToken)
         {

@@ -2,7 +2,7 @@
 
 namespace Leo.CodeAnalysis
 {
-    class Parser
+    public class Parser
     {
         private readonly SyntaxToken[] _tokens;
 

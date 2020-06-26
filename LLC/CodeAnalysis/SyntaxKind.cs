@@ -1,6 +1,6 @@
 ﻿namespace Leo.CodeAnalysis
 {
-    enum SyntaxKind
+    public enum SyntaxKind
     {
         NumberToken,
         WhitespaceToken,
