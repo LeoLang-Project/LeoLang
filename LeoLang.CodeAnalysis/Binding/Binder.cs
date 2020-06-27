@@ -4,7 +4,7 @@ using Leo.CodeAnalysis.Syntax;
 
 namespace LLC.CodeAnalysis.Binding
 {
-    public sealed class Binder
+    internal sealed class Binder
     {
         private readonly List<string> _diagnostics = new List<string>();
 

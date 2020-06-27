@@ -1,6 +1,6 @@
 ﻿namespace LLC.CodeAnalysis.Binding
 {
-    public enum BoundBinaryOperatorKind
+    internal enum BoundBinaryOperatorKind
     {
         Addition,
         Subtraction,
