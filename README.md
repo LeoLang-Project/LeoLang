@@ -1,7 +1,12 @@
 # LeoLang
 LeoLang is a general pupose Language with multiple backends. It is a null-free multi-paradigm language.
 
-Planned Features:
+[![Join the chat at https://gitter.im/furesoft/LeoLang](https://badges.gitter.im/furesoft/LeoLang.svg)](https://gitter.im/furesoft/LeoLang?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+![Discord](https://img.shields.io/discord/455738571186241536)
+[![Build Status](https://dev.azure.com/cmagerabronn110/cmagerabronn110/_apis/build/status/furesoft.LeoLang?branchName=master)](https://dev.azure.com/cmagerabronn110/cmagerabronn110/_build/latest?definitionId=1&branchName=master)
+![GitHub last commit](https://img.shields.io/github/last-commit/furesoft/LeoLang)
+
+## Planned Features:
   - Everything is a expression
   - Discriminated Unions
   - Union Types
@@ -19,11 +24,3 @@ Planned Features:
   - Planned Backends:
     - MSIL
   - Compiler Plugins (Backend)
-
-[![Join the chat at https://gitter.im/furesoft/LeoLang](https://badges.gitter.im/furesoft/LeoLang.svg)](https://gitter.im/furesoft/LeoLang?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-![Discord](https://img.shields.io/discord/455738571186241536)
-
-
-[![Build Status](https://dev.azure.com/cmagerabronn110/cmagerabronn110/_apis/build/status/furesoft.LeoLang?branchName=master)](https://dev.azure.com/cmagerabronn110/cmagerabronn110/_build/latest?definitionId=1&branchName=master)
-
-![GitHub last commit](https://img.shields.io/github/last-commit/furesoft/LeoLang)
