@@ -103,7 +103,16 @@ namespace Leo.CodeAnalysis.Syntax
                     break;
                 case '=':
                     if (Lookahead == '=')
-                        return new SyntaxToken(SyntaxKind.EqualsEqualsToken, _position += 2, "==", null);
+                    {
+                        if (Peek(2) == '=')
+                        {
+                            return new SyntaxToken(SyntaxKind.EqualsEqualsEqualsToken, _position += 3, "===", null);
+                        }
+                        else
+                        {
+                            return new SyntaxToken(SyntaxKind.EqualsEqualsToken, _position += 2, "==", null);
+                        }
+                    }
                     break;
                 case '!':
                     if (Lookahead == '=')

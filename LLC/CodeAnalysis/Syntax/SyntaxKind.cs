@@ -31,5 +31,6 @@
         UnaryExpression,
         BinaryExpression,
         ParenthesizedExpression,
+        EqualsEqualsEqualsToken,
     }
 }

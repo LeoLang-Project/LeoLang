@@ -10,6 +10,7 @@
         LogicalOr,
         Equals,
         NotEquals,
-        RefEquals
+        RefEquals,
+        TypeEquals
     }
 }

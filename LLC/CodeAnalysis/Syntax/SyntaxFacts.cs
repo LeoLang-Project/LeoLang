@@ -33,6 +33,7 @@ namespace Leo.CodeAnalysis.Syntax
                 case SyntaxKind.EqualsEqualsToken:
                 case SyntaxKind.BangEqualsToken:
                 case SyntaxKind.ApostropheEqualsToken:
+                case SyntaxKind.EqualsEqualsEqualsToken:
                     return 3;
 
                 case SyntaxKind.AmpersandAmpersandToken:

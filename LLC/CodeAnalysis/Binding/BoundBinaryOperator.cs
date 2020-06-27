@@ -40,7 +40,9 @@ namespace LLC.CodeAnalysis.Binding
             new BoundBinaryOperator(SyntaxKind.SlashToken, BoundBinaryOperatorKind.Division, typeof(int)),
             new BoundBinaryOperator(SyntaxKind.EqualsEqualsToken, BoundBinaryOperatorKind.Equals, typeof(int), typeof(bool)),
             new BoundBinaryOperator(SyntaxKind.BangEqualsToken, BoundBinaryOperatorKind.NotEquals, typeof(int), typeof(bool)),
-            new BoundBinaryOperator(SyntaxKind.ApostropheEqualsToken, BoundBinaryOperatorKind.RefEquals, typeof(int)),
+            new BoundBinaryOperator(SyntaxKind.ApostropheEqualsToken, BoundBinaryOperatorKind.RefEquals, typeof(int), typeof(bool)),
+            new BoundBinaryOperator(SyntaxKind.EqualsEqualsEqualsToken, BoundBinaryOperatorKind.TypeEquals, typeof(int), typeof(bool)),
+            new BoundBinaryOperator(SyntaxKind.EqualsEqualsEqualsToken, BoundBinaryOperatorKind.TypeEquals, typeof(bool)),
 
             new BoundBinaryOperator(SyntaxKind.AmpersandAmpersandToken, BoundBinaryOperatorKind.LogicalAnd, typeof(bool)),
             new BoundBinaryOperator(SyntaxKind.PipePipeToken, BoundBinaryOperatorKind.LogicalOr, typeof(bool)),
