@@ -15,6 +15,9 @@
         LiteralExpression,
         BinaryExpression,
         ParenthesizedExpression,
-        UnaryExpression
+        UnaryExpression,
+        FalseKeyword,
+        TrueKeyword,
+        IdentifierToken
     }
 }
