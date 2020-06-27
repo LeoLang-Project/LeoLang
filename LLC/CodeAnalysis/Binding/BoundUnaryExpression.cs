@@ -4,17 +4,15 @@ namespace LLC.CodeAnalysis.Binding
 {
     internal sealed class BoundUnaryExpression : BoundExpression
     {
-        public BoundUnaryExpression(BoundExpression operand, BoundNodeKind operatorKind)
+        public BoundUnaryExpression(BoundUnaryOperatorKind operatorKind, BoundExpression operand)
         {
-            Operand = operand;
             OperatorKind = operatorKind;
+            Operand = operand;
         }
 
-        public BoundExpression Operand { get; }
-        public BoundNodeKind OperatorKind { get; }
-
-        public override Type Type => Operand.Type;
-
         public override BoundNodeKind Kind => BoundNodeKind.UnaryExpression;
+        public override Type Type => Operand.Type;
+        public BoundUnaryOperatorKind OperatorKind { get; }
+        public BoundExpression Operand { get; }
     }
 }

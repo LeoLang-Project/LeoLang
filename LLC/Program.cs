@@ -2,6 +2,7 @@
 using System.Linq;
 using Leo.CodeAnalysis;
 using Leo.CodeAnalysis.Syntax;
+using LLC.CodeAnalysis.Binding;
 
 namespace LLC
 {
@@ -19,55 +20,55 @@ namespace LLC
                     return;
                 }
 
-                var syntaxtree = SyntaxTree.Parse(line);
+                var syntaxTree = SyntaxTree.Parse(line);
+                var binder = new Binder();
+                var boundExpression = binder.BindExpression(syntaxTree.Root);
 
-                if(syntaxtree.Diagnostics.Any())
+                var diagnostics = syntaxTree.Diagnostics.Concat(binder.Diagnostics).ToArray();
+
+                if (!diagnostics.Any())
                 {
-                    foreach (var err in syntaxtree.Diagnostics)
-                    {
-                        Console.WriteLine(err);
-                    }
+                    var e = new Evaluator(boundExpression);
+                    var result = e.Evaluate();
+                    Console.WriteLine(result);
                 }
                 else
                 {
-                    var evaluator = new Evaluator(syntaxtree.Root);
-                    var result = evaluator.Evaluate();
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
 
-                    Console.WriteLine(result);
+                    foreach (var diagnostic in diagnostics)
+                        Console.WriteLine(diagnostic);
+
+                    Console.ResetColor();
                 }
 
-                PrettyPrint(syntaxtree.Root);
+                PrettyPrint(syntaxTree.Root);
                 Console.WriteLine();
             }
         }
 
-        static void PrettyPrint(SyntaxNode node, string indent = "", bool last = false)
+        static void PrettyPrint(SyntaxNode node, string indent = "", bool isLast = true)
         {
-            Console.WriteLine();
-            Console.Write(indent);
-            if (last)
-            {
-                Console.Write("\\-");
-                indent += "  ";
-            }
-            else
-            {
-                Console.Write("└──");
-                indent += "  ";
-            }
+            var marker = isLast ? "└──" : "├──";
 
+            Console.Write(indent);
+            Console.Write(marker);
             Console.Write(node.Kind);
 
-            if(node is SyntaxToken t && t.Value != null)
+            if (node is SyntaxToken t && t.Value != null)
             {
                 Console.Write(" ");
                 Console.Write(t.Value);
             }
 
+            Console.WriteLine();
+
+            indent += isLast ? "   " : "│   ";
+
+            var lastChild = node.GetChildren().LastOrDefault();
+
             foreach (var child in node.GetChildren())
-            {
-                PrettyPrint(child, indent);
-            }
+                PrettyPrint(child, indent, child == lastChild);
         }
     }
 }
