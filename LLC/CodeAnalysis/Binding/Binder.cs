@@ -20,6 +20,8 @@ namespace LLC.CodeAnalysis.Binding
                     return BindUnaryExpression((UnaryExpressionSyntax)syntax);
                 case SyntaxKind.BinaryExpression:
                     return BindBinaryExpression((BinaryExpressionSyntax)syntax);
+                case SyntaxKind.SomeExpression:
+                    return BindSomeExpression((SomeExpressionSyntax)syntax);
                 default:
                     throw new Exception($"Unexpected syntax {syntax.Kind}");
             }
@@ -29,6 +31,19 @@ namespace LLC.CodeAnalysis.Binding
         {
             var value = syntax.Value ?? 0;
             return new BoundLiteralExpression(value);
+        }
+
+        private BoundExpression BindSomeExpression(SomeExpressionSyntax syntax)
+        {
+            var boundValue = BindExpression(syntax.Value);
+
+            if(syntax.Value.Kind != SyntaxKind.SomeKeyword || syntax.Value.Kind != SyntaxKind.EmptyKeyword)
+            {
+                return new BoundSomeExpression(boundValue);
+            }
+
+            _diagnostics.Add($"Unable to bind {boundValue.Kind}");
+            return boundValue;
         }
 
         private BoundExpression BindUnaryExpression(UnaryExpressionSyntax syntax)

@@ -33,5 +33,8 @@
         ParenthesizedExpression,
         EqualsEqualsEqualsToken,
         SymbolLiteral,
+        EmptyKeyword,
+        SomeKeyword,
+        SomeExpression,
     }
 }

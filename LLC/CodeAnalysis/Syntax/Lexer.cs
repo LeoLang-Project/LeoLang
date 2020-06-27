@@ -79,7 +79,13 @@ namespace Leo.CodeAnalysis.Syntax
                 var length = _position - start;
                 var text = _text.Substring(start, length);
                 var kind = SyntaxFacts.GetKeywordKind(text);
-                return new SyntaxToken(kind, start, text, null);
+                object value = null;
+
+                if(kind == SyntaxKind.EmptyKeyword)
+                {
+                    value = Maybe.None<object>();
+                }
+                return new SyntaxToken(kind, start, text, value);
             }
             if(Current == '\'')
             {

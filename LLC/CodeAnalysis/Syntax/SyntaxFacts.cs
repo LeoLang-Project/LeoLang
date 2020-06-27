@@ -55,6 +55,12 @@ namespace Leo.CodeAnalysis.Syntax
                     return SyntaxKind.TrueKeyword;
                 case "false":
                     return SyntaxKind.FalseKeyword;
+                case "empty":
+                    return SyntaxKind.EmptyKeyword;
+                case "none":
+                    return SyntaxKind.EmptyKeyword;
+                case "some":
+                    return SyntaxKind.SomeKeyword;
                 default:
                     return SyntaxKind.IdentifierToken;
             }

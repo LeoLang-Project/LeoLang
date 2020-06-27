@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Leo.CodeAnalysis;
 using Leo.CodeAnalysis.Syntax;
@@ -13,6 +14,7 @@ namespace LLC
 
             while(true) {
                 Console.Write("> ");
+
                 var line = Console.ReadLine();
 
                 if (string.IsNullOrWhiteSpace(line))
