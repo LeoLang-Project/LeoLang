@@ -11,6 +11,7 @@ LeoLang is a general pupose Language with multiple backends. It is a null-free m
   - Discriminated Unions
   - Union Types
   - Symbol Type
+  - BitFieldss
   - Type and Reference Equality
   - Good Type Inference
   - Partial Applications
