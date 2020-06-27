@@ -110,6 +110,10 @@ namespace Leo.CodeAnalysis.Syntax
                         return new SyntaxToken(SyntaxKind.BangEqualsToken, _position += 2, "!=", null);
                     else
                         return new SyntaxToken(SyntaxKind.BangToken, _position++, "!", null);
+                case '\'':
+                    if (Lookahead == '=')
+                        return new SyntaxToken(SyntaxKind.ApostropheEqualsToken, _position += 2, "'=", null);
+                    break;
             }
 
             _diagnostics.Add($"ERROR: bad character input: '{Current}'");

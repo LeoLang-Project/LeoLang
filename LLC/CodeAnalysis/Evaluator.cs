@@ -63,6 +63,8 @@ namespace Leo.CodeAnalysis
                         return Equals(left, right);
                     case BoundBinaryOperatorKind.NotEquals:
                         return !Equals(left, right);
+                    case BoundBinaryOperatorKind.RefEquals:
+                        return ReferenceEquals(left, right);
                     default:
                         throw new Exception($"Unexpected binary operator {b.Op}");
                 }

@@ -15,10 +15,12 @@
         AmpersandAmpersandToken,
         PipePipeToken,
         EqualsEqualsToken,
+        ApostropheEqualsToken,
         BangEqualsToken,
         OpenParenthesisToken,
         CloseParenthesisToken,
         IdentifierToken,
+        ApostropheToken,
 
         // Keywords
         FalseKeyword,
