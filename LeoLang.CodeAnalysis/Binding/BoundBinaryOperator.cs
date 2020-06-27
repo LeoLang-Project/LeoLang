@@ -4,7 +4,7 @@ using LeoLang.Core;
 
 namespace LLC.CodeAnalysis.Binding
 {
-    internal sealed class BoundBinaryOperator
+    public sealed class BoundBinaryOperator
     {
         private BoundBinaryOperator(SyntaxKind syntaxKind, BoundBinaryOperatorKind kind, Type type)
          : this(syntaxKind, kind, type, type, type)

@@ -1,10 +1,9 @@
 ﻿using System;
-using Leo.CodeAnalysis.Syntax;
 using LLC.CodeAnalysis.Binding;
 
 namespace Leo.CodeAnalysis
 {
-    internal sealed class Evaluator
+    public sealed class Evaluator
     {
         private readonly BoundExpression _root;
 

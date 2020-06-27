@@ -6,11 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="CodeAnalysis\" />
-    <Folder Include="CodeAnalysis\Syntax\" />
-    <Folder Include="CodeAnalysis\Binding\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\LeoLang.Core\LeoLang.Core.csproj" />
+    <ProjectReference Include="..\LeoLang.CodeAnalysis\LeoLang.CodeAnalysis.csproj" />
   </ItemGroup>
 </Project>
