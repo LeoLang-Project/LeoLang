@@ -2,25 +2,32 @@
 {
     public enum SyntaxKind
     {
-        NumberToken,
-        WhitespaceToken,
-        PlusToken,
-        MinusToken,
-        CloseParenthesisToken,
-        SlashToken,
-        OpenParenthesisToken,
-        StarToken,
+        // Tokens
         BadToken,
         EndOfFileToken,
-        LiteralExpression,
-        BinaryExpression,
-        ParenthesizedExpression,
-        UnaryExpression,
-        FalseKeyword,
-        TrueKeyword,
-        IdentifierToken,
+        WhitespaceToken,
+        NumberToken,
+        PlusToken,
+        MinusToken,
+        StarToken,
+        SlashToken,
         BangToken,
         AmpersandAmpersandToken,
-        PipePipeToken
+        PipePipeToken,
+        EqualsEqualsToken,
+        BangEqualsToken,
+        OpenParenthesisToken,
+        CloseParenthesisToken,
+        IdentifierToken,
+
+        // Keywords
+        FalseKeyword,
+        TrueKeyword,
+
+        // Expressions
+        LiteralExpression,
+        UnaryExpression,
+        BinaryExpression,
+        ParenthesizedExpression,
     }
 }
