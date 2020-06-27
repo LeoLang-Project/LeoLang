@@ -18,7 +18,7 @@ namespace Leo.CodeAnalysis.Syntax
             SyntaxToken token;
             do
             {
-                token = lexer.NextToken();
+                token = lexer.Lex();
 
                 if (token.Kind != SyntaxKind.WhitespaceToken &&
                     token.Kind != SyntaxKind.BadToken)
@@ -100,11 +100,11 @@ namespace Leo.CodeAnalysis.Syntax
         {
             switch (Current.Kind)
             {
-                case SyntaxKind.OpenParenthiseToken:
+                case SyntaxKind.OpenParenthesisToken:
                     {
                         var left = NextToken();
                         var expression = ParseExpression();
-                        var right = MatchToken(SyntaxKind.CloseParenthiseToken);
+                        var right = MatchToken(SyntaxKind.CloseParenthesisToken);
                         return new ParenthesizedExpressionSyntax(left, expression, right);
                     }
 
@@ -112,7 +112,7 @@ namespace Leo.CodeAnalysis.Syntax
                 case SyntaxKind.TrueKeyword:
                     {
                         var keywordToken = NextToken();
-                        var value = Current.Kind != SyntaxKind.FalseKeyword;
+                        var value = keywordToken.Kind != SyntaxKind.FalseKeyword;
 
                         return new LiteralExpressionSyntax(keywordToken, value);
                     }

@@ -6,9 +6,9 @@
         WhitespaceToken,
         PlusToken,
         MinusToken,
-        CloseParenthiseToken,
+        CloseParenthesisToken,
         SlashToken,
-        OpenParenthiseToken,
+        OpenParenthesisToken,
         StarToken,
         BadToken,
         EndOfFileToken,
@@ -18,6 +18,9 @@
         UnaryExpression,
         FalseKeyword,
         TrueKeyword,
-        IdentifierToken
+        IdentifierToken,
+        BangToken,
+        AmpersandAmpersandToken,
+        PipePipeToken
     }
 }
