@@ -1,5 +1,6 @@
 ﻿using System;
 using Leo.CodeAnalysis.Syntax;
+using LeoLang.Core;
 
 namespace LLC.CodeAnalysis.Binding
 {
@@ -39,6 +40,7 @@ namespace LLC.CodeAnalysis.Binding
             new BoundBinaryOperator(SyntaxKind.StarToken, BoundBinaryOperatorKind.Multiplication, typeof(int)),
             new BoundBinaryOperator(SyntaxKind.SlashToken, BoundBinaryOperatorKind.Division, typeof(int)),
             new BoundBinaryOperator(SyntaxKind.EqualsEqualsToken, BoundBinaryOperatorKind.Equals, typeof(int), typeof(bool)),
+            new BoundBinaryOperator(SyntaxKind.EqualsEqualsToken, BoundBinaryOperatorKind.Equals, typeof(Symbol), typeof(bool)),
             new BoundBinaryOperator(SyntaxKind.BangEqualsToken, BoundBinaryOperatorKind.NotEquals, typeof(int), typeof(bool)),
             new BoundBinaryOperator(SyntaxKind.ApostropheEqualsToken, BoundBinaryOperatorKind.RefEquals, typeof(int), typeof(bool)),
             new BoundBinaryOperator(SyntaxKind.EqualsEqualsEqualsToken, BoundBinaryOperatorKind.TypeEquals, typeof(int), typeof(bool)),

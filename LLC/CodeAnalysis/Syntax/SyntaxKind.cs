@@ -32,5 +32,6 @@
         BinaryExpression,
         ParenthesizedExpression,
         EqualsEqualsEqualsToken,
+        SymbolLiteral,
     }
 }

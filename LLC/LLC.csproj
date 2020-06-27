@@ -10,4 +10,7 @@
     <Folder Include="CodeAnalysis\Syntax\" />
     <Folder Include="CodeAnalysis\Binding\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LeoLang.Core\LeoLang.Core.csproj" />
+  </ItemGroup>
 </Project>

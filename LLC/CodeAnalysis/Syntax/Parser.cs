@@ -116,6 +116,12 @@ namespace Leo.CodeAnalysis.Syntax
 
                         return new LiteralExpressionSyntax(keywordToken, value);
                     }
+                case SyntaxKind.SymbolLiteral:
+                    {
+                        var symbolToken = NextToken();
+
+                        return new LiteralExpressionSyntax(symbolToken);
+                    }
                 default:
                     {
                         var numberToken = MatchToken(SyntaxKind.NumberToken);
