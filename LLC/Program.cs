@@ -26,18 +26,37 @@ namespace LLC
 
                 var diagnostics = syntaxTree.Diagnostics.Concat(result.Diagnostics).ToArray();
 
-                if (!diagnostics.Any())
+                if (!result.Diagnostics.Any())
                 {
                     Console.WriteLine(result.Value);
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    foreach (var diagnostic in result.Diagnostics)
+                    {
+                        Console.WriteLine();
 
-                    foreach (var diagnostic in diagnostics)
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.WriteLine(diagnostic);
+                        Console.ResetColor();
 
-                    Console.ResetColor();
+                        var prefix = line.Substring(0, diagnostic.Span.Start);
+                        var error = line.Substring(diagnostic.Span.Start, diagnostic.Span.Length);
+                        var suffix = line.Substring(diagnostic.Span.End);
+
+                        Console.Write("    ");
+                        Console.Write(prefix);
+
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.Write(error);
+                        Console.ResetColor();
+
+                        Console.Write(suffix);
+
+                        Console.WriteLine();
+                    }
+
+                    Console.WriteLine();
                 }
 
                 PrettyPrint(syntaxTree.Root);

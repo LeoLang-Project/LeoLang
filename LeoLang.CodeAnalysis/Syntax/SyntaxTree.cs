@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 namespace LeoLang.CodeAnalysis.Syntax
 {
     public class SyntaxTree
     {
-        public SyntaxTree(IEnumerable<string> diagnostics, ExpressionSyntax root, SyntaxToken endoffileToken)
+        public SyntaxTree(DiagnosticBag diagnostics, ExpressionSyntax root, SyntaxToken endoffileToken)
         {
-            Diagnostics = diagnostics.ToArray();
+            Diagnostics = diagnostics;
             Root = root;
             EndoffileToken = endoffileToken;
         }
 
-        public IReadOnlyList<string> Diagnostics { get; }
+        public DiagnosticBag Diagnostics { get; }
         public ExpressionSyntax Root { get; }
         public SyntaxToken EndoffileToken { get; }
 
