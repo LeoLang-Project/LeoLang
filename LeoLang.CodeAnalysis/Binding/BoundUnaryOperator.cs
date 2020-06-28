@@ -1,7 +1,7 @@
 ﻿using System;
-using Leo.CodeAnalysis.Syntax;
+using LeoLang.CodeAnalysis.Syntax;
 
-namespace LLC.CodeAnalysis.Binding
+namespace LeoLang.CodeAnalysis.Binding
 {
     internal sealed class BoundUnaryOperator
     {

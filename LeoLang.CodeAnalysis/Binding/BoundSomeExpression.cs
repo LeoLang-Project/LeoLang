@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LLC.CodeAnalysis.Binding
+namespace LeoLang.CodeAnalysis.Binding
 {
     internal sealed class BoundSomeExpression : BoundExpression
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using Leo.CodeAnalysis.Syntax;
-using LLC.CodeAnalysis.Binding;
+using LeoLang.CodeAnalysis.Binding;
+using LeoLang.CodeAnalysis.Syntax;
 
-namespace Leo.CodeAnalysis
+namespace LeoLang.CodeAnalysis
 {
     public sealed class Compilation
     {

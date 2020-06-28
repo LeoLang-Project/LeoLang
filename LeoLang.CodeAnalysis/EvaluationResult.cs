@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Leo.CodeAnalysis
+namespace LeoLang.CodeAnalysis
 {
     public sealed class EvaluationResult
     {

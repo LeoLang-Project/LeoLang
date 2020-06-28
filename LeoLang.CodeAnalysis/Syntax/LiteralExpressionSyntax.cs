@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Leo.CodeAnalysis.Syntax
+namespace LeoLang.CodeAnalysis.Syntax
 {
     public sealed class LiteralExpressionSyntax : ExpressionSyntax
     {

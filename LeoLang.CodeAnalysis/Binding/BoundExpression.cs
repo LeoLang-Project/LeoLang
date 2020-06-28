@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LLC.CodeAnalysis.Binding
+namespace LeoLang.CodeAnalysis.Binding
 {
     public abstract class BoundExpression : BoundNode
     {

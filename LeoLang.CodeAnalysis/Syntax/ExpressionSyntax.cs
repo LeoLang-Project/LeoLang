@@ -1,4 +1,4 @@
-﻿namespace Leo.CodeAnalysis.Syntax
+﻿namespace LeoLang.CodeAnalysis.Syntax
 {
     public abstract class ExpressionSyntax : SyntaxNode
     {

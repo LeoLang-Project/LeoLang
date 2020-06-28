@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using Leo.CodeAnalysis;
-using Leo.CodeAnalysis.Syntax;
-using LLC.CodeAnalysis.Binding;
+using LeoLang.CodeAnalysis;
+using LeoLang.CodeAnalysis.Syntax;
 
 namespace LLC
 {

@@ -1,4 +1,4 @@
-﻿namespace LLC.CodeAnalysis.Binding
+﻿namespace LeoLang.CodeAnalysis.Binding
 {
     public enum BoundNodeKind
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using LeoLang.Core;
 
-namespace Leo.CodeAnalysis.Syntax
+namespace LeoLang.CodeAnalysis.Syntax
 {
     internal sealed class Lexer
     {

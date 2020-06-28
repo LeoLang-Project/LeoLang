@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Leo.CodeAnalysis.Syntax
+namespace LeoLang.CodeAnalysis.Syntax
 {
     internal static class SyntaxFacts
     {

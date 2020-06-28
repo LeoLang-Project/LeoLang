@@ -1,7 +1,7 @@
 ﻿using System;
-using LLC.CodeAnalysis.Binding;
+using LeoLang.CodeAnalysis.Binding;
 
-namespace Leo.CodeAnalysis
+namespace LeoLang.CodeAnalysis
 {
     public sealed class Evaluator
     {
