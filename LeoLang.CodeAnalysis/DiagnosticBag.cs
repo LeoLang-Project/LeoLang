@@ -53,6 +53,13 @@ namespace LeoLang.CodeAnalysis
             var message = $"Binary operator '{operatorText}' is not defined for types {leftType} and {rightType}.";
             Report(span, message);
         }
+
+        internal void ReportNoDefault(TextSpan span, string value)
+        {
+            var message = $"No Default Value found for Type '{value}'.";
+            Report(span, message);
+        }
+
         public void ReportNotBindable(TextSpan span, BoundNodeKind kind)
         {
             var message = $"Unable to bind {kind}";

@@ -21,9 +21,14 @@ namespace LeoLang.CodeAnalysis
         {
             if (node is BoundLiteralExpression n)
                 return n.Value;
-            if(node is BoundSomeExpression s)
+            if (node is BoundSomeExpression s)
             {
                 return EvaluateExpression(s.Value);
+            }
+
+            if (node is BoundDefaultExpression d)
+            {
+                return d.Value;
             }
 
             if (node is BoundUnaryExpression u)

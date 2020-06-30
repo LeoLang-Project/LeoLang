@@ -36,5 +36,7 @@
         EmptyKeyword,
         SomeKeyword,
         SomeExpression,
+        DefaultKeyword,
+        DefaultExpression,
     }
 }

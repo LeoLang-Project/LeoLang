@@ -61,6 +61,8 @@ namespace LeoLang.CodeAnalysis.Syntax
                     return SyntaxKind.EmptyKeyword;
                 case "some":
                     return SyntaxKind.SomeKeyword;
+                case "default":
+                    return SyntaxKind.DefaultKeyword;
                 default:
                     return SyntaxKind.IdentifierToken;
             }

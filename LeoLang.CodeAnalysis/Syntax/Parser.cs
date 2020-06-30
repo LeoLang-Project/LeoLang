@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace LeoLang.CodeAnalysis.Syntax
 {
@@ -127,6 +128,15 @@ namespace LeoLang.CodeAnalysis.Syntax
                         var someToken = NextToken();
 
                         return new SomeExpressionSyntax(someToken, ParsePrimaryExpression());
+                    }
+                case SyntaxKind.DefaultKeyword:
+                    {
+                        var defaultToken = NextToken();
+                        var open = MatchToken(SyntaxKind.OpenParenthesisToken);
+                        var id = MatchToken(SyntaxKind.IdentifierToken);
+                        var close = MatchToken(SyntaxKind.CloseParenthesisToken);
+
+                        return new DefaultExpressionSyntax(defaultToken, id);
                     }
                 case SyntaxKind.EmptyKeyword:
                     {

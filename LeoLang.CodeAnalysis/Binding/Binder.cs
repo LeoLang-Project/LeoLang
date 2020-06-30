@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using LeoLang.CodeAnalysis.Syntax;
+using LeoLang.Core;
 
 namespace LeoLang.CodeAnalysis.Binding
 {
@@ -22,11 +23,26 @@ namespace LeoLang.CodeAnalysis.Binding
                     return BindBinaryExpression((BinaryExpressionSyntax)syntax);
                 case SyntaxKind.SomeExpression:
                     return BindSomeExpression((SomeExpressionSyntax)syntax);
+                case SyntaxKind.DefaultExpression:
+                    return BindDefaultExpression((DefaultExpressionSyntax)syntax);
                 case SyntaxKind.ParenthesizedExpression:
                     return BindParenthesizedExpression((ParenthesizedExpressionSyntax)syntax);
                 default:
                     throw new Exception($"Unexpected syntax {syntax.Kind}");
             }
+        }
+
+        private BoundExpression BindDefaultExpression(DefaultExpressionSyntax syntax)
+        {
+            var boundValue = DefaultTable.GetValue(syntax.Identifier.Text); //ToDo: to fix error implement identifier in lexer
+
+            if (syntax.DefaultToken.Kind == SyntaxKind.DefaultKeyword && syntax.Identifier.Kind == SyntaxKind.IdentifierToken)
+            {
+                return new BoundDefaultExpression(new BoundLiteralExpression(boundValue));
+            }
+
+            _diagnostics.ReportNoDefault(syntax.Identifier.Span, syntax.Identifier.Text);
+            return new BoundLiteralExpression(boundValue);
         }
 
         private BoundExpression BindParenthesizedExpression(ParenthesizedExpressionSyntax syntax)

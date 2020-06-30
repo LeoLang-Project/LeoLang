@@ -2,9 +2,9 @@
 
 namespace LeoLang.CodeAnalysis.Binding
 {
-    internal sealed class BoundSomeExpression : BoundExpression
+    internal sealed class BoundDefaultExpression : BoundExpression
     {
-        public BoundSomeExpression(BoundExpression value)
+        public BoundDefaultExpression(BoundExpression value)
         {
             Value = value;
         }

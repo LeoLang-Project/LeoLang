@@ -8,10 +8,6 @@
     <Compile Remove="Class1.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Binding\" />
-    <Folder Include="Syntax\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\LeoLang.Core\LeoLang.Core.csproj" />
   </ItemGroup>
 </Project>

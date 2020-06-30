@@ -7,6 +7,8 @@ namespace LeoLang.CodeAnalysis
 {
     internal static class DefaultTable
     {
+        //ToDo: add method to get default value from .net type
+
         static DefaultTable()
         {
             AddValue("i32", 0);
@@ -21,7 +23,12 @@ namespace LeoLang.CodeAnalysis
 
         public static object GetValue(string type)
         {
-            return _values[type];
+            if (_values.ContainsKey(type))
+            {
+                return _values[type];
+            }
+
+            return null;
         }
 
         private static Dictionary<string, object> _values = new Dictionary<string, object>();
