@@ -8,6 +8,7 @@ LeoLang is a general pupose Language with multiple backends. It is a null-free m
 ![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/LeoLang)
 
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/LeoLang-Project/LeoLang.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/LeoLang-Project/LeoLang/alerts/)
+[![Language grade: C#](https://img.shields.io/lgtm/grade/csharp/g/LeoLang-Project/LeoLang.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/LeoLang-Project/LeoLang/context:csharp)
 
 ## Planned Features:
   - Everything is a expression
