@@ -26,7 +26,7 @@ namespace LeoLang.CodeAnalysis
 
         static DefaultTable()
         {
-            AddValue("i32", 0);
+            AddValue("int", 0);
             AddValue("empty", Maybe.None<object>());
             AddValue("date", DateTime.MinValue);
             AddValue("guid", Guid.Empty);

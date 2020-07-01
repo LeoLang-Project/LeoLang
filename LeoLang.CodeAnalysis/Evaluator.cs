@@ -25,10 +25,10 @@ namespace LeoLang.CodeAnalysis
             {
                 return EvaluateExpression(s.Value);
             }
-
+            
             if (node is BoundDefaultExpression d)
             {
-                return d.Value;
+                return ((BoundLiteralExpression)d.Value).Value;
             }
 
             if (node is BoundUnaryExpression u)

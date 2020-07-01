@@ -36,7 +36,8 @@ namespace LeoLang.CodeAnalysis.Binding
         {
             var boundValue = DefaultTable.GetValue(syntax.Identifier.Text); //ToDo: to fix error implement identifier in lexer
 
-            if (syntax.DefaultToken.Kind == SyntaxKind.DefaultKeyword && syntax.Identifier.Kind == SyntaxKind.IdentifierToken)
+            if (syntax.DefaultToken.Kind == SyntaxKind.DefaultKeyword && syntax.Identifier.Kind == SyntaxKind.IdentifierToken
+                && boundValue != null)
             {
                 return new BoundDefaultExpression(new BoundLiteralExpression(boundValue));
             }
