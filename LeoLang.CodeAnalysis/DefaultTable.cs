@@ -1,19 +1,35 @@
 ﻿using LeoLang.Core;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace LeoLang.CodeAnalysis
 {
     internal static class DefaultTable
     {
-        //ToDo: add method to get default value from .net type
+
+        public static object GetValueOf(Type t)
+        {
+            var props = t.GetProperties();
+            foreach (var p in props)
+            {
+                var attr = p.GetCustomAttribute<DefaultAttribute>(true);
+                if(attr != null)
+                {
+                    return p.GetValue(null);
+                }
+            }
+
+            return Maybe.None<object>();
+        }
 
         static DefaultTable()
         {
             AddValue("i32", 0);
             AddValue("empty", Maybe.None<object>());
             AddValue("date", DateTime.MinValue);
+            AddValue("guid", Guid.Empty);
         }
 
         public static void AddValue(string type, object value)
