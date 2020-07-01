@@ -8,7 +8,7 @@ namespace LeoLang.CodeAnalysis.Syntax
     {
         private readonly SyntaxToken[] _tokens;
 
-        private DiagnosticBag _diagnostics = new DiagnosticBag();
+        private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
         private int _position;
 
         public Parser(string text)
@@ -38,7 +38,7 @@ namespace LeoLang.CodeAnalysis.Syntax
         {
             var index = _position + offset;
             if (index >= _tokens.Length)
-                return _tokens[_tokens.Length - 1];
+                return _tokens[^1];
 
             return _tokens[index];
         }

@@ -31,6 +31,6 @@ namespace LeoLang.CodeAnalysis
             return null;
         }
 
-        private static Dictionary<string, object> _values = new Dictionary<string, object>();
+        private static readonly Dictionary<string, object> _values = new Dictionary<string, object>();
     }
 }

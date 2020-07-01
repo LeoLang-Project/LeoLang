@@ -44,7 +44,7 @@ namespace LeoLang.CodeAnalysis
                     case BoundUnaryOperatorKind.LogicalNegation:
                         return !(bool)operand;
                     default:
-                        throw new Exception($"Unexpected unary operator {u.Op}");
+                        throw new Exception($"Unexpected unary operator {u.Op.Kind}");
                 }
             }
 
@@ -76,7 +76,7 @@ namespace LeoLang.CodeAnalysis
                     case BoundBinaryOperatorKind.TypeEquals:
                         return Equals(left, right) && left.GetType() == right.GetType();
                     default:
-                        throw new Exception($"Unexpected binary operator {b.Op}");
+                        throw new Exception($"Unexpected binary operator {b.Op.Kind}");
                 }
             }
 

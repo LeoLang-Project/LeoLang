@@ -8,7 +8,7 @@ namespace LeoLang.CodeAnalysis.Syntax
     {
         private readonly string _text;
         private int _position;
-        private DiagnosticBag _diagnostics = new DiagnosticBag();
+        private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
 
         public Lexer(string text)
         {
