@@ -7,6 +7,9 @@ LeoLang is a general pupose Language with multiple backends. It is a null-free m
 ![GitHub last commit](https://img.shields.io/github/last-commit/furesoft/LeoLang)
 ![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/LeoLang)
 
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/LeoLang-Project/LeoLang.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/LeoLang-Project/LeoLang/alerts/)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/LeoLang-Project/LeoLang.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/LeoLang-Project/LeoLang/alerts/)
+
 ## Planned Features:
   - Everything is a expression
   - Discriminated Unions
