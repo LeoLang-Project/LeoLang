@@ -5,6 +5,7 @@ LeoLang is a general pupose Language with multiple backends. It is a null-free m
 ![Discord](https://img.shields.io/discord/455738571186241536)
 [![Build Status](https://dev.azure.com/cmagerabronn110/cmagerabronn110/_apis/build/status/furesoft.LeoLang?branchName=master)](https://dev.azure.com/cmagerabronn110/cmagerabronn110/_build/latest?definitionId=1&branchName=master)
 ![GitHub last commit](https://img.shields.io/github/last-commit/furesoft/LeoLang)
+![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/LeoLang)
 
 ## Planned Features:
   - Everything is a expression
