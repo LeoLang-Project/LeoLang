@@ -141,7 +141,10 @@ namespace LeoLang.CodeAnalysis.Syntax
                             return new SyntaxToken(SyntaxKind.EqualsEqualsToken, _position, "==", null);
                         }
                     }
-                    break;
+                    else
+                    {
+                        return new SyntaxToken(SyntaxKind.EqualsToken, _position++, "=", null);
+                    }
                 case '!':
                     if (Lookahead == '=')
                         return new SyntaxToken(SyntaxKind.BangEqualsToken, _position += 2, "!=", null);

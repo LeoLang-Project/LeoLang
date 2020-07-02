@@ -38,5 +38,8 @@
         SomeExpression,
         DefaultKeyword,
         DefaultExpression,
+        NameExpression,
+        EqualsToken,
+        AssignmentExpression,
     }
 }

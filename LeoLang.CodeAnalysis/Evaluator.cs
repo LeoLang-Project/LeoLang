@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using LeoLang.CodeAnalysis.Binding;
 
 namespace LeoLang.CodeAnalysis
@@ -6,10 +7,12 @@ namespace LeoLang.CodeAnalysis
     public sealed class Evaluator
     {
         private readonly BoundExpression _root;
+        private readonly Dictionary<string, object> _variables;
 
-        public Evaluator(BoundExpression root)
+        public Evaluator(BoundExpression root, Dictionary<string, object> variables)
         {
             _root = root;
+            _variables = variables;
         }
 
         public object Evaluate()
@@ -24,6 +27,18 @@ namespace LeoLang.CodeAnalysis
             if (node is BoundSomeExpression s)
             {
                 return EvaluateExpression(s.Value);
+            }
+            if(node is BoundVariableExpression v)
+            {
+                var value = _variables[v.Name];
+                return value;
+            }
+
+            if(node is BoundAssignmentExpression a)
+            {
+                var value = EvaluateExpression(a.Expression);
+                _variables[a.Name] = value;
+                return value;
             }
             
             if (node is BoundDefaultExpression d)

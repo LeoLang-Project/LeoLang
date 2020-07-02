@@ -23,6 +23,12 @@ namespace LeoLang.CodeAnalysis
             _diagnostics.Add(diagnostic);
         }
 
+        public void ReportUndefinedName(TextSpan span, string name)
+        {
+            var message = $"Variable '{name}' doesn't exist.";
+            Report(span, message);
+        }
+
         public void ReportInvalidNumber(TextSpan span, string text, Type type)
         {
             var message = $"The number {text} isn't valid {type}.";

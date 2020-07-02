@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LeoLang.CodeAnalysis;
 using LeoLang.CodeAnalysis.Syntax;
@@ -9,6 +10,7 @@ namespace LLC
     {
         static void Main(string[] args)
         {
+            var variables = new Dictionary<string, object>();
 
             while(true) {
                 Console.Write("> ");
@@ -21,7 +23,7 @@ namespace LLC
                 }
 
                 var syntaxTree = SyntaxTree.Parse(line);
-                var compilation = new Compilation(syntaxTree);
+                var compilation = new Compilation(syntaxTree, variables);
                 var result = compilation.Evaluate();
 
                 var diagnostics = syntaxTree.Diagnostics.Concat(result.Diagnostics).ToArray();
