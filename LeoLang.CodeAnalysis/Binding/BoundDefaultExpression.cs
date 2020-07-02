@@ -13,6 +13,6 @@ namespace LeoLang.CodeAnalysis.Binding
 
         public override Type Type => Value.GetType();
 
-        public override BoundNodeKind Kind => BoundNodeKind.DefaultExpression;
+        public override BoundNodeKind Kind => BoundNodeKind.TypeOfExpression;
     }
 }
