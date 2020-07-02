@@ -115,22 +115,30 @@ namespace LeoLang.CodeAnalysis.Syntax
                     return new SyntaxToken(SyntaxKind.CloseParenthesisToken, _position++, ")", null);
                 case '&':
                     if (Lookahead == '&')
-                        return new SyntaxToken(SyntaxKind.AmpersandAmpersandToken, _position += 2, "&&", null);
+                    {
+                        _position += 2;
+                        return new SyntaxToken(SyntaxKind.AmpersandAmpersandToken, _position, "&&", null);
+                    }
                     break;
                 case '|':
                     if (Lookahead == '|')
-                        return new SyntaxToken(SyntaxKind.PipePipeToken, _position += 2, "||", null);
+                    {
+                        _position += 2;
+                        return new SyntaxToken(SyntaxKind.PipePipeToken, _position, "||", null);
+                    }
                     break;
                 case '=':
                     if (Lookahead == '=')
                     {
                         if (Peek(2) == '=')
                         {
-                            return new SyntaxToken(SyntaxKind.EqualsEqualsEqualsToken, _position += 3, "===", null);
+                            _position += 3;
+                            return new SyntaxToken(SyntaxKind.EqualsEqualsEqualsToken, _position, "===", null);
                         }
                         else
                         {
-                            return new SyntaxToken(SyntaxKind.EqualsEqualsToken, _position += 2, "==", null);
+                            _position += 2;
+                            return new SyntaxToken(SyntaxKind.EqualsEqualsToken, _position, "==", null);
                         }
                     }
                     break;
