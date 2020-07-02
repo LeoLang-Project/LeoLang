@@ -11,8 +11,8 @@ namespace LeoLang.CodeAnalysis.Binding
 
         public BoundExpression Value { get; }
 
-        public override Type Type => Value.GetType();
+        public override Type Type => Value.Type;
 
-        public override BoundNodeKind Kind => BoundNodeKind.DefaultExpression;
+        public override BoundNodeKind Kind => BoundNodeKind.SomeExpression;
     }
 }
