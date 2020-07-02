@@ -40,10 +40,14 @@ namespace LeoLang.CodeAnalysis
                 _variables[a.Name] = value;
                 return value;
             }
-            
+
             if (node is BoundDefaultExpression d)
             {
                 return ((BoundLiteralExpression)d.Value).Value;
+            }
+            if (node is BoundTypeOfExpression t)
+            {
+                return ((BoundLiteralExpression)t.Value).Value;
             }
 
             if (node is BoundUnaryExpression u)

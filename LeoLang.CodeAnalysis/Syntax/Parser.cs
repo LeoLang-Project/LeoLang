@@ -154,6 +154,15 @@ namespace LeoLang.CodeAnalysis.Syntax
 
                         return new SomeExpressionSyntax(someToken, ParsePrimaryExpression());
                     }
+                case SyntaxKind.TypeOfKeyword:
+                    {
+                        var typeToken = NextToken();
+                        var open = MatchToken(SyntaxKind.OpenParenthesisToken);
+                        var id = MatchToken(SyntaxKind.IdentifierToken);
+                        var close = MatchToken(SyntaxKind.CloseParenthesisToken);
+
+                        return new TypeOfExpressionSyntax(typeToken, id);
+                    }
                 case SyntaxKind.DefaultKeyword:
                     {
                         var defaultToken = NextToken();

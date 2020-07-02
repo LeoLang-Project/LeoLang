@@ -41,5 +41,7 @@
         NameExpression,
         EqualsToken,
         AssignmentExpression,
+        TypeOfKeyword,
+        TypeOfExpression,
     }
 }

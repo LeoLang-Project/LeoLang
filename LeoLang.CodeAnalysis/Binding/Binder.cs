@@ -37,9 +37,25 @@ namespace LeoLang.CodeAnalysis.Binding
                     return BindNameExpression((NameExpressionSyntax)syntax);
                 case SyntaxKind.AssignmentExpression:
                     return BindAssignmentExpression((AssignmentExpressionSyntax)syntax);
+                case SyntaxKind.TypeOfExpression:
+                    return BindTypeOfExpression((TypeOfExpressionSyntax)syntax);
                 default:
                     throw new Exception($"Unexpected syntax {syntax.Kind}");
             }
+        }
+
+        private BoundExpression BindTypeOfExpression(TypeOfExpressionSyntax syntax)
+        {
+            var typename = syntax.Identifier.Text;
+            var boundValue = Type.GetType(typename); //ToDo fix type binding
+
+            if (syntax.Identifier.Kind == SyntaxKind.IdentifierToken && boundValue != null)
+            {
+                return new BoundTypeOfExpression(new BoundLiteralExpression(boundValue));
+            }
+
+            _diagnostics.ReportNotBindable(syntax.TypeToken.Span, BoundNodeKind.TypeOfExpression);
+            return new BoundLiteralExpression(Maybe.None<object>());
         }
 
         private BoundExpression BindAssignmentExpression(AssignmentExpressionSyntax syntax)
