@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LeoLang.CodeAnalysis.Syntax
 {
@@ -19,6 +21,17 @@ namespace LeoLang.CodeAnalysis.Syntax
         {
             var parser = new Parser(line);
             return parser.Parse();
+        }
+
+        public static IEnumerable<SyntaxToken> ParseTokens(string line)
+        {
+            var lexer = new Lexer(line);
+            while(true)
+            {
+                var token = lexer.Lex();
+                if (token.Kind == SyntaxKind.EndOfFileToken) break;
+                yield return token;
+            }
         }
     }
 }
