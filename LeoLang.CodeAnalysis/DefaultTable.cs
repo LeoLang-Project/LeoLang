@@ -31,6 +31,7 @@ namespace LeoLang.CodeAnalysis
             AddValue("decimal", 0.0);
             AddValue("date", DateTime.MinValue);
             AddValue("guid", Guid.Empty);
+            AddValue("bool", false);
         }
 
         public static void AddValue(string type, object value)

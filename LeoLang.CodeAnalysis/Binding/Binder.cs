@@ -47,7 +47,7 @@ namespace LeoLang.CodeAnalysis.Binding
         private BoundExpression BindTypeOfExpression(TypeOfExpressionSyntax syntax)
         {
             var typename = syntax.Identifier.Text;
-            var boundValue = Type.GetType(typename); //ToDo fix type binding
+            var boundValue = (typename); //ToDo fix type binding
 
             if (syntax.Identifier.Kind == SyntaxKind.IdentifierToken && boundValue != null)
             {
@@ -62,6 +62,16 @@ namespace LeoLang.CodeAnalysis.Binding
         {
             var name = syntax.IdentifierToken.Text;
             var boundExpression = BindExpression(syntax.Expression);
+
+            var defaultValue = boundExpression.Type == typeof(int) ? (object)0 : boundExpression.Type == typeof(bool) ? (object)false : null;
+
+            if(defaultValue == null)
+            {
+                throw new Exception($"unsupported variable type '{boundExpression.Type}'");
+            }
+
+            _variables[name] = defaultValue;
+
             return new BoundAssignmentExpression(name, boundExpression);
         }
 
@@ -74,7 +84,7 @@ namespace LeoLang.CodeAnalysis.Binding
                 return new BoundLiteralExpression(0);
             }
 
-            var type = typeof(int);
+            var type = value.GetType();
             return new BoundVariableExpression(name, type);
         }
 
