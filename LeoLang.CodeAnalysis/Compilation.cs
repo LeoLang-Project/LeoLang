@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using LeoLang.CodeAnalysis.Binding;
 using LeoLang.CodeAnalysis.Symbols;
@@ -23,13 +24,14 @@ namespace LeoLang.CodeAnalysis
             var binder = new Binder(Variables);
             var boundExpression = binder.BindExpression(SyntaxTree.Root);
 
-            var diagnostics = SyntaxTree.Diagnostics.Concat(binder.Diagnostics).ToArray();
+            var diagnostics = SyntaxTree.Diagnostics.Concat(binder.Diagnostics).ToImmutableArray();
             if (diagnostics.Any())
                 return new EvaluationResult(diagnostics, null);
 
             var evaluator = new Evaluator(boundExpression, Variables);
             var value = evaluator.Evaluate();
-            return new EvaluationResult(Array.Empty<Diagnostic>(), value);
+
+            return new EvaluationResult(ImmutableArray<Diagnostic>.Empty, value);
         }
     }
 }

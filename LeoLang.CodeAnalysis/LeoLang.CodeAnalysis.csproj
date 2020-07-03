@@ -7,6 +7,10 @@
   <ItemGroup>
     <Compile Remove="Class1.cs" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Collections.Immutable" Version="1.7.1" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LeoLang.Core\LeoLang.Core.csproj" />
   </ItemGroup>
