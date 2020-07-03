@@ -49,11 +49,10 @@ namespace LeoLang.CodeAnalysis.Binding
         private BoundExpression BindTypeOfExpression(TypeOfExpressionSyntax syntax)
         {
             var typename = syntax.Identifier.Text;
-            var boundValue = (typename); //ToDo fix type binding
 
-            if (syntax.Identifier.Kind == SyntaxKind.IdentifierToken && boundValue != null)
+            if (syntax.Identifier.Kind == SyntaxKind.IdentifierToken && typename != null)
             {
-                return new BoundTypeOfExpression(new BoundLiteralExpression(boundValue));
+                return new BoundTypeOfExpression(new BoundLiteralExpression(typename));
             }
 
             _diagnostics.ReportNotBindable(syntax.TypeToken.Span, BoundNodeKind.TypeOfExpression);

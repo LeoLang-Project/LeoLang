@@ -48,7 +48,9 @@ namespace LeoLang.CodeAnalysis
             }
             if (node is BoundTypeOfExpression t)
             {
-                return ((BoundLiteralExpression)t.Value).Value;
+                var type = Type.GetType(((BoundLiteralExpression)t.Value).Value.ToString(), false, true);
+                //Todo: fix type evaluation of typeof expression
+                return type;
             }
 
             if (node is BoundUnaryExpression u)
