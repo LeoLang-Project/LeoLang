@@ -14,11 +14,5 @@ namespace LeoLang.CodeAnalysis.Syntax
         public SyntaxToken Identifier { get; }
 
         public override SyntaxKind Kind =>  SyntaxKind.TypeOfExpression;
-
-        public override IEnumerable<SyntaxNode> GetChildren()
-        {
-            yield return TypeToken;
-            yield return Identifier;
-        }
     }
 }

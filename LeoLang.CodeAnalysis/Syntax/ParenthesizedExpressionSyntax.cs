@@ -18,11 +18,5 @@ namespace LeoLang.CodeAnalysis.Syntax
         public ExpressionSyntax Expression { get; }
         public SyntaxToken CloseParenthesizeToken { get; }
 
-        public override IEnumerable<SyntaxNode> GetChildren()
-        {
-            yield return OpenParenthesizeToken;
-            yield return Expression;
-            yield return CloseParenthesizeToken;
-        }
     }
 }

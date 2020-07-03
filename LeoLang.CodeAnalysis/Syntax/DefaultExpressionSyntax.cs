@@ -14,11 +14,5 @@ namespace LeoLang.CodeAnalysis.Syntax
 
         public SyntaxToken DefaultToken { get; }
         public SyntaxToken Identifier { get; }
-
-        public override IEnumerable<SyntaxNode> GetChildren()
-        {
-            yield return DefaultToken;
-            yield return Identifier;
-        }
     }
 }

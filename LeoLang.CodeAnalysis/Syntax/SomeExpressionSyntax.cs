@@ -14,11 +14,5 @@ namespace LeoLang.CodeAnalysis.Syntax
 
         public SyntaxToken SomeToken { get; }
         public ExpressionSyntax Value { get; }
-
-        public override IEnumerable<SyntaxNode> GetChildren()
-        {
-            yield return SomeToken;
-            yield return Value;
-        }
     }
 }
