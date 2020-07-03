@@ -46,6 +46,12 @@ namespace LeoLang.CodeAnalysis.Binding
             }
         }
 
+        private BoundExpression BindSymbolLiteralExpression(LiteralExpressionSyntax syntax)
+        {
+            var value = (Symbol)syntax.Value;
+            return new BoundLiteralExpression(value);
+        }
+
         private BoundExpression BindTypeOfExpression(TypeOfExpressionSyntax syntax)
         {
             var typename = syntax.Identifier.Text;
@@ -114,6 +120,8 @@ namespace LeoLang.CodeAnalysis.Binding
         private BoundExpression BindLiteralExpression(LiteralExpressionSyntax syntax)
         {
             var value = syntax.Value ?? 0;
+            if (syntax.LiteralToken.Kind == SyntaxKind.SymbolLiteral) value = (Symbol)syntax.LiteralToken.Text;
+            
             return new BoundLiteralExpression(value);
         }
 

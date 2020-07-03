@@ -142,11 +142,12 @@ namespace LeoLang.CodeAnalysis.Syntax
     
                         return new NameExpressionSyntax(identifierToken);
                     }
-                case SyntaxKind.SymbolLiteral:
+                case SyntaxKind.ApostropheToken:
                     {
                         var symbolToken = NextToken();
+                        var valueToken = MatchToken(SyntaxKind.IdentifierToken);
 
-                        return new LiteralExpressionSyntax(symbolToken);
+                        return new LiteralExpressionSyntax(new SyntaxToken(SyntaxKind.SymbolLiteral, symbolToken.Position, valueToken.Text, valueToken.Value));
                     }
                 case SyntaxKind.SomeKeyword:
                     {
