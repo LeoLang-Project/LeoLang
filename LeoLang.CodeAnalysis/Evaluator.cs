@@ -23,86 +23,87 @@ namespace LeoLang.CodeAnalysis
 
         private object EvaluateExpression(BoundExpression node)
         {
-            if (node is BoundLiteralExpression n)
-                return n.Value;
-            if (node is BoundSomeExpression s)
+            switch (node.Kind)
             {
-                return EvaluateExpression(s.Value);
+                case BoundNodeKind.LiteralExpression:
+                    return EvaluateLiteralExpression((BoundLiteralExpression)node);
+                case BoundNodeKind.VariableExpression:
+                    return this.EvaluateVariableExpression((BoundVariableExpression)node);
+                case BoundNodeKind.AssignmentExpression:
+                    return EvaluateAssignmentExpression((BoundAssignmentExpression)node);
+                case BoundNodeKind.UnaryExpression:
+                    return EvaluateUnaryExpression((BoundUnaryExpression)node);
+                case BoundNodeKind.BinaryExpression:
+                    return EvaluateBinaryExpression((BoundBinaryExpression)node);
+                case BoundNodeKind.SomeExpression:
+                    return EvaluateExpression(((BoundSomeExpression)node).Value);
+                default:
+                    throw new Exception($"Unexpected node {node.Kind}");
             }
-            if(node is BoundVariableExpression v)
+        }
+
+        private static object EvaluateLiteralExpression(BoundLiteralExpression n)
+        {
+            return n.Value;
+        }
+
+        private object EvaluateVariableExpression(BoundVariableExpression v)
+        {
+            return _variables[v.Variable];
+        }
+
+        private object EvaluateAssignmentExpression(BoundAssignmentExpression a)
+        {
+            var value = EvaluateExpression(a.Expression);
+            _variables[a.Variable] = value;
+            return value;
+        }
+
+        private object EvaluateUnaryExpression(BoundUnaryExpression u)
+        {
+            var operand = EvaluateExpression(u.Operand);
+
+            switch (u.Op.Kind)
             {
-                var value = _variables[v.Variable];
-                return value;
+                case BoundUnaryOperatorKind.Identity:
+                    return (int)operand;
+                case BoundUnaryOperatorKind.Negation:
+                    return -(int)operand;
+                case BoundUnaryOperatorKind.LogicalNegation:
+                    return !(bool)operand;
+                default:
+                    throw new Exception($"Unexpected unary operator {u.Op}");
             }
+        }
 
-            if(node is BoundAssignmentExpression a)
+        private object EvaluateBinaryExpression(BoundBinaryExpression b)
+        {
+            var left = EvaluateExpression(b.Left);
+            var right = EvaluateExpression(b.Right);
+
+            switch (b.Op.Kind)
             {
-                var value = EvaluateExpression(a.Expression);
-                _variables[a.Variable] = value;
-                return value;
+                case BoundBinaryOperatorKind.Addition:
+                    return (int)left + (int)right;
+                case BoundBinaryOperatorKind.Subtraction:
+                    return (int)left - (int)right;
+                case BoundBinaryOperatorKind.Multiplication:
+                    return (int)left * (int)right;
+                case BoundBinaryOperatorKind.Division:
+                    return (int)left / (int)right;
+                case BoundBinaryOperatorKind.LogicalAnd:
+                    return (bool)left && (bool)right;
+                case BoundBinaryOperatorKind.LogicalOr:
+                    return (bool)left || (bool)right;
+                case BoundBinaryOperatorKind.Equals:
+                    return Equals(left, right);
+                case BoundBinaryOperatorKind.NotEquals:
+                    return !Equals(left, right);
+                case BoundBinaryOperatorKind.TypeEquals:
+                    return Equals(left, right) && left.GetType() == right.GetType();
+                default:
+                    throw new Exception($"Unexpected binary operator {b.Op}");
             }
-
-            if (node is BoundDefaultExpression d)
-            {
-                return ((BoundLiteralExpression)d.Value).Value;
-            }
-            if (node is BoundTypeOfExpression t)
-            {
-                var type = Type.GetType(((BoundLiteralExpression)t.Value).Value.ToString(), false, true);
-                //Todo: fix type evaluation of typeof expression
-                return type;
-            }
-
-            if (node is BoundUnaryExpression u)
-            {
-                var operand = EvaluateExpression(u.Operand);
-
-                switch (u.Op.Kind)
-                {
-                    case BoundUnaryOperatorKind.Identity:
-                        return (int)operand;
-                    case BoundUnaryOperatorKind.Negation:
-                        return -(int)operand;
-                    case BoundUnaryOperatorKind.LogicalNegation:
-                        return !(bool)operand;
-                    default:
-                        throw new Exception($"Unexpected unary operator {u.Op.Kind}");
-                }
-            }
-
-            if (node is BoundBinaryExpression b)
-            {
-                var left = EvaluateExpression(b.Left);
-                var right = EvaluateExpression(b.Right);
-
-                switch (b.Op.Kind)
-                {
-                    case BoundBinaryOperatorKind.Addition:
-                        return (int)left + (int)right;
-                    case BoundBinaryOperatorKind.Subtraction:
-                        return (int)left - (int)right;
-                    case BoundBinaryOperatorKind.Multiplication:
-                        return (int)left * (int)right;
-                    case BoundBinaryOperatorKind.Division:
-                        return (int)left / (int)right;
-                    case BoundBinaryOperatorKind.LogicalAnd:
-                        return (bool)left && (bool)right;
-                    case BoundBinaryOperatorKind.LogicalOr:
-                        return (bool)left || (bool)right;
-                    case BoundBinaryOperatorKind.Equals:
-                        return Equals(left, right);
-                    case BoundBinaryOperatorKind.NotEquals:
-                        return !Equals(left, right);
-                    case BoundBinaryOperatorKind.RefEquals:
-                        return ReferenceEquals(left, right);
-                    case BoundBinaryOperatorKind.TypeEquals:
-                        return Equals(left, right) && left.GetType() == right.GetType();
-                    default:
-                        throw new Exception($"Unexpected binary operator {b.Op.Kind}");
-                }
-            }
-
-            throw new Exception($"Unexpected node {node.Kind}");
         }
     }
 }
