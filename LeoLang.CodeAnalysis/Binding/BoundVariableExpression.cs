@@ -1,21 +1,19 @@
-﻿using System;
+﻿using LeoLang.CodeAnalysis.Symbols;
+using System;
 
 namespace LeoLang.CodeAnalysis.Binding
 {
     internal class BoundVariableExpression : BoundExpression
     {
-        private Type type;
-
-        public BoundVariableExpression(string name, Type type)
+        public BoundVariableExpression(VariableSymbol Variable)
         {
-            Name = name;
-            this.type = type;
+            this.Variable = Variable;
         }
 
-        public override Type Type => type;
+        public override Type Type => Variable.Type;
 
         public override BoundNodeKind Kind => BoundNodeKind.VariableExpression;
 
-        public string Name { get; }
+        public VariableSymbol Variable { get; }
     }
 }

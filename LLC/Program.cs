@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using LeoLang.CodeAnalysis;
+using LeoLang.CodeAnalysis.Symbols;
 using LeoLang.CodeAnalysis.Syntax;
 
 namespace LLC
@@ -10,7 +11,7 @@ namespace LLC
     {
         static void Main(string[] args)
         {
-            var variables = new Dictionary<string, object>();
+            var variables = new Dictionary<VariableSymbol, object>();
 
             while(true) {
                 Console.Write("> ");

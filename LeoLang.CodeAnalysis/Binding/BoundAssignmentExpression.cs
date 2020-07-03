@@ -1,13 +1,14 @@
-﻿using System;
+﻿using LeoLang.CodeAnalysis.Symbols;
+using System;
 
 namespace LeoLang.CodeAnalysis.Binding
 {
     internal class BoundAssignmentExpression : BoundExpression
     {
 
-        public BoundAssignmentExpression(string name, BoundExpression boundExpression)
+        public BoundAssignmentExpression(VariableSymbol Variable, BoundExpression boundExpression)
         {
-            Name = name;
+            this.Variable = Variable;
             Expression = boundExpression;
         }
 
@@ -15,7 +16,7 @@ namespace LeoLang.CodeAnalysis.Binding
 
         public override BoundNodeKind Kind => BoundNodeKind.AssignmentExpression;
 
-        public string Name { get; }
+        public VariableSymbol Variable { get; }
         public BoundExpression Expression { get; }
     }
 }

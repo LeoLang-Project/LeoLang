@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using LeoLang.CodeAnalysis.Binding;
+using LeoLang.CodeAnalysis.Symbols;
 using LeoLang.CodeAnalysis.Syntax;
 
 namespace LeoLang.CodeAnalysis
 {
     public sealed class Compilation
     {
-        public Compilation(SyntaxTree syntaxTree, Dictionary<string, object> variables)
+        public Compilation(SyntaxTree syntaxTree, Dictionary<VariableSymbol, object> variables)
         {
             SyntaxTree = syntaxTree;
             Variables = variables;
         }
 
         public SyntaxTree SyntaxTree { get; }
-        public Dictionary<string, object> Variables { get; }
+        public Dictionary<VariableSymbol, object> Variables { get; }
 
         public EvaluationResult Evaluate()
         {
