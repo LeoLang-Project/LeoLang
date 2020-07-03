@@ -7,6 +7,7 @@
         TypeOfExpression,
         VariableExpression,
         AssignmentExpression,
-        SomeExpression
+        SomeExpression,
+        BinaryExpression
     }
 }
