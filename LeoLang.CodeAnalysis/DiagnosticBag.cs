@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using LeoLang.CodeAnalysis.Binding;
 using LeoLang.CodeAnalysis.Syntax;
+using LeoLang.CodeAnalysis.Text;
 
 namespace LeoLang.CodeAnalysis
 {

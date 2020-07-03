@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using LeoLang.CodeAnalysis.Text;
 using LeoLang.Core;
 
 namespace LeoLang.CodeAnalysis.Syntax
