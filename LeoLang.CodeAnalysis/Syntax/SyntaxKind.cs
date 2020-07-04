@@ -55,5 +55,8 @@
         VariableDeclaration,
         LetKeyword,
         VarKeyword,
+        IfStatement,
+        IfKeyword,
+        ElseKeyword,
     }
 }

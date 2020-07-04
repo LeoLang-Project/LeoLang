@@ -11,6 +11,7 @@
         BinaryExpression,
         BlockStatement,
         ExpressionStatement,
-        VariableDeclaration
+        VariableDeclaration,
+        IfStatement
     }
 }
