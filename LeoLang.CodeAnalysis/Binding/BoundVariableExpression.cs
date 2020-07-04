@@ -10,7 +10,7 @@ namespace LeoLang.CodeAnalysis.Binding
             this.Variable = Variable;
         }
 
-        public override Type Type => Variable.Type;
+        public override TypeSymbol Type => Variable.Type;
 
         public override BoundNodeKind Kind => BoundNodeKind.VariableExpression;
 

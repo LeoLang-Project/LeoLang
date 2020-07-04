@@ -17,6 +17,7 @@
         ForStatement,
         ConditionalGotoStatement,
         LabelStatement,
-        GotoStatement
+        GotoStatement,
+        ErrorExpression
     }
 }

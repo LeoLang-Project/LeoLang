@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LeoLang.CodeAnalysis.Symbols;
+using System;
 
 namespace LeoLang.CodeAnalysis.Binding
 {
@@ -11,7 +12,7 @@ namespace LeoLang.CodeAnalysis.Binding
 
         public BoundExpression Value { get; }
 
-        public override Type Type => Value.GetType();
+        public override TypeSymbol Type => TypeSymbol.Any;
 
         public override BoundNodeKind Kind => BoundNodeKind.TypeOfExpression;
     }

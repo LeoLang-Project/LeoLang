@@ -17,10 +17,10 @@ namespace LeoLang.CodeAnalysis.Lowering
         {
         }
 
-        private BoundSymbol GenerateLabel()
+        private LabelSymbol GenerateLabel()
         {
             var name = $"Label{++_labelCount}";
-            return new BoundSymbol(name);
+            return new LabelSymbol(name);
         }
 
         public static BoundBlockStatement Lower(BoundStatement statement)
@@ -164,7 +164,7 @@ namespace LeoLang.CodeAnalysis.Lowering
             var variableExpression = new BoundVariableExpression(node.Variable);
             var condition = new BoundBinaryExpression(
                 variableExpression,
-                BoundBinaryOperator.Bind(SyntaxKind.LessOrEqualsToken, typeof(int), typeof(int)),
+                BoundBinaryOperator.Bind(SyntaxKind.LessOrEqualsToken, TypeSymbol.Int, TypeSymbol.Int),
                 node.UpperBound
             );
             var increment = new BoundExpressionStatement(
@@ -172,7 +172,7 @@ namespace LeoLang.CodeAnalysis.Lowering
                     node.Variable,
                     new BoundBinaryExpression(
                             variableExpression,
-                            BoundBinaryOperator.Bind(SyntaxKind.PlusToken, typeof(int), typeof(int)),
+                            BoundBinaryOperator.Bind(SyntaxKind.PlusToken, TypeSymbol.Int, TypeSymbol.Int),
                             new BoundLiteralExpression(1)
                     )
                 )

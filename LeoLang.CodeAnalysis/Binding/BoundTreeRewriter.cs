@@ -17,6 +17,7 @@ namespace LeoLang.CodeAnalysis.Binding
                     return RewriteVariableDeclaration((BoundVariableDeclaration)node);
                 case BoundNodeKind.IfStatement:
                     return RewriteIfStatement((BoundIfStatement)node);
+               
                 case BoundNodeKind.WhileStatement:
                     return RewriteWhileStatement((BoundWhileStatement)node);
                 case BoundNodeKind.ForStatement:
@@ -32,6 +33,11 @@ namespace LeoLang.CodeAnalysis.Binding
                 default:
                     throw new Exception($"Unexpected node: {node.Kind}");
             }
+        }
+
+        protected virtual BoundExpression RewriteErrorExpression(BoundErrorExpression node)
+        {
+            return node;
         }
 
         protected virtual BoundStatement RewriteLabelStatement(BoundLabelStatement node)

@@ -85,13 +85,13 @@ namespace LeoLang.CodeAnalysis
 
         private BoundStatement BindForStatement(ForStatementSyntax syntax)
         {
-            var lowerBound = BindExpression(syntax.LowerBound, typeof(int));
-            var upperBound = BindExpression(syntax.UpperBound, typeof(int));
+            var lowerBound = BindExpression(syntax.LowerBound, TypeSymbol.Int);
+            var upperBound = BindExpression(syntax.UpperBound, TypeSymbol.Int);
 
             _scope = new BoundScope(_scope);
 
             var name = syntax.Identifier.Text;
-            var variable = new VariableSymbol(name, true, typeof(int));
+            var variable = new VariableSymbol(name, true, TypeSymbol.Int);
             if (!_scope.TryDeclare(variable))
                 _diagnostics.ReportVariableAlreadyDeclared(syntax.Identifier.Span, name);
 
@@ -104,14 +104,14 @@ namespace LeoLang.CodeAnalysis
 
         private BoundStatement BindWhileStatement(WhileStatementSyntax syntax)
         {
-            var condition = BindExpression(syntax.Condition, typeof(bool));
+            var condition = BindExpression(syntax.Condition, TypeSymbol.Bool);
             var body = BindStatement(syntax.Body);
             return new BoundWhileStatement(condition, body);
         }
 
         private BoundStatement BindIfStatement(IfStatementSyntax syntax)
         {
-            var condition = BindExpression(syntax.Condition, typeof(bool));
+            var condition = BindExpression(syntax.Condition, TypeSymbol.Bool);
             var thenStatement = BindStatement(syntax.ThenStatement);
             var elseStatement = syntax.ElseClause == null ? null : BindStatement(syntax.ElseClause.ElseStatement);
             return new BoundIfStatement(condition, thenStatement, elseStatement);
@@ -152,7 +152,7 @@ namespace LeoLang.CodeAnalysis
             return new BoundExpressionStatement(expression);
         }
 
-        private BoundExpression BindExpression(ExpressionSyntax syntax, Type targetType)
+        private BoundExpression BindExpression(ExpressionSyntax syntax, TypeSymbol targetType)
         {
             var result = BindExpression(syntax);
             if (result.Type != targetType)
@@ -190,7 +190,7 @@ namespace LeoLang.CodeAnalysis
 
         private BoundExpression BindSymbolLiteralExpression(LiteralExpressionSyntax syntax)
         {
-            var value = (Symbol)syntax.Value;
+            var value = (Core.Symbol)syntax.Value;
             return new BoundLiteralExpression(value);
         }
 
@@ -271,7 +271,7 @@ namespace LeoLang.CodeAnalysis
         private BoundExpression BindLiteralExpression(LiteralExpressionSyntax syntax)
         {
             var value = syntax.Value ?? 0;
-            if (syntax.LiteralToken.Kind == SyntaxKind.SymbolLiteral) value = (Symbol)syntax.LiteralToken.Text;
+            if (syntax.LiteralToken.Kind == SyntaxKind.SymbolLiteral) value = (Core.Symbol)syntax.LiteralToken.Text;
             
             return new BoundLiteralExpression(value);
         }
