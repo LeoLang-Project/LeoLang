@@ -12,6 +12,7 @@ namespace LeoLang.CodeAnalysis.Syntax
                 case SyntaxKind.PlusToken:
                 case SyntaxKind.MinusToken:
                 case SyntaxKind.BangToken:
+                case SyntaxKind.TildeToken:
                     return 6;
 
                 default:
@@ -41,12 +42,14 @@ namespace LeoLang.CodeAnalysis.Syntax
                 case SyntaxKind.EqualsEqualsEqualsToken:
                     return 3;
 
+                case SyntaxKind.AmpersandToken:
                 case SyntaxKind.AmpersandAmpersandToken:
                     return 2;
 
+                case SyntaxKind.PipeToken:
                 case SyntaxKind.PipePipeToken:
+                case SyntaxKind.HatToken:
                     return 1;
-
                 default:
                     return 0;
             }
@@ -127,6 +130,14 @@ namespace LeoLang.CodeAnalysis.Syntax
                     return "-";
                 case SyntaxKind.StarToken:
                     return "*";
+                case SyntaxKind.TildeToken:
+                    return "~";
+                case SyntaxKind.AmpersandToken:
+                    return "&";
+                case SyntaxKind.HatToken:
+                    return "^";
+                case SyntaxKind.PipeToken:
+                    return "|";
                 case SyntaxKind.WhileKeyword:
                     return "while";
                 case SyntaxKind.ForKeyword:

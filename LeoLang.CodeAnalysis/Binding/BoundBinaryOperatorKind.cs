@@ -15,6 +15,9 @@
         Less,
         Greater,
         GreaterOrEquals,
-        LessOrEquals
+        LessOrEquals,
+        BitwiseAnd,
+        BitwiseOr,
+        BitwiseXor
     }
 }

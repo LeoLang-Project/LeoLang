@@ -5,5 +5,6 @@
         Identity,
         Negation,
         LogicalNegation,
+        OnesComplement,
     }
 }

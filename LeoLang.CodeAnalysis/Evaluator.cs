@@ -147,6 +147,8 @@ namespace LeoLang.CodeAnalysis
                     return -(int)operand;
                 case BoundUnaryOperatorKind.LogicalNegation:
                     return !(bool)operand;
+                case BoundUnaryOperatorKind.OnesComplement:
+                    return ~(int)operand;
                 default:
                     throw new Exception($"Unexpected unary operator {u.Op}");
             }
@@ -185,6 +187,21 @@ namespace LeoLang.CodeAnalysis
                     return !Equals(left, right);
                 case BoundBinaryOperatorKind.TypeEquals:
                     return Equals(left, right) && left.GetType() == right.GetType();
+                case BoundBinaryOperatorKind.BitwiseAnd:
+                    if (b.Type == (typeof(int)))
+                        return (int)left & (int)right;
+                    else
+                        return (bool)left & (bool)right;
+                case BoundBinaryOperatorKind.BitwiseOr:
+                    if (b.Type == (typeof(int)))
+                        return (int)left | (int)right;
+                    else
+                        return (bool)left | (bool)right;
+                case BoundBinaryOperatorKind.BitwiseXor:
+                    if (b.Type == (typeof(int)))
+                        return (int)left ^ (int)right;
+                    else
+                        return (bool)left ^ (bool)right;
                 default:
                     throw new Exception($"Unexpected binary operator {b.Op}");
             }

@@ -64,5 +64,9 @@
         ForKeyword,
         ToKeyword,
         ForStatement,
+        HatToken,
+        TildeToken,
+        AmpersandToken,
+        PipeToken,
     }
 }
