@@ -1,0 +1,5 @@
+change syntax of 
+ [ ] if-statement
+ [ ] while-statement
+ [ ] for-statement
+design syntax for statements
