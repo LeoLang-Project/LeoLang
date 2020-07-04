@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using LeoLang.CodeAnalysis.Diagnostics;
 using LeoLang.CodeAnalysis.Syntax;
 using LeoLang.CodeAnalysis.Text;
-using LeoLang.Core;
 
 namespace LeoLang.CodeAnalysis
 {

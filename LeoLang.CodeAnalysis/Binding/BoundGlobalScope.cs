@@ -1,4 +1,5 @@
-﻿using LeoLang.CodeAnalysis.Symbols;
+﻿using LeoLang.CodeAnalysis.Diagnostics;
+using LeoLang.CodeAnalysis.Symbols;
 using System.Collections.Immutable;
 
 namespace LeoLang.CodeAnalysis.Binding

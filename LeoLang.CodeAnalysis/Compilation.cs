@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using LeoLang.CodeAnalysis.Binding;
+using LeoLang.CodeAnalysis.Diagnostics;
 using LeoLang.CodeAnalysis.Symbols;
 using LeoLang.CodeAnalysis.Syntax;
 
