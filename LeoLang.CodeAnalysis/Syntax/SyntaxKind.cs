@@ -61,5 +61,8 @@
         ElseClause,
         WhileStatement,
         WhileKeyword,
+        ForKeyword,
+        ToKeyword,
+        ForStatement,
     }
 }

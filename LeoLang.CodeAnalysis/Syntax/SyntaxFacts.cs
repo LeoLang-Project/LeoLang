@@ -70,6 +70,10 @@ namespace LeoLang.CodeAnalysis.Syntax
                     return SyntaxKind.IfKeyword;
                 case "while":
                     return SyntaxKind.WhileKeyword;
+                case "for":
+                    return SyntaxKind.ForKeyword;
+                case "to":
+                    return SyntaxKind.ToKeyword;
                 case "empty":
                     return SyntaxKind.EmptyKeyword;
                 case "none":
@@ -125,6 +129,10 @@ namespace LeoLang.CodeAnalysis.Syntax
                     return "*";
                 case SyntaxKind.WhileKeyword:
                     return "while";
+                case SyntaxKind.ForKeyword:
+                    return "for";
+                case SyntaxKind.ToKeyword:
+                    return "to";
                 case SyntaxKind.SlashToken:
                     return "/";
                 case SyntaxKind.BangToken:
