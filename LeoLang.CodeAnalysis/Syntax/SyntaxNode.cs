@@ -1,4 +1,5 @@
 ﻿using LeoLang.CodeAnalysis.Text;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -48,10 +49,18 @@ namespace LeoLang.CodeAnalysis.Syntax
 
         private static void PrettyPrint(TextWriter writer, SyntaxNode node, string indent = "", bool isLast = true)
         {
+            var isToConsole = writer == Console.Out;
             var marker = isLast ? "└──" : "├──";
+
+            if (isToConsole)
+                Console.ForegroundColor = ConsoleColor.DarkGray;
 
             writer.Write(indent);
             writer.Write(marker);
+
+            if (isToConsole)
+                Console.ForegroundColor = node is SyntaxToken ? ConsoleColor.Blue : ConsoleColor.Cyan;
+
             writer.Write(node.Kind);
 
             if (node is SyntaxToken t && t.Value != null)
@@ -59,6 +68,9 @@ namespace LeoLang.CodeAnalysis.Syntax
                 writer.Write(" ");
                 writer.Write(t.Value);
             }
+
+            if (isToConsole)
+                Console.ResetColor();
 
             writer.WriteLine();
 
