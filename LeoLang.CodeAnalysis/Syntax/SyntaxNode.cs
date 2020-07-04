@@ -51,6 +51,15 @@ namespace LeoLang.CodeAnalysis.Syntax
             PrettyPrint(writer, this);
         }
 
+        public SyntaxToken GetLastToken()
+        {
+            if (this is SyntaxToken token)
+                return token;
+
+            // A syntax node should always contain at least 1 token.
+            return GetChildren().Last().GetLastToken();
+        }
+
         private static void PrettyPrint(TextWriter writer, SyntaxNode node, string indent = "", bool isLast = true)
         {
             var isToConsole = writer == Console.Out;

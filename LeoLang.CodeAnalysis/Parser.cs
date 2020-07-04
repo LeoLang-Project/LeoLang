@@ -229,6 +229,12 @@ namespace LeoLang.CodeAnalysis
             return new ExpressionStatementSyntax(expression);
         }
 
+        private ExpressionSyntax ParseStringLiteral()
+        {
+            var stringToken = MatchToken(SyntaxKind.StringToken);
+            return new LiteralExpressionSyntax(stringToken);
+        }
+
         private ExpressionSyntax ParsePrimaryExpression()
         {
             switch (Current.Kind)
@@ -255,6 +261,8 @@ namespace LeoLang.CodeAnalysis
     
                         return new NameExpressionSyntax(identifierToken);
                     }
+                case SyntaxKind.StringToken:
+                    return ParseStringLiteral();
                 case SyntaxKind.ApostropheToken:
                     {
                         var symbolToken = NextToken();

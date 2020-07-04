@@ -48,6 +48,12 @@ namespace LeoLang.CodeAnalysis.Diagnostics
             Report(span, message);
         }
 
+        public void ReportUnterminatedString(TextSpan span)
+        {
+            var message = "Unterminated string literal.";
+            Report(span, message);
+        }
+
         public void ReportBadCharacter(int position, char character)
         {
             var span = new TextSpan(position, 1);

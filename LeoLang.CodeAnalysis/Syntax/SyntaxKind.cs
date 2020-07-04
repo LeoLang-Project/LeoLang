@@ -68,5 +68,6 @@
         TildeToken,
         AmpersandToken,
         PipeToken,
+        StringToken,
     }
 }
