@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using LeoLang.CodeAnalysis.Binding;
 using LeoLang.CodeAnalysis.Diagnostics;
+using LeoLang.CodeAnalysis.Lowering;
 using LeoLang.CodeAnalysis.Symbols;
 using LeoLang.CodeAnalysis.Syntax;
 
@@ -18,7 +19,6 @@ namespace LeoLang.CodeAnalysis
         public Compilation(SyntaxTree syntaxTree)
             : this(null, syntaxTree)
         {
-            SyntaxTree = syntaxTree;
         }
 
         private Compilation(Compilation previous, SyntaxTree syntaxTree)
@@ -55,14 +55,22 @@ namespace LeoLang.CodeAnalysis
             if (diagnostics.Any())
                 return new EvaluationResult(diagnostics, null);
 
-            var evaluator = new Evaluator(GlobalScope.Statement, variables);
+            var statement = GetStatement();
+            var evaluator = new Evaluator(statement, variables);
             var value = evaluator.Evaluate();
             return new EvaluationResult(ImmutableArray<Diagnostic>.Empty, value);
         }
 
         public void EmitTree(TextWriter writer)
         {
-            GlobalScope.Statement.WriteTo(writer);
+            var statement = GetStatement();
+            statement.WriteTo(writer);
+        }
+
+        private BoundStatement GetStatement()
+        {
+            var result = GlobalScope.Statement;
+            return Lowerer.Lower(result);
         }
     }
 }
