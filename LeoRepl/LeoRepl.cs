@@ -22,11 +22,19 @@ namespace LeoRepl
             foreach (var token in tokens)
             {
                 var isKeyword = token.Kind.ToString().EndsWith("Keyword");
+                var isIdentifier = token.Kind == SyntaxKind.IdentifierToken;
                 var isNumber = token.Kind == SyntaxKind.NumberToken;
+                var isString = token.Kind == SyntaxKind.StringToken;
 
                 if (isKeyword)
                     Console.ForegroundColor = ConsoleColor.Blue;
-                else if (!isNumber)
+                else if (isIdentifier)
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                else if (isNumber)
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                else if (isString)
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                else
                     Console.ForegroundColor = ConsoleColor.DarkGray;
 
                 Console.Write(token.Text);
@@ -65,10 +73,19 @@ namespace LeoRepl
             if (string.IsNullOrEmpty(text))
                 return true;
 
+            var lastTwoLinesAreBlank = text.Split(Environment.NewLine)
+                                           .Reverse()
+                                           .TakeWhile(s => string.IsNullOrEmpty(s))
+                                           .Take(2)
+                                           .Count() == 2;
+            if (lastTwoLinesAreBlank)
+                return true;
+
             var syntaxTree = SyntaxTree.Parse(text);
 
-            if (syntaxTree.Diagnostics.Any())
-                return false;
+            // Use Statement because we need to exclude the EndOfFileToken.
+           // if (syntaxTree.Root.Statement.GetLastToken().IsMissing)
+               // return false;
 
             return true;
         }
@@ -91,7 +108,7 @@ namespace LeoRepl
 
             if (!result.Diagnostics.Any())
             {
-                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine(result.Value);
                 Console.ResetColor();
                 _previous = compilation;
