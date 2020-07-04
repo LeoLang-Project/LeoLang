@@ -8,6 +8,8 @@
         VariableExpression,
         AssignmentExpression,
         SomeExpression,
-        BinaryExpression
+        BinaryExpression,
+        BlockStatement,
+        ExpressionStatement
     }
 }

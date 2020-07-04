@@ -44,5 +44,9 @@
         TypeOfKeyword,
         TypeOfExpression,
         CompilationUnit,
+        BlockStatement,
+        ExpressionStatement,
+        CloseBraceToken,
+        OpenBraceToken,
     }
 }

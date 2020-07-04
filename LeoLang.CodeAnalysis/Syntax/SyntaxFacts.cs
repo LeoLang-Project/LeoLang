@@ -107,6 +107,10 @@ namespace LeoLang.CodeAnalysis.Syntax
                     return "!";
                 case SyntaxKind.EqualsToken:
                     return "=";
+                case SyntaxKind.OpenBraceToken:
+                    return "{";
+                case SyntaxKind.CloseBraceToken:
+                    return "}";
                 case SyntaxKind.AmpersandAmpersandToken:
                     return "&&";
                 case SyntaxKind.PipePipeToken:
