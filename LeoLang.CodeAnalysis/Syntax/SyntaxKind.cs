@@ -43,5 +43,6 @@
         AssignmentExpression,
         TypeOfKeyword,
         TypeOfExpression,
+        CompilationUnit,
     }
 }
