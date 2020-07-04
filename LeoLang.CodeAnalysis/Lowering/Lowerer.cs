@@ -1,4 +1,4 @@
-﻿using LeoLang.CodeAnalysis.Binding;
+using LeoLang.CodeAnalysis.Binding;
 using LeoLang.CodeAnalysis.Symbols;
 using LeoLang.CodeAnalysis.Syntax;
 using System;
@@ -17,10 +17,10 @@ namespace LeoLang.CodeAnalysis.Lowering
         {
         }
 
-        private LabelSymbol GenerateLabel()
+        private BoundSymbol GenerateLabel()
         {
             var name = $"Label{++_labelCount}";
-            return new LabelSymbol(name);
+            return new BoundSymbol(name);
         }
 
         public static BoundBlockStatement Lower(BoundStatement statement)
