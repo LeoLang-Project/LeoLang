@@ -52,8 +52,12 @@ namespace LeoLang.CodeAnalysis.Syntax
         {
             switch (text)
             {
+                case "let":
+                    return SyntaxKind.LetKeyword;
                 case "true":
                     return SyntaxKind.TrueKeyword;
+                case "var":
+                    return SyntaxKind.VarKeyword;
                 case "false":
                     return SyntaxKind.FalseKeyword;
                 case "empty":
@@ -125,8 +129,12 @@ namespace LeoLang.CodeAnalysis.Syntax
                     return ")";
                 case SyntaxKind.FalseKeyword:
                     return "false";
+                case SyntaxKind.LetKeyword:
+                    return "let";
                 case SyntaxKind.TrueKeyword:
                     return "true";
+                case SyntaxKind.VarKeyword:
+                    return "var";
                 case SyntaxKind.DefaultKeyword:
                     return "default";
                 case SyntaxKind.TypeOfKeyword:

@@ -10,6 +10,7 @@
         SomeExpression,
         BinaryExpression,
         BlockStatement,
-        ExpressionStatement
+        ExpressionStatement,
+        VariableDeclaration
     }
 }

@@ -48,5 +48,8 @@
         ExpressionStatement,
         CloseBraceToken,
         OpenBraceToken,
+        VariableDeclaration,
+        LetKeyword,
+        VarKeyword,
     }
 }

@@ -30,6 +30,18 @@ namespace LeoLang.CodeAnalysis
             Report(span, message);
         }
 
+        public void ReportVariableAlreadyDeclared(TextSpan span, string name)
+        {
+            var message = $"Variable '{name}' is already declared.";
+            Report(span, message);
+        }
+
+        public void ReportCannotAssign(TextSpan span, string name)
+        {
+            var message = $"Variable '{name}' is read-only and cannot be assigned to.";
+            Report(span, message);
+        }
+
         public void ReportInvalidNumber(TextSpan span, string text, Type type)
         {
             var message = $"The number {text} isn't valid {type}.";
