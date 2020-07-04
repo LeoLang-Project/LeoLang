@@ -1,10 +1,11 @@
-﻿using LeoLang.CodeAnalysis.Text;
+﻿using LeoLang.CodeAnalysis.Syntax;
+using LeoLang.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 
-namespace LeoLang.CodeAnalysis.Syntax
+namespace LeoLang.CodeAnalysis
 {
     public class Parser
     {

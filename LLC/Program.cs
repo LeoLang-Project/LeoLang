@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using LeoLang.CodeAnalysis;
 using LeoLang.CodeAnalysis.Symbols;
-using LeoLang.CodeAnalysis.Syntax;
 using LeoLang.CodeAnalysis.Text;
 
 namespace LLC

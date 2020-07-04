@@ -1,10 +1,11 @@
-﻿using LeoLang.CodeAnalysis.Text;
+﻿using LeoLang.CodeAnalysis.Syntax;
+using LeoLang.CodeAnalysis.Text;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace LeoLang.CodeAnalysis.Syntax
+namespace LeoLang.CodeAnalysis
 {
     public sealed class SyntaxTree
     {

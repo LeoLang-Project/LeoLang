@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using LeoLang.CodeAnalysis.Binding;
 using LeoLang.CodeAnalysis.Symbols;
 using LeoLang.CodeAnalysis.Syntax;
 using LeoLang.Core;
 
-namespace LeoLang.CodeAnalysis.Binding
+namespace LeoLang.CodeAnalysis
 {
     internal sealed class Binder
     {
