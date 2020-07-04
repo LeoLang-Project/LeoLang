@@ -8,12 +8,12 @@ namespace LeoLang.CodeAnalysis.Binding
         {
             Label = label;
             Condition = condition;
-            JumpIfFalse = jumpIfFalse;
+            JumpIfTrue = jumpIfFalse;
         }
 
         public override BoundNodeKind Kind => BoundNodeKind.ConditionalGotoStatement;
         public BoundLabel Label { get; }
         public BoundExpression Condition { get; }
-        public bool JumpIfFalse { get; }
+        public bool JumpIfTrue { get; }
     }
 }

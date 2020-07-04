@@ -156,7 +156,12 @@ namespace LeoLang.CodeAnalysis
         {
             var result = BindExpression(syntax);
             if (result.Type != targetType)
-                _diagnostics.ReportCannotConvert(syntax.Span, result.Type, targetType);
+                if (targetType != TypeSymbol.Error &&
+                    result.Type != TypeSymbol.Error &&
+                    result.Type != targetType)
+                {
+                    _diagnostics.ReportCannotConvert(syntax.Span, result.Type, targetType);
+                }
 
             return result;
         }
@@ -235,9 +240,7 @@ namespace LeoLang.CodeAnalysis
             var name = syntax.IdentifierToken.Text;
             if (string.IsNullOrEmpty(name))
             {
-                // This means the token was inserted by the parser. We already
-                // reported error so we can just return an error expression.
-                return new BoundLiteralExpression(0);
+                return new BoundErrorExpression();
             }
 
             if (!_scope.TryLookup(name, out var variable))
@@ -293,11 +296,14 @@ namespace LeoLang.CodeAnalysis
         {
             var boundOperand = BindExpression(syntax.Operand);
             var boundOperator = BoundUnaryOperator.Bind(syntax.OperatorToken.Kind, boundOperand.Type);
+            
+            if (boundOperand.Type == TypeSymbol.Error)
+                return new BoundErrorExpression();
 
             if (boundOperator == null)
             {
                 _diagnostics.ReportUndefinedUnaryOperator(syntax.OperatorToken.Span, syntax.OperatorToken.Text, boundOperand.Type);
-                return boundOperand;
+                return new BoundErrorExpression();
             }
 
             return new BoundUnaryExpression(boundOperator, boundOperand);
@@ -309,10 +315,13 @@ namespace LeoLang.CodeAnalysis
             var boundRight = BindExpression(syntax.Right);
             var boundOperator = BoundBinaryOperator.Bind(syntax.OperatorToken.Kind, boundLeft.Type, boundRight.Type);
 
+            if (boundLeft.Type == TypeSymbol.Error || boundRight.Type == TypeSymbol.Error)
+                return new BoundErrorExpression();
+
             if (boundOperator == null)
             {
                 _diagnostics.ReportUndefinedBinaryOperator(syntax.OperatorToken.Span, syntax.OperatorToken.Text, boundLeft.Type, boundRight.Type);
-                return boundLeft;
+                return new BoundErrorExpression();
             }
 
             return new BoundBinaryExpression(boundLeft, boundOperator, boundRight);

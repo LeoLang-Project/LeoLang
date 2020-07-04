@@ -17,7 +17,6 @@ namespace LeoLang.CodeAnalysis.Binding
                     return RewriteVariableDeclaration((BoundVariableDeclaration)node);
                 case BoundNodeKind.IfStatement:
                     return RewriteIfStatement((BoundIfStatement)node);
-               
                 case BoundNodeKind.WhileStatement:
                     return RewriteWhileStatement((BoundWhileStatement)node);
                 case BoundNodeKind.ForStatement:
@@ -33,30 +32,6 @@ namespace LeoLang.CodeAnalysis.Binding
                 default:
                     throw new Exception($"Unexpected node: {node.Kind}");
             }
-        }
-
-        protected virtual BoundExpression RewriteErrorExpression(BoundErrorExpression node)
-        {
-            return node;
-        }
-
-        protected virtual BoundStatement RewriteLabelStatement(BoundLabelStatement node)
-        {
-            return node;
-        }
-
-        protected virtual BoundStatement RewriteGotoStatement(BoundGotoStatement node)
-        {
-            return node;
-        }
-
-        protected virtual BoundStatement RewriteConditionalGotoStatement(BoundConditionalGotoStatement node)
-        {
-            var condition = RewriteExpression(node.Condition);
-            if (condition == node.Condition)
-                return node;
-
-            return new BoundConditionalGotoStatement(node.Label, condition, node.JumpIfFalse);
         }
 
         protected virtual BoundStatement RewriteBlockStatement(BoundBlockStatement node)
@@ -129,6 +104,25 @@ namespace LeoLang.CodeAnalysis.Binding
             return new BoundForStatement(node.Variable, lowerBound, upperBound, body);
         }
 
+        protected virtual BoundStatement RewriteLabelStatement(BoundLabelStatement node)
+        {
+            return node;
+        }
+
+        protected virtual BoundStatement RewriteGotoStatement(BoundGotoStatement node)
+        {
+            return node;
+        }
+
+        protected virtual BoundStatement RewriteConditionalGotoStatement(BoundConditionalGotoStatement node)
+        {
+            var condition = RewriteExpression(node.Condition);
+            if (condition == node.Condition)
+                return node;
+
+            return new BoundConditionalGotoStatement(node.Label, condition, node.JumpIfTrue);
+        }
+
         protected virtual BoundStatement RewriteExpressionStatement(BoundExpressionStatement node)
         {
             var expression = RewriteExpression(node.Expression);
@@ -142,6 +136,8 @@ namespace LeoLang.CodeAnalysis.Binding
         {
             switch (node.Kind)
             {
+                case BoundNodeKind.ErrorExpression:
+                    return RewriteErrorExpression((BoundErrorExpression)node);
                 case BoundNodeKind.LiteralExpression:
                     return RewriteLiteralExpression((BoundLiteralExpression)node);
                 case BoundNodeKind.VariableExpression:
@@ -155,6 +151,11 @@ namespace LeoLang.CodeAnalysis.Binding
                 default:
                     throw new Exception($"Unexpected node: {node.Kind}");
             }
+        }
+
+        protected virtual BoundExpression RewriteErrorExpression(BoundErrorExpression node)
+        {
+            return node;
         }
 
         protected virtual BoundExpression RewriteLiteralExpression(BoundLiteralExpression node)
