@@ -58,5 +58,6 @@
         IfStatement,
         IfKeyword,
         ElseKeyword,
+        ElseClause,
     }
 }
