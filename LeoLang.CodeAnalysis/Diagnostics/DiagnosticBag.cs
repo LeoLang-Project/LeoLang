@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using LeoLang.CodeAnalysis.Binding;
+using LeoLang.CodeAnalysis.Symbols;
 using LeoLang.CodeAnalysis.Syntax;
 using LeoLang.CodeAnalysis.Text;
 
@@ -42,9 +43,9 @@ namespace LeoLang.CodeAnalysis.Diagnostics
             Report(span, message);
         }
 
-        public void ReportInvalidNumber(TextSpan span, string text, Type type)
+        public void ReportInvalidNumber(TextSpan span, string text, TypeSymbol TypeSymbol)
         {
-            var message = $"The number {text} isn't valid {type}.";
+            var message = $"The number {text} isn't valid {TypeSymbol}.";
             Report(span, message);
         }
 
@@ -67,21 +68,21 @@ namespace LeoLang.CodeAnalysis.Diagnostics
             Report(span, message);
         }
 
-        public void ReportUndefinedUnaryOperator(TextSpan span, string operatorText, Type operandType)
+        public void ReportUndefinedUnaryOperator(TextSpan span, string operatorText, TypeSymbol operandTypeSymbol)
         {
-            var message = $"Unary operator '{operatorText}' is not defined for type '{operandType}'.";
+            var message = $"Unary operator '{operatorText}' is not defined for TypeSymbol '{operandTypeSymbol}'.";
             Report(span, message);
         }
 
-        public void ReportUndefinedBinaryOperator(TextSpan span, string operatorText, Type leftType, Type rightType)
+        public void ReportUndefinedBinaryOperator(TextSpan span, string operatorText, TypeSymbol leftTypeSymbol, TypeSymbol rightTypeSymbol)
         {
-            var message = $"Binary operator '{operatorText}' is not defined for types '{leftType}' and '{rightType}'.";
+            var message = $"Binary operator '{operatorText}' is not defined for TypeSymbols '{leftTypeSymbol}' and '{rightTypeSymbol}'.";
             Report(span, message);
         }
 
         internal void ReportNoDefault(TextSpan span, string value)
         {
-            var message = $"No Default Value found for Type '{value}'.";
+            var message = $"No Default Value found for TypeSymbol '{value}'.";
             Report(span, message);
         }
 
@@ -96,9 +97,9 @@ namespace LeoLang.CodeAnalysis.Diagnostics
             return _diagnostics.GetEnumerator();
         }
 
-        public void ReportCannotConvert(TextSpan span, Type fromType, Type toType)
+        public void ReportCannotConvert(TextSpan span, TypeSymbol fromTypeSymbol, TypeSymbol toTypeSymbol)
         {
-            var message = $"Cannot convert type '{fromType}' to '{toType}'.";
+            var message = $"Cannot convert TypeSymbol '{fromTypeSymbol}' to '{toTypeSymbol}'.";
             Report(span, message);
         }
     }
