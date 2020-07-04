@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LeoLang.CodeAnalysis.Text
 {
-    internal sealed class AnnotatedText
+    public sealed class AnnotatedText
     {
         public AnnotatedText(string text, ImmutableArray<TextSpan> spans)
         {
