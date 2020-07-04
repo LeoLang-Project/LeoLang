@@ -4,7 +4,7 @@ namespace LeoLang.CodeAnalysis.Binding
 {
     internal sealed class BoundConditionalGotoStatement : BoundStatement
     {
-        public BoundConditionalGotoStatement(LabelSymbol label, BoundExpression condition, bool jumpIfFalse = false)
+        public BoundConditionalGotoStatement(BoundLabel label, BoundExpression condition, bool jumpIfFalse = false)
         {
             Label = label;
             Condition = condition;
@@ -12,7 +12,7 @@ namespace LeoLang.CodeAnalysis.Binding
         }
 
         public override BoundNodeKind Kind => BoundNodeKind.ConditionalGotoStatement;
-        public LabelSymbol Label { get; }
+        public BoundLabel Label { get; }
         public BoundExpression Condition { get; }
         public bool JumpIfFalse { get; }
     }
