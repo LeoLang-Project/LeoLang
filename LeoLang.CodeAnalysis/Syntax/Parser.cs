@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LeoLang.CodeAnalysis.Text;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
@@ -11,8 +12,9 @@ namespace LeoLang.CodeAnalysis.Syntax
 
         private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
         private int _position;
+        private readonly SourceText _text;
 
-        public Parser(string text)
+        public Parser(SourceText text)
         {
             var tokens = new List<SyntaxToken>();
 
@@ -29,6 +31,7 @@ namespace LeoLang.CodeAnalysis.Syntax
                 }
             } while (token.Kind != SyntaxKind.EndOfFileToken);
 
+            _text = text;
             _tokens = tokens.ToImmutableArray();
             _diagnostics.AddRange(lexer.Diagnostics);
         }
@@ -114,7 +117,7 @@ namespace LeoLang.CodeAnalysis.Syntax
         {
             var expresion = ParseExpression();
             var endOfFileToken = MatchToken(SyntaxKind.EndOfFileToken);
-            return new SyntaxTree(_diagnostics, expresion, endOfFileToken);
+            return new SyntaxTree(_text, _diagnostics.ToImmutableArray(), expresion, endOfFileToken);
         }
 
         private ExpressionSyntax ParsePrimaryExpression()

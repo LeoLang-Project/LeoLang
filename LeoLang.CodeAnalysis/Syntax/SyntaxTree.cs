@@ -1,35 +1,53 @@
-﻿using System.Collections;
+﻿using LeoLang.CodeAnalysis.Text;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 
 namespace LeoLang.CodeAnalysis.Syntax
 {
-    public class SyntaxTree
+    public sealed class SyntaxTree
     {
-        public SyntaxTree(DiagnosticBag diagnostics, ExpressionSyntax root, SyntaxToken endoffileToken)
+        public SyntaxTree(SourceText text, ImmutableArray<Diagnostic> diagnostics, ExpressionSyntax root, SyntaxToken endOfFileToken)
         {
+            Text = text;
             Diagnostics = diagnostics;
             Root = root;
-            EndoffileToken = endoffileToken;
+            EndOfFileToken = endOfFileToken;
         }
 
-        public DiagnosticBag Diagnostics { get; }
+        public SourceText Text { get; }
+        public ImmutableArray<Diagnostic> Diagnostics { get; }
         public ExpressionSyntax Root { get; }
-        public SyntaxToken EndoffileToken { get; }
+        public SyntaxToken EndOfFileToken { get; }
 
-        public static SyntaxTree Parse(string line)
+        public static SyntaxTree Parse(string text)
         {
-            var parser = new Parser(line);
+            var sourceText = SourceText.From(text);
+            return Parse(sourceText);
+        }
+
+        public static SyntaxTree Parse(SourceText text)
+        {
+            var parser = new Parser(text);
             return parser.Parse();
         }
 
-        public static IEnumerable<SyntaxToken> ParseTokens(string line)
+        public static IEnumerable<SyntaxToken> ParseTokens(string text)
         {
-            var lexer = new Lexer(line);
-            while(true)
+            var sourceText = SourceText.From(text);
+            return ParseTokens(sourceText);
+        }
+
+        public static IEnumerable<SyntaxToken> ParseTokens(SourceText text)
+        {
+            var lexer = new Lexer(text);
+            while (true)
             {
                 var token = lexer.Lex();
-                if (token.Kind == SyntaxKind.EndOfFileToken) break;
+                if (token.Kind == SyntaxKind.EndOfFileToken)
+                    break;
+
                 yield return token;
             }
         }
