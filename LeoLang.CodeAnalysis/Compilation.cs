@@ -10,27 +10,24 @@ namespace LeoLang.CodeAnalysis
 {
     public sealed class Compilation
     {
-        public Compilation(SyntaxTree syntaxTree, Dictionary<VariableSymbol, object> variables)
+        public Compilation(SyntaxTree syntaxTree)
         {
             SyntaxTree = syntaxTree;
-            Variables = variables;
         }
 
         public SyntaxTree SyntaxTree { get; }
-        public Dictionary<VariableSymbol, object> Variables { get; }
 
-        public EvaluationResult Evaluate()
+        public EvaluationResult Evaluate(Dictionary<VariableSymbol, object> variables)
         {
-            var binder = new Binder(Variables);
+            var binder = new Binder(variables);
             var boundExpression = binder.BindExpression(SyntaxTree.Root);
 
             var diagnostics = SyntaxTree.Diagnostics.Concat(binder.Diagnostics).ToImmutableArray();
             if (diagnostics.Any())
                 return new EvaluationResult(diagnostics, null);
 
-            var evaluator = new Evaluator(boundExpression, Variables);
+            var evaluator = new Evaluator(boundExpression, variables);
             var value = evaluator.Evaluate();
-
             return new EvaluationResult(ImmutableArray<Diagnostic>.Empty, value);
         }
     }
