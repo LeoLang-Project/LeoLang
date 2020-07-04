@@ -59,5 +59,7 @@
         IfKeyword,
         ElseKeyword,
         ElseClause,
+        WhileStatement,
+        WhileKeyword,
     }
 }

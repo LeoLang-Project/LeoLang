@@ -68,6 +68,8 @@ namespace LeoLang.CodeAnalysis.Syntax
                     return SyntaxKind.FalseKeyword;
                 case "if":
                     return SyntaxKind.IfKeyword;
+                case "while":
+                    return SyntaxKind.WhileKeyword;
                 case "empty":
                     return SyntaxKind.EmptyKeyword;
                 case "none":
@@ -121,6 +123,8 @@ namespace LeoLang.CodeAnalysis.Syntax
                     return "-";
                 case SyntaxKind.StarToken:
                     return "*";
+                case SyntaxKind.WhileKeyword:
+                    return "while";
                 case SyntaxKind.SlashToken:
                     return "/";
                 case SyntaxKind.BangToken:
