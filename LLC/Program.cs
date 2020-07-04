@@ -8,7 +8,7 @@ using LeoLang.CodeAnalysis.Text;
 
 namespace LLC
 {
-    class Program
+    internal static class Program
     {
         private static void Main()
         {
@@ -47,7 +47,7 @@ namespace LLC
                     else if (input == "#showProgram")
                     {
                         showProgram = !showProgram;
-                        Console.WriteLine(showTree ? "Showing bound tree." : "Not showing bound tree.");
+                        Console.WriteLine(showProgram ? "Showing bound tree." : "Not showing bound tree.");
                         continue;
                     }
                     else if (input == "#cls")
@@ -75,13 +75,13 @@ namespace LLC
                                     ? new Compilation(syntaxTree)
                                     : previous.ContinueWith(syntaxTree);
 
-                var result = compilation.Evaluate(variables);
-
                 if (showTree)
                     syntaxTree.Root.WriteTo(Console.Out);
 
                 if (showProgram)
                     compilation.EmitTree(Console.Out);
+
+                var result = compilation.Evaluate(variables);
 
                 if (!result.Diagnostics.Any())
                 {
