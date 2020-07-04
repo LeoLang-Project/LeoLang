@@ -32,6 +32,10 @@ namespace LeoLang.CodeAnalysis.Syntax
                     return 4;
 
                 case SyntaxKind.EqualsEqualsToken:
+                case SyntaxKind.LessToken:
+                case SyntaxKind.LessOrEqualsToken:
+                case SyntaxKind.GreaterToken:
+                case SyntaxKind.GreaterOrEqualsToken:
                 case SyntaxKind.BangEqualsToken:
                 case SyntaxKind.ApostropheEqualsToken:
                 case SyntaxKind.EqualsEqualsEqualsToken:
@@ -99,6 +103,14 @@ namespace LeoLang.CodeAnalysis.Syntax
         {
             switch (kind)
             {
+                case SyntaxKind.LessToken:
+                    return "<";
+                case SyntaxKind.LessOrEqualsToken:
+                    return "<=";
+                case SyntaxKind.GreaterToken:
+                    return ">";
+                case SyntaxKind.GreaterOrEqualsToken:
+                    return ">=";
                 case SyntaxKind.PlusToken:
                     return "+";
                 case SyntaxKind.MinusToken:

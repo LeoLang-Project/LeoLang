@@ -11,6 +11,10 @@
         Equals,
         NotEquals,
         RefEquals,
-        TypeEquals
+        TypeEquals,
+        Less,
+        Greater,
+        GreaterOrEquals,
+        LessOrEquals
     }
 }

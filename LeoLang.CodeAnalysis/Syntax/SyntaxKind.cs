@@ -21,6 +21,10 @@
         CloseParenthesisToken,
         IdentifierToken,
         ApostropheToken,
+        LessToken,
+        LessOrEqualsToken,
+        GreaterToken,
+        GreaterOrEqualsToken,
 
         // Keywords
         FalseKeyword,

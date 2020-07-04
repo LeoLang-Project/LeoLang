@@ -137,6 +137,14 @@ namespace LeoLang.CodeAnalysis
                     return (bool)left || (bool)right;
                 case BoundBinaryOperatorKind.Equals:
                     return Equals(left, right);
+                case BoundBinaryOperatorKind.Less:
+                    return (int)left < (int)right;
+                case BoundBinaryOperatorKind.LessOrEquals:
+                    return (int)left <= (int)right;
+                case BoundBinaryOperatorKind.Greater:
+                    return (int)left > (int)right;
+                case BoundBinaryOperatorKind.GreaterOrEquals:
+                    return (int)left >= (int)right;
                 case BoundBinaryOperatorKind.NotEquals:
                     return !Equals(left, right);
                 case BoundBinaryOperatorKind.TypeEquals:
