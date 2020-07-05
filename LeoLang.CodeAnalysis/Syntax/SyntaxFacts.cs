@@ -146,6 +146,8 @@ namespace LeoLang.CodeAnalysis.Syntax
                     return "to";
                 case SyntaxKind.SlashToken:
                     return "/";
+                case SyntaxKind.CommaToken:
+                    return ",";
                 case SyntaxKind.BangToken:
                     return "!";
                 case SyntaxKind.EqualsToken:

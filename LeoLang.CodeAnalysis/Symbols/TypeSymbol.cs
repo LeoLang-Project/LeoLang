@@ -9,6 +9,7 @@
         public static readonly TypeSymbol Some = new TypeSymbol("some");
         public static readonly TypeSymbol Any = new TypeSymbol("any");
         public static readonly TypeSymbol Type = new TypeSymbol("type");
+        public static readonly TypeSymbol Void = new TypeSymbol("void");
         public static readonly TypeSymbol Error = new TypeSymbol("?");
 
         private TypeSymbol(string name)

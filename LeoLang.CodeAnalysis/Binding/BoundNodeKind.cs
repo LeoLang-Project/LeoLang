@@ -4,7 +4,7 @@
     {
         UnaryExpression,
         LiteralExpression,
-        TypeOfExpression,
+        DefaultExpression,
         VariableExpression,
         AssignmentExpression,
         SomeExpression,
@@ -18,6 +18,8 @@
         ConditionalGotoStatement,
         LabelStatement,
         GotoStatement,
-        ErrorExpression
+        ErrorExpression,
+        CallExpression,
+        TypeOfExpression
     }
 }

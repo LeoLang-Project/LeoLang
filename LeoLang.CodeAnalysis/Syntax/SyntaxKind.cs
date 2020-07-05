@@ -69,5 +69,7 @@
         AmpersandToken,
         PipeToken,
         StringToken,
+        CallExpression,
+        CommaToken,
     }
 }

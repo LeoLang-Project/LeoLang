@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LeoLang.CodeAnalysis.Syntax;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
@@ -148,9 +149,61 @@ namespace LeoLang.CodeAnalysis.Binding
                     return RewriteUnaryExpression((BoundUnaryExpression)node);
                 case BoundNodeKind.BinaryExpression:
                     return RewriteBinaryExpression((BoundBinaryExpression)node);
+                case BoundNodeKind.CallExpression:
+                    return RewriteCallExpression((BoundCallExpression)node);
+                case BoundNodeKind.TypeOfExpression:
+                    return RewriteTypeOfExpression((BoundTypeOfExpression)node);
+                case BoundNodeKind.SomeExpression:
+                    return RewriteSomeExpression((BoundSomeExpression)node);
+                case BoundNodeKind.DefaultExpression:
+                    return RewriteDefaultExpression((BoundDefaultExpression)node);
                 default:
                     throw new Exception($"Unexpected node: {node.Kind}");
             }
+        }
+
+        private BoundExpression RewriteTypeOfExpression(BoundTypeOfExpression node)
+        {
+            return node;
+        }
+
+        private BoundExpression RewriteSomeExpression(BoundSomeExpression node)
+        {
+            return node.Value;
+        }
+
+        private BoundExpression RewriteDefaultExpression(BoundDefaultExpression node)
+        {
+            return node.Value;
+        }
+
+        protected virtual BoundExpression RewriteCallExpression(BoundCallExpression node)
+        {
+            ImmutableArray<BoundExpression>.Builder builder = null;
+
+            for (var i = 0; i < node.Arguments.Length; i++)
+            {
+                var oldArgument = node.Arguments[i];
+                var newArgument = RewriteExpression(oldArgument);
+                if (newArgument != oldArgument)
+                {
+                    if (builder == null)
+                    {
+                        builder = ImmutableArray.CreateBuilder<BoundExpression>(node.Arguments.Length);
+
+                        for (var j = 0; j < i; j++)
+                            builder.Add(node.Arguments[j]);
+                    }
+                }
+
+                if (builder != null)
+                    builder.Add(newArgument);
+            }
+
+            if (builder == null)
+                return node;
+
+            return new BoundCallExpression(node.Function, builder.MoveToImmutable());
         }
 
         protected virtual BoundExpression RewriteErrorExpression(BoundErrorExpression node)

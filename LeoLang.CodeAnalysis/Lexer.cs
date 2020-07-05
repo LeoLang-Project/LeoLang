@@ -57,6 +57,10 @@ namespace LeoLang.CodeAnalysis
                     _kind = SyntaxKind.MinusToken;
                     _position++;
                     break;
+                case ',':
+                    _kind = SyntaxKind.CommaToken;
+                    _position++;
+                    break;
                 case '*':
                     _kind = SyntaxKind.StarToken;
                     _position++;

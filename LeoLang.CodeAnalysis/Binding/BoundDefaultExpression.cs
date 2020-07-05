@@ -14,6 +14,6 @@ namespace LeoLang.CodeAnalysis.Binding
 
         public override TypeSymbol Type => TypeSymbol.Any;
 
-        public override BoundNodeKind Kind => BoundNodeKind.TypeOfExpression;
+        public override BoundNodeKind Kind => BoundNodeKind.DefaultExpression;
     }
 }

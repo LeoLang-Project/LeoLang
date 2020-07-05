@@ -3,3 +3,5 @@ change syntax of
  [ ] while-statement
  [ ] for-statement
 design syntax for statements
+
+add nameof(identifier)

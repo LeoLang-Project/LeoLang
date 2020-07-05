@@ -67,6 +67,35 @@ namespace LeoLang.CodeAnalysis
             return new SyntaxToken(kind, Current.Position, null, null);
         }
 
+        private ExpressionSyntax ParseCallExpression()
+        {
+            var identifier = MatchToken(SyntaxKind.IdentifierToken);
+            var openParenthesisToken = MatchToken(SyntaxKind.OpenParenthesisToken);
+            var arguments = ParseArguments();
+            var closeParenthesisToken = MatchToken(SyntaxKind.CloseParenthesisToken);
+
+            return new CallExpressionSyntax(identifier, openParenthesisToken, arguments, closeParenthesisToken);
+        }
+
+        private SeparatedSyntaxList<ExpressionSyntax> ParseArguments()
+        {
+            var nodesAndSeperators = ImmutableArray.CreateBuilder<SyntaxNode>();
+
+            while(Current.Kind != SyntaxKind.CloseParenthesisToken &&
+                Current.Kind != SyntaxKind.EndOfFileToken)
+            {
+                var expression = ParseExpression();
+                nodesAndSeperators.Add(expression);
+
+                if(Current.Kind != SyntaxKind.CloseParenthesisToken)
+                {
+                    var comma = MatchToken(SyntaxKind.CommaToken);
+                    nodesAndSeperators.Add(comma);
+                }
+            }
+            return new SeparatedSyntaxList<ExpressionSyntax>(nodesAndSeperators.ToImmutable());
+        }
+
         private ExpressionSyntax ParseAssignmentExpression()
         {
             if(Peek(0).Kind == SyntaxKind.IdentifierToken && Peek(1).Kind == SyntaxKind.EqualsToken)
@@ -250,25 +279,17 @@ namespace LeoLang.CodeAnalysis
                 case SyntaxKind.FalseKeyword:
                 case SyntaxKind.TrueKeyword:
                     {
-                        var keywordToken = NextToken();
-                        var value = keywordToken.Kind != SyntaxKind.FalseKeyword;
-
-                        return new LiteralExpressionSyntax(keywordToken, value);
+                        return ParseBooleanLiteral();
                     }
                 case SyntaxKind.IdentifierToken:
                     {
-                        var identifierToken = NextToken();
-    
-                        return new NameExpressionSyntax(identifierToken);
+                        return ParseNameOrCallExpression();
                     }
                 case SyntaxKind.StringToken:
                     return ParseStringLiteral();
                 case SyntaxKind.ApostropheToken:
                     {
-                        var symbolToken = NextToken();
-                        var valueToken = MatchToken(SyntaxKind.IdentifierToken);
-
-                        return new LiteralExpressionSyntax(new SyntaxToken(SyntaxKind.SymbolLiteral, symbolToken.Position, valueToken.Text, valueToken.Value));
+                        return ParseSymbolLiteral();
                     }
                 case SyntaxKind.SomeKeyword:
                     {
@@ -302,10 +323,42 @@ namespace LeoLang.CodeAnalysis
                     }
                 default:
                     {
-                        var numberToken = MatchToken(SyntaxKind.NumberToken);
-                        return new LiteralExpressionSyntax(numberToken);
+                        return ParseNameOrCallExpression();
                     }
             }
+        }
+
+        private ExpressionSyntax ParseSymbolLiteral()
+        {
+            var symbolToken = NextToken();
+            var valueToken = MatchToken(SyntaxKind.IdentifierToken);
+
+            return new LiteralExpressionSyntax(new SyntaxToken(SyntaxKind.SymbolLiteral, symbolToken.Position, valueToken.Text, valueToken.Value));
+        }
+
+        private ExpressionSyntax ParseBooleanLiteral()
+        {
+            var keywordToken = NextToken();
+            var value = keywordToken.Kind != SyntaxKind.FalseKeyword;
+
+            return new LiteralExpressionSyntax(keywordToken, value);
+        }
+
+        private ExpressionSyntax ParseNameOrCallExpression()
+        {
+            if (Peek(0).Kind == SyntaxKind.IdentifierToken && Peek(1).Kind == SyntaxKind.OpenParenthesisToken)
+            {
+                return ParseCallExpression();
+            }
+
+            return ParseNameExpression();
+        }
+
+        private ExpressionSyntax ParseNameExpression()
+        {
+            var identifierToken = NextToken();
+
+            return new NameExpressionSyntax(identifierToken);
         }
     }
 }
