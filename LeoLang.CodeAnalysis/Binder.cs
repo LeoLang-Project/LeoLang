@@ -192,6 +192,11 @@ namespace LeoLang.CodeAnalysis
             return new BoundExpressionStatement(expression);
         }
 
+        private BoundExpression BindNameOfExpression(NameOfExpressionSyntax syntax)
+        {
+            return new BoundLiteralExpression(syntax.Identifier.Text);
+        }
+
         private BoundExpression BindExpression(ExpressionSyntax syntax, TypeSymbol targetType)
         {
             var result = BindExpression(syntax);
@@ -242,6 +247,8 @@ namespace LeoLang.CodeAnalysis
                     return BindTypeOfExpression((TypeOfExpressionSyntax)syntax);
                 case SyntaxKind.CallExpression:
                     return BindCallExpression((CallExpressionSyntax)syntax);
+                case SyntaxKind.NameOfExpression:
+                    return BindNameOfExpression((NameOfExpressionSyntax)syntax);
                 default:
                     throw new Exception($"Unexpected syntax {syntax.Kind}");
             }

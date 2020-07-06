@@ -71,5 +71,7 @@
         StringToken,
         CallExpression,
         CommaToken,
+        NameOfKeyword,
+        NameOfExpression,
     }
 }

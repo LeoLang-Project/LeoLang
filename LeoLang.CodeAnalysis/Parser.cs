@@ -291,6 +291,8 @@ namespace LeoLang.CodeAnalysis
                     {
                         return ParseSymbolLiteral();
                     }
+                case SyntaxKind.NameOfKeyword:
+                    return ParseNameOfExpression();
                 case SyntaxKind.SomeKeyword:
                     {
                         var someToken = NextToken();
@@ -326,6 +328,16 @@ namespace LeoLang.CodeAnalysis
                         return ParseNameOrCallExpression();
                     }
             }
+        }
+
+        private ExpressionSyntax ParseNameOfExpression()
+        {
+            var nameOfToken = NextToken();
+            var openParan = MatchToken(SyntaxKind.OpenParenthesisToken);
+            var identifier = MatchToken(SyntaxKind.IdentifierToken);
+            var closeParan = MatchToken(SyntaxKind.CloseParenthesisToken);
+
+            return new NameOfExpressionSyntax(nameOfToken, openParan, identifier, closeParan);
         }
 
         private ExpressionSyntax ParseSymbolLiteral()

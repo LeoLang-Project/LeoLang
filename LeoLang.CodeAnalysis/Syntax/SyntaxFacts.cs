@@ -85,6 +85,8 @@ namespace LeoLang.CodeAnalysis.Syntax
                     return SyntaxKind.SomeKeyword;
                 case "default":
                     return SyntaxKind.DefaultKeyword;
+                case "nameof":
+                    return SyntaxKind.NameOfKeyword;
                 case "typeof":
                     return SyntaxKind.TypeOfKeyword;
                 default:
