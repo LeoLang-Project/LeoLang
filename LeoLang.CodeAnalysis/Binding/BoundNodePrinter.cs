@@ -77,6 +77,17 @@ namespace LeoLang.CodeAnalysis.Binding
             }
         }
 
+        private static void WriteReturnStatement(BoundReturnStatement node, IndentedTextWriter writer)
+        {
+            writer.WriteKeyword("return ");
+            if (node.Expression != null)
+            {
+                writer.Write(" ");
+                node.Expression.WriteTo(writer);
+            }
+            writer.WriteLine();
+        }
+
         private static void WriteNestedStatement(this IndentedTextWriter writer, BoundStatement node)
         {
             var needsIndentation = !(node is BoundBlockStatement);

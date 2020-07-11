@@ -83,5 +83,7 @@
         ContinueStatement,
         ContinueKeyword,
         BreakKeyword,
+        ReturnKeyword,
+        ReturnStatement,
     }
 }

@@ -14,6 +14,8 @@ namespace LeoLang.CodeAnalysis.Binding
             {
                 case BoundNodeKind.BlockStatement:
                     return RewriteBlockStatement((BoundBlockStatement)node);
+                case BoundNodeKind.ReturnStatement:
+                    return RewriteReturnStatement((BoundReturnStatement)node);
                 case BoundNodeKind.VariableDeclaration:
                     return RewriteVariableDeclaration((BoundVariableDeclaration)node);
                 case BoundNodeKind.IfStatement:
@@ -33,6 +35,15 @@ namespace LeoLang.CodeAnalysis.Binding
                 default:
                     throw new Exception($"Unexpected node: {node.Kind}");
             }
+        }
+
+        protected virtual BoundStatement RewriteReturnStatement(BoundReturnStatement node)
+        {
+            var expression = node.Expression == null ? null : RewriteExpression(node.Expression);
+            if (expression == node.Expression)
+                return node;
+
+            return new BoundReturnStatement(expression);
         }
 
         protected virtual BoundStatement RewriteBlockStatement(BoundBlockStatement node)

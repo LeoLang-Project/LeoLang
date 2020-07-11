@@ -49,6 +49,10 @@ namespace LeoLang.CodeAnalysis
                         EvaluateVariableDeclaration((BoundVariableDeclaration)s);
                         index++;
                         break;
+                    case BoundNodeKind.ReturnStatement:
+                        var rs = (BoundReturnStatement)s;
+                        _lastValue = rs.Expression == null ? null : EvaluateExpression(rs.Expression);
+                        return _lastValue;
                     case BoundNodeKind.ExpressionStatement:
                         EvaluateExpressionStatement((BoundExpressionStatement)s);
                         index++;

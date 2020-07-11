@@ -65,6 +65,8 @@ namespace LeoLang.CodeAnalysis.Syntax
                     return SyntaxKind.ContinueKeyword;
                 case "function":
                     return SyntaxKind.FunctionKeyword;
+                case "return":
+                    return SyntaxKind.ReturnKeyword;
                 case "let":
                     return SyntaxKind.LetKeyword;
                 case "true":

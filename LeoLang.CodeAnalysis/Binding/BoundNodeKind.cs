@@ -21,6 +21,7 @@
         ErrorExpression,
         CallExpression,
         TypeOfExpression,
-        ConversionExpression
+        ConversionExpression,
+        ReturnStatement
     }
 }
