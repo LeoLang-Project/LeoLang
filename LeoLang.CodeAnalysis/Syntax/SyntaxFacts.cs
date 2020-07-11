@@ -130,6 +130,8 @@ namespace LeoLang.CodeAnalysis.Syntax
                     return "+";
                 case SyntaxKind.MinusToken:
                     return "-";
+                case SyntaxKind.ColonToken:
+                    return ":";
                 case SyntaxKind.StarToken:
                     return "*";
                 case SyntaxKind.TildeToken:

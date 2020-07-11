@@ -65,6 +65,10 @@ namespace LeoLang.CodeAnalysis
                     _kind = SyntaxKind.StarToken;
                     _position++;
                     break;
+                case ':':
+                    _kind = SyntaxKind.ColonToken;
+                    _position++;
+                    break;
                 case '/':
                     _kind = SyntaxKind.SlashToken;
                     _position++;

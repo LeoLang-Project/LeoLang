@@ -73,5 +73,7 @@
         CommaToken,
         NameOfKeyword,
         NameOfExpression,
+        ColonToken,
+        TypeClause,
     }
 }
