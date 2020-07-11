@@ -16,7 +16,7 @@ namespace LeoLang.CodeAnalysis
     internal sealed class Binder
     {
         private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
-
+        private readonly bool _isScript;
 
         public DiagnosticBag Diagnostics => _diagnostics;
 
@@ -25,9 +25,10 @@ namespace LeoLang.CodeAnalysis
         private int _labelCounter;
         private BoundScope _scope;
 
-        public Binder(BoundScope parent, FunctionSymbol function)
+        public Binder(bool isScript, BoundScope parent, FunctionSymbol function)
         {
             _scope = new BoundScope(parent);
+            _isScript = isScript;
             _function = function;
 
             if (function != null)
@@ -42,10 +43,34 @@ namespace LeoLang.CodeAnalysis
             return new BoundExpressionStatement(new BoundErrorExpression());
         }
 
-        public static BoundGlobalScope BindGlobalScope(BoundGlobalScope previous, ImmutableArray<SyntaxTree> syntaxTrees)
+        private BoundStatement BindGlobalStatement(StatementSyntax syntax)
+        {
+            return BindStatement(syntax, isGlobal: true);
+        }
+
+        private BoundStatement BindStatement(StatementSyntax syntax, bool isGlobal = false)
+        {
+            var result = BindStatementInternal(syntax);
+
+            if (!_isScript || !isGlobal)
+            {
+                if (result is BoundExpressionStatement es)
+                {
+                    var isAllowedExpression = es.Expression.Kind == BoundNodeKind.ErrorExpression ||
+                                              es.Expression.Kind == BoundNodeKind.AssignmentExpression ||
+                                              es.Expression.Kind == BoundNodeKind.CallExpression;
+                    if (!isAllowedExpression)
+                        _diagnostics.ReportInvalidExpressionStatement(syntax.Location);
+                }
+            }
+
+            return result;
+        }
+
+        public static BoundGlobalScope BindGlobalScope(bool isScript, BoundGlobalScope previous, ImmutableArray<SyntaxTree> syntaxTrees)
         {
             var parentScope = CreateParentScope(previous);
-            var binder = new Binder(parentScope, function: null);
+            var binder = new Binder(isScript, parentScope, function: null);
 
             var functionDeclarations = syntaxTrees.SelectMany(st => st.Root.Members)
                                                   .OfType<FunctionDeclarationSyntax>();
@@ -60,7 +85,7 @@ namespace LeoLang.CodeAnalysis
 
             foreach (var globalStatement in globalStatements)
             {
-                var statement = binder.BindStatement(globalStatement.Statement);
+                var statement = binder.BindGlobalStatement(globalStatement.Statement);
                 statements.Add(statement);
             }
 
@@ -74,37 +99,30 @@ namespace LeoLang.CodeAnalysis
             return new BoundGlobalScope(previous, diagnostics, functions, variables, statements.ToImmutable());
         }
 
-        public static BoundProgram BindProgram(BoundGlobalScope globalScope)
+        public static BoundProgram BindProgram(bool isScript, BoundProgram previous, BoundGlobalScope globalScope)
         {
             var parentScope = CreateParentScope(globalScope);
 
             var functionBodies = ImmutableDictionary.CreateBuilder<FunctionSymbol, BoundBlockStatement>();
             var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
 
-            var scope = globalScope;
-
-            while (scope != null)
+            foreach (var function in globalScope.Functions)
             {
-                foreach (var function in scope.Functions)
-                {
-                    var binder = new Binder(parentScope, function);
-                    var body = binder.BindStatement(function.Declaration.Body);
-                    var loweredBody = Lowerer.Lower(body);
+                var binder = new Binder(isScript, parentScope, function);
+                var body = binder.BindStatement(function.Declaration.Body);
+                var loweredBody = Lowerer.Lower(body);
 
-                    if (function.Type != TypeSymbol.Void && !ControlFlowGraph.AllPathsReturn(loweredBody))
-                        binder._diagnostics.ReportAllPathsMustReturn(function.Declaration.Identifier.Location);
+                if (function.Type != TypeSymbol.Void && !ControlFlowGraph.AllPathsReturn(loweredBody))
+                    binder._diagnostics.ReportAllPathsMustReturn(function.Declaration.Identifier.Location);
 
-                    functionBodies.Add(function, loweredBody);
+                functionBodies.Add(function, loweredBody);
 
-                    diagnostics.AddRange(binder.Diagnostics);
-                }
-
-                scope = scope.Previous;
+                diagnostics.AddRange(binder.Diagnostics);
             }
 
             var statement = Lowerer.Lower(new BoundBlockStatement(globalScope.Statements));
 
-            return new BoundProgram(diagnostics.ToImmutable(), functionBodies.ToImmutable(), statement);
+            return new BoundProgram(previous, diagnostics.ToImmutable(), functionBodies.ToImmutable(), statement);
         }
 
         private BoundStatement BindReturnStatement(ReturnStatementSyntax syntax)
@@ -200,7 +218,7 @@ namespace LeoLang.CodeAnalysis
             return result;
         }
 
-        private BoundStatement BindStatement(StatementSyntax syntax)
+        private BoundStatement BindStatementInternal(StatementSyntax syntax)
         {
             switch (syntax.Kind)
             {

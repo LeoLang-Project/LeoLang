@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using LeoLang.CodeAnalysis.Binding;
 using LeoLang.CodeAnalysis.ControlFlow;
 using LeoLang.CodeAnalysis.Diagnostics;
-using LeoLang.CodeAnalysis.Lowering;
 using LeoLang.CodeAnalysis.Symbols;
-using LeoLang.CodeAnalysis.Syntax;
 
 namespace LeoLang.CodeAnalysis
 {
@@ -17,19 +16,28 @@ namespace LeoLang.CodeAnalysis
     {
         private BoundGlobalScope _globalScope;
 
-        public Compilation(params SyntaxTree[] syntaxTrees)
-            : this(null, syntaxTrees)
+        private Compilation(bool isScript, Compilation previous, params SyntaxTree[] syntaxTrees)
         {
-        }
-
-        private Compilation(Compilation previous, params SyntaxTree[] syntaxTrees)
-        {
+            IsScript = isScript;
             Previous = previous;
             SyntaxTrees = syntaxTrees.ToImmutableArray();
         }
 
+        public static Compilation Create(params SyntaxTree[] syntaxTrees)
+        {
+            return new Compilation(isScript: false, previous: null, syntaxTrees);
+        }
+
+        public static Compilation CreateScript(Compilation previous, params SyntaxTree[] syntaxTrees)
+        {
+            return new Compilation(isScript: true, previous, syntaxTrees);
+        }
+
+        public bool IsScript { get; }
         public Compilation Previous { get; }
         public ImmutableArray<SyntaxTree> SyntaxTrees { get; }
+        public ImmutableArray<FunctionSymbol> Functions => GlobalScope.Functions;
+        public ImmutableArray<VariableSymbol> Variables => GlobalScope.Variables;
 
         internal BoundGlobalScope GlobalScope
         {
@@ -37,7 +45,7 @@ namespace LeoLang.CodeAnalysis
             {
                 if (_globalScope == null)
                 {
-                    var globalScope = Binder.BindGlobalScope(Previous?.GlobalScope, SyntaxTrees);
+                    var globalScope = Binder.BindGlobalScope(IsScript, Previous?.GlobalScope, SyntaxTrees);
                     Interlocked.CompareExchange(ref _globalScope, globalScope, null);
                 }
 
@@ -45,9 +53,42 @@ namespace LeoLang.CodeAnalysis
             }
         }
 
-        public Compilation ContinueWith(SyntaxTree syntaxTree)
+        public IEnumerable<Symbol> GetSymbols()
         {
-            return new Compilation(this, syntaxTree);
+            var submission = this;
+            var seenSymbolNames = new HashSet<string>();
+
+            while (submission != null)
+            {
+                const BindingFlags bindingFlags =
+                    BindingFlags.Static |
+                    BindingFlags.Public |
+                    BindingFlags.NonPublic;
+                var builtinFunctions = typeof(BuiltinFunctions)
+                    .GetFields(bindingFlags)
+                    .Where(fi => fi.FieldType == typeof(FunctionSymbol))
+                    .Select(fi => (FunctionSymbol)fi.GetValue(obj: null))
+                    .ToList();
+                foreach (var builtin in builtinFunctions)
+                    if (seenSymbolNames.Add(builtin.Name))
+                        yield return builtin;
+
+                foreach (var function in submission.Functions)
+                    if (seenSymbolNames.Add(function.Name))
+                        yield return function;
+
+                foreach (var variable in submission.Variables)
+                    if (seenSymbolNames.Add(variable.Name))
+                        yield return variable;
+
+                submission = submission.Previous;
+            }
+        }
+
+        private BoundProgram GetProgram()
+        {
+            var previous = Previous == null ? null : Previous.GetProgram();
+            return Binder.BindProgram(IsScript, previous, GlobalScope);
         }
 
         public EvaluationResult Evaluate(Dictionary<VariableSymbol, object> variables)
@@ -58,7 +99,7 @@ namespace LeoLang.CodeAnalysis
             if (diagnostics.Any())
                 return new EvaluationResult(diagnostics, null);
 
-            var program = Binder.BindProgram(GlobalScope);
+            var program = GetProgram();
 
             var appPath = Environment.GetCommandLineArgs()[0];
             var appDirectory = Path.GetDirectoryName(appPath);
@@ -80,7 +121,7 @@ namespace LeoLang.CodeAnalysis
 
         public void EmitTree(TextWriter writer)
         {
-            var program = Binder.BindProgram(GlobalScope);
+            var program = GetProgram();
 
             if (program.Statement.Statements.Any())
             {
@@ -94,9 +135,20 @@ namespace LeoLang.CodeAnalysis
                         continue;
 
                     functionBody.Key.WriteTo(writer);
+                    writer.WriteLine();
                     functionBody.Value.WriteTo(writer);
                 }
             }
+        }
+
+        public void EmitTree(FunctionSymbol symbol, TextWriter writer)
+        {
+            var program = GetProgram();
+            symbol.WriteTo(writer);
+            writer.WriteLine();
+            if (!program.Functions.TryGetValue(symbol, out var body))
+                return;
+            body.WriteTo(writer);
         }
     }
 }

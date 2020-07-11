@@ -68,6 +68,12 @@ namespace LeoLang.CodeAnalysis.Diagnostics
             Report(span, message);
         }
 
+        public void ReportInvalidExpressionStatement(TextLocation location)
+        {
+            var message = $"Only assignment and call expressions can be used as a statement.";
+            Report(location, message);
+        }
+
         public void ReportWrongArgumentCount(TextLocation span, string name, int expectedCount, int actualCount)
         {
             var message = $"Function '{name}' requires {expectedCount} arguments but was given {actualCount}.";

@@ -94,10 +94,8 @@ namespace LeoRepl
         {
             var syntaxTree = SyntaxTree.Parse(text);
 
-            var compilation = _previous == null
-                                ? new Compilation(syntaxTree)
-                                : _previous.ContinueWith(syntaxTree);
-
+            var compilation = Compilation.CreateScript(_previous, syntaxTree);
+            
             if (_showTree)
                 syntaxTree.Root.WriteTo(Console.Out);
 
