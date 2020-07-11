@@ -7,13 +7,13 @@ namespace LeoLang.CodeAnalysis.Symbols
         public FunctionSymbol(string name, ImmutableArray<ParameterSymbol> parameters, TypeSymbol type)
             : base(name)
         {
-            Parameter = parameters;
+            Parameters = parameters;
             Type = type;
         }
 
         public override SymbolKind Kind => SymbolKind.Function;
 
-        public ImmutableArray<ParameterSymbol> Parameter { get; }
+        public ImmutableArray<ParameterSymbol> Parameters { get; }
         public TypeSymbol Type { get; }
     }
 }
