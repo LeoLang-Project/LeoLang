@@ -264,6 +264,12 @@ namespace LeoLang.CodeAnalysis
             return new LiteralExpressionSyntax(stringToken);
         }
 
+        private ExpressionSyntax ParseNumberLiteral()
+        {
+            var numberToken = MatchToken(SyntaxKind.NumberToken);
+            return new LiteralExpressionSyntax(numberToken);
+        }
+
         private ExpressionSyntax ParsePrimaryExpression()
         {
             switch (Current.Kind)
@@ -275,6 +281,8 @@ namespace LeoLang.CodeAnalysis
                         var right = MatchToken(SyntaxKind.CloseParenthesisToken);
                         return new ParenthesizedExpressionSyntax(left, expression, right);
                     }
+                case SyntaxKind.NumberToken:
+                    return ParseNumberLiteral();
 
                 case SyntaxKind.FalseKeyword:
                 case SyntaxKind.TrueKeyword:
