@@ -75,5 +75,9 @@
         NameOfExpression,
         ColonToken,
         TypeClause,
+        FunctionDeclaration,
+        Parameter,
+        FunctionKeyword,
+        GlobalStatement,
     }
 }

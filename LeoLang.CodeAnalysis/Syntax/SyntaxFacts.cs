@@ -59,6 +59,8 @@ namespace LeoLang.CodeAnalysis.Syntax
         {
             switch (text)
             {
+                case "function":
+                    return SyntaxKind.FunctionKeyword;
                 case "let":
                     return SyntaxKind.LetKeyword;
                 case "true":
@@ -136,6 +138,8 @@ namespace LeoLang.CodeAnalysis.Syntax
                     return "*";
                 case SyntaxKind.TildeToken:
                     return "~";
+                case SyntaxKind.FunctionKeyword:
+                    return "function";
                 case SyntaxKind.AmpersandToken:
                     return "&";
                 case SyntaxKind.HatToken:
