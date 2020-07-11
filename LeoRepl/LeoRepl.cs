@@ -116,7 +116,7 @@ namespace LeoRepl
             }
             else
             {
-                foreach (var diagnostic in result.Diagnostics)
+                foreach (var diagnostic in result.Diagnostics.OrderBy(_=> _.Span, new TextSpanComparer()))
                 {
                     var lineIndex = syntaxTree.Text.GetLineIndex(diagnostic.Span.Start);
                     var line = syntaxTree.Text.Lines[lineIndex];
