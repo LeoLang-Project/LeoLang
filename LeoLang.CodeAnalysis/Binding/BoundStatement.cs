@@ -1,6 +1,6 @@
 ﻿namespace LeoLang.CodeAnalysis.Binding
 {
-    public abstract class BoundStatement : BoundNode
+    internal abstract class BoundStatement : BoundNode
     {
     }
 }
