@@ -24,30 +24,6 @@ namespace LeoLang.CodeAnalysis
             _scope = new BoundScope(parent);
         }
 
-        private static BoundScope CreateParentScope(BoundGlobalScope previous)
-        {
-            var stack = new Stack<BoundGlobalScope>();
-            while (previous != null)
-            {
-                stack.Push(previous);
-                previous = previous.Previous;
-            }
-
-            BoundScope parent = null;
-
-            while (stack.Count > 0)
-            {
-                previous = stack.Pop();
-                var scope = new BoundScope(parent);
-                foreach (var v in previous.Variables)
-                    scope.TryDeclare(v);
-
-                parent = scope;
-            }
-
-            return parent;
-        }
-
         public static BoundGlobalScope BindGlobalScope(BoundGlobalScope previous, CompilationUnitSyntax syntax)
         {
             var parentScope = CreateParentScope(previous);
@@ -60,6 +36,40 @@ namespace LeoLang.CodeAnalysis
                 diagnostics = diagnostics.InsertRange(0, previous.Diagnostics);
 
             return new BoundGlobalScope(previous, diagnostics, variables, expression);
+        }
+
+        private static BoundScope CreateParentScope(BoundGlobalScope previous)
+        {
+            var stack = new Stack<BoundGlobalScope>();
+            while (previous != null)
+            {
+                stack.Push(previous);
+                previous = previous.Previous;
+            }
+
+            var parent = CreateRootScope();
+
+            while (stack.Count > 0)
+            {
+                previous = stack.Pop();
+                var scope = new BoundScope(parent);
+                foreach (var v in previous.Variables)
+                    scope.TryDeclareVariable(v);
+
+                parent = scope;
+            }
+
+            return parent;
+        }
+
+        private static BoundScope CreateRootScope()
+        {
+            var result = new BoundScope(null);
+
+            foreach (var f in BuiltinFunctions.GetAll())
+                result.TryDeclareFunction(f);
+
+            return result;
         }
 
         private BoundStatement BindStatement(StatementSyntax syntax)
@@ -83,8 +93,24 @@ namespace LeoLang.CodeAnalysis
             }
         }
 
+        private BoundExpression BindConversion(TypeSymbol type, ExpressionSyntax syntax)
+        {
+            var expression = BindExpression(syntax);
+            var conversion = Conversion.Classify(expression.Type, type);
+            if (!conversion.Exists)
+            {
+                _diagnostics.ReportCannotConvert(syntax.Span, expression.Type, type);
+                return new BoundErrorExpression();
+            }
+
+            return new BoundConversionExpression(type, expression);
+        }
+
         private BoundExpression BindCallExpression(CallExpressionSyntax syntax)
         {
+            if (syntax.Arguments.Count == 1 && LookupType(syntax.Identifier.Text) is TypeSymbol type)
+                return BindConversion(type, syntax.Arguments[0]);
+
             var boundArguments = ImmutableArray.CreateBuilder<BoundExpression>();
 
             foreach (var argument in syntax.Arguments)
@@ -93,10 +119,7 @@ namespace LeoLang.CodeAnalysis
                 boundArguments.Add(boundArgument);
             }
 
-            var functions = BuiltinFunctions.GetAll();
-
-            var function = functions.SingleOrDefault(f => f.Name == syntax.Identifier.Text);
-            if (function == null)
+            if (!_scope.TryLookupFunction(syntax.Identifier.Text, out var function))
             {
                 _diagnostics.ReportUndefinedFunction(syntax.Identifier.Span, syntax.Identifier.Text);
                 return new BoundErrorExpression();
@@ -132,7 +155,7 @@ namespace LeoLang.CodeAnalysis
 
             var name = syntax.Identifier.Text;
             var variable = new VariableSymbol(name, true, TypeSymbol.Int);
-            if (!_scope.TryDeclare(variable))
+            if (!_scope.TryDeclareVariable(variable))
                 _diagnostics.ReportVariableAlreadyDeclared(syntax.Identifier.Span, name);
 
             var body = BindStatement(syntax.Body);
@@ -180,7 +203,7 @@ namespace LeoLang.CodeAnalysis
             var initializer = BindExpression(syntax.Initializer);
             var variable = new VariableSymbol(name, isReadOnly, initializer.Type);
 
-            if (!_scope.TryDeclare(variable))
+            if (!_scope.TryDeclareVariable(variable))
                 _diagnostics.ReportVariableAlreadyDeclared(syntax.Identifier.Span, name);
 
             return new BoundVariableDeclaration(variable, initializer);
@@ -273,12 +296,32 @@ namespace LeoLang.CodeAnalysis
             return new BoundLiteralExpression(Maybe.None<object>());
         }
 
+
+        private BoundExpression BindNameExpression(NameExpressionSyntax syntax)
+        {
+            var name = syntax.IdentifierToken.Text;
+            if (syntax.IdentifierToken.IsMissing)
+            {
+                // This means the token was inserted by the parser. We already
+                // reported error so we can just return an error expression.
+                return new BoundErrorExpression();
+            }
+
+            if (!_scope.TryLookupVariable(name, out var variable))
+            {
+                _diagnostics.ReportUndefinedName(syntax.IdentifierToken.Span, name);
+                return new BoundErrorExpression();
+            }
+
+            return new BoundVariableExpression(variable);
+        }
+
         private BoundExpression BindAssignmentExpression(AssignmentExpressionSyntax syntax)
         {
             var name = syntax.IdentifierToken.Text;
             var boundExpression = BindExpression(syntax.Expression);
 
-            if (!_scope.TryLookup(name, out var variable))
+            if (!_scope.TryLookupVariable(name, out var variable))
             {
                 _diagnostics.ReportUndefinedName(syntax.IdentifierToken.Span, name);
                 return boundExpression;
@@ -294,23 +337,6 @@ namespace LeoLang.CodeAnalysis
             }
 
             return new BoundAssignmentExpression(variable, boundExpression);
-        }
-
-        private BoundExpression BindNameExpression(NameExpressionSyntax syntax)
-        {
-            var name = syntax.IdentifierToken.Text;
-            if (string.IsNullOrEmpty(name))
-            {
-                return new BoundErrorExpression();
-            }
-
-            if (!_scope.TryLookup(name, out var variable))
-            {
-                _diagnostics.ReportUndefinedName(syntax.IdentifierToken.Span, name);
-                return new BoundLiteralExpression(0);
-            }
-
-            return new BoundVariableExpression(variable);
         }
 
         private BoundExpression BindDefaultExpression(DefaultExpressionSyntax syntax)
@@ -386,6 +412,21 @@ namespace LeoLang.CodeAnalysis
             }
 
             return new BoundBinaryExpression(boundLeft, boundOperator, boundRight);
+        }
+
+        private TypeSymbol LookupType(string name)
+        {
+            switch (name)
+            {
+                case "bool":
+                    return TypeSymbol.Bool;
+                case "int":
+                    return TypeSymbol.Int;
+                case "string":
+                    return TypeSymbol.String;
+                default:
+                    return null;
+            }
         }
     }
 }

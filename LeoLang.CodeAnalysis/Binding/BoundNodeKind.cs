@@ -20,6 +20,7 @@
         GotoStatement,
         ErrorExpression,
         CallExpression,
-        TypeOfExpression
+        TypeOfExpression,
+        ConversionExpression
     }
 }
