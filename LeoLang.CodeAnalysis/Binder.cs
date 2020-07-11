@@ -6,6 +6,7 @@ using LeoLang.CodeAnalysis.Binding;
 using LeoLang.CodeAnalysis.Diagnostics;
 using LeoLang.CodeAnalysis.Symbols;
 using LeoLang.CodeAnalysis.Syntax;
+using LeoLang.CodeAnalysis.Text;
 using LeoLang.Core;
 
 namespace LeoLang.CodeAnalysis
@@ -93,15 +94,28 @@ namespace LeoLang.CodeAnalysis
             }
         }
 
-        private BoundExpression BindConversion(TypeSymbol type, ExpressionSyntax syntax)
+        private BoundExpression BindConversion(ExpressionSyntax syntax, TypeSymbol type)
         {
             var expression = BindExpression(syntax);
+            return BindConversion(syntax.Span, expression, type);
+        }
+
+        private BoundExpression BindConversion(TextSpan diagnosticSpan, BoundExpression expression, TypeSymbol type)
+        {
             var conversion = Conversion.Classify(expression.Type, type);
+
             if (!conversion.Exists)
             {
-                _diagnostics.ReportCannotConvert(syntax.Span, expression.Type, type);
+                if (expression.Type != TypeSymbol.Error && type != TypeSymbol.Error)
+                {
+                    _diagnostics.ReportCannotConvert(diagnosticSpan, expression.Type, type);
+                }
+
                 return new BoundErrorExpression();
             }
+
+            if (conversion.IsIdentity)
+                return expression;
 
             return new BoundConversionExpression(type, expression);
         }
@@ -109,7 +123,7 @@ namespace LeoLang.CodeAnalysis
         private BoundExpression BindCallExpression(CallExpressionSyntax syntax)
         {
             if (syntax.Arguments.Count == 1 && LookupType(syntax.Identifier.Text) is TypeSymbol type)
-                return BindConversion(type, syntax.Arguments[0]);
+                return BindConversion(syntax.Arguments[0], type);
 
             var boundArguments = ImmutableArray.CreateBuilder<BoundExpression>();
 
@@ -220,18 +234,10 @@ namespace LeoLang.CodeAnalysis
             return new BoundLiteralExpression(syntax.Identifier.Text);
         }
 
+
         private BoundExpression BindExpression(ExpressionSyntax syntax, TypeSymbol targetType)
         {
-            var result = BindExpression(syntax);
-            if (result.Type != targetType)
-                if (targetType != TypeSymbol.Error &&
-                    result.Type != TypeSymbol.Error &&
-                    result.Type != targetType)
-                {
-                    _diagnostics.ReportCannotConvert(syntax.Span, result.Type, targetType);
-                }
-
-            return result;
+            return BindConversion(syntax, targetType);
         }
 
         private BoundExpression BindExpression(ExpressionSyntax syntax, bool canBeVoid = false)
