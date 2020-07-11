@@ -99,6 +99,12 @@ namespace LeoLang.CodeAnalysis.Diagnostics
             Report(span, message);
         }
 
+        public void ReportAllPathsMustReturn(TextSpan span)
+        {
+            var message = "Not all code paths return a value.";
+            Report(span, message);
+        }
+
         public void ReportUndefinedUnaryOperator(TextSpan span, string operatorText, TypeSymbol operandTypeSymbol)
         {
             var message = $"Unary operator '{operatorText}' is not defined for TypeSymbol '{operandTypeSymbol}'.";

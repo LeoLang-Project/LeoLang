@@ -33,6 +33,9 @@ namespace LeoLang.CodeAnalysis.Binding
                 case BoundNodeKind.WhileStatement:
                     WriteWhileStatement((BoundWhileStatement)node, writer);
                     break;
+                case BoundNodeKind.ReturnStatement:
+                    WriteReturnStatement((BoundReturnStatement)node, writer);
+                    break;
                 case BoundNodeKind.ForStatement:
                     WriteForStatement((BoundForStatement)node, writer);
                     break;
