@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using LeoLang.CodeAnalysis.Binding;
 using LeoLang.CodeAnalysis.Symbols;
 using LeoLang.CodeAnalysis.Syntax;
 using LeoLang.CodeAnalysis.Text;
+using Mono.Cecil;
 
 namespace LeoLang.CodeAnalysis.Diagnostics
 {
@@ -35,6 +37,30 @@ namespace LeoLang.CodeAnalysis.Diagnostics
         {
             var message = $"Variable '{name}' is already declared.";
             Report(span, message);
+        }
+
+        public void ReportInvalidReference(string path)
+        {
+            var message = $"The reference is not a valid .NET assembly: '{path}'";
+            Report(default, message);
+        }
+
+        public void ReportRequiredTypeNotFound(string leoName, string metadataName)
+        {
+            var message = leoName == null
+                ? $"The required type '{metadataName}' cannot be resolved among the given references."
+                : $"The required type '{leoName}' ('{metadataName}') cannot be resolved among the given references.";
+            Report(default, message);
+        }
+
+        public void ReportRequiredTypeAmbiguous(string leoName, string metadataName, TypeDefinition[] foundTypes)
+        {
+            var assemblyNames = foundTypes.Select(t => t.Module.Assembly.Name.Name);
+            var assemblyNameList = string.Join(", ", assemblyNames);
+            var message = leoName == null
+                ? $"The required type '{leoName}' was found in multiple references: {assemblyNameList}."
+                : $"The required type '{leoName}' ('{metadataName}') was found in multiple references: {assemblyNameList}.";
+            Report(default, message);
         }
 
         public void ReportInvalidBreakOrContinue(TextLocation span, string text)
