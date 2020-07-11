@@ -1,14 +1,18 @@
-﻿using System;
+﻿using LeoLang.CodeAnalysis.Diagnostics;
+using LeoLang.CodeAnalysis.Syntax;
+using LeoLang.CodeAnalysis.Text;
+using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace LeoLang.CodeAnalysis.IO
 {
-    internal static class TextWriterExtensions
+    public static class TextWriterExtensions
     {
-        public static bool IsConsoleOut(this TextWriter writer)
+        private static bool IsConsoleOut(this TextWriter writer)
         {
             if (writer == Console.Out)
                 return true;
@@ -19,16 +23,21 @@ namespace LeoLang.CodeAnalysis.IO
             return false;
         }
 
-        public static void SetForeground(this TextWriter writer, ConsoleColor color)
+        private static void SetForeground(this TextWriter writer, ConsoleColor color)
         {
             if (writer.IsConsoleOut())
                 Console.ForegroundColor = color;
         }
 
-        public static void ResetColor(this TextWriter writer)
+        private static void ResetColor(this TextWriter writer)
         {
             if (writer.IsConsoleOut())
                 Console.ResetColor();
+        }
+
+        public static void WriteKeyword(this TextWriter writer, SyntaxKind kind)
+        {
+            writer.WriteKeyword(SyntaxFacts.GetText(kind));
         }
 
         public static void WriteKeyword(this TextWriter writer, string text)
@@ -59,11 +68,60 @@ namespace LeoLang.CodeAnalysis.IO
             writer.ResetColor();
         }
 
+        public static void WriteSpace(this TextWriter writer)
+        {
+            writer.WritePunctuation(" ");
+        }
+
+        public static void WritePunctuation(this TextWriter writer, SyntaxKind kind)
+        {
+            writer.WritePunctuation(SyntaxFacts.GetText(kind));
+        }
+
         public static void WritePunctuation(this TextWriter writer, string text)
         {
             writer.SetForeground(ConsoleColor.DarkGray);
             writer.Write(text);
             writer.ResetColor();
+        }
+
+        public static void WriteDiagnostics(this TextWriter writer, IEnumerable<Diagnostic> diagnostics, SyntaxTree syntaxTree)
+        {
+            foreach (var diagnostic in diagnostics.OrderBy(d => d.Span.Start)
+                                                  .ThenBy(d => d.Span.Length))
+            {
+                var lineIndex = syntaxTree.Text.GetLineIndex(diagnostic.Span.Start);
+                var line = syntaxTree.Text.Lines[lineIndex];
+                var lineNumber = lineIndex + 1;
+                var character = diagnostic.Span.Start - line.Start + 1;
+
+                Console.WriteLine();
+
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.Write($"({lineNumber}, {character}): ");
+                Console.WriteLine(diagnostic);
+                Console.ResetColor();
+
+                var prefixSpan = TextSpan.FromBounds(line.Start, diagnostic.Span.Start);
+                var suffixSpan = TextSpan.FromBounds(diagnostic.Span.End, line.End);
+
+                var prefix = syntaxTree.Text.ToString(prefixSpan);
+                var error = syntaxTree.Text.ToString(diagnostic.Span);
+                var suffix = syntaxTree.Text.ToString(suffixSpan);
+
+                Console.Write("    ");
+                Console.Write(prefix);
+
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.Write(error);
+                Console.ResetColor();
+
+                Console.Write(suffix);
+
+                Console.WriteLine();
+            }
+
+            Console.WriteLine();
         }
     }
 }
