@@ -37,6 +37,13 @@ namespace LeoLang.CodeAnalysis.Diagnostics
             Report(span, message);
         }
 
+        public void ReportInvalidBreakOrContinue(TextSpan span, string text)
+        {
+            var message = $"The keyword '{text}' can only be used inside of loops.";
+            Report(span, message);
+        }
+
+
         public void ReportCannotAssign(TextSpan span, string name)
         {
             var message = $"Variable '{name}' is read-only and cannot be assigned to.";

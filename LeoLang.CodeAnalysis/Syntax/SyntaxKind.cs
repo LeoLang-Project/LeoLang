@@ -79,5 +79,9 @@
         Parameter,
         FunctionKeyword,
         GlobalStatement,
+        BreakStatement,
+        ContinueStatement,
+        ContinueKeyword,
+        BreakKeyword,
     }
 }
