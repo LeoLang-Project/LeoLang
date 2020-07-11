@@ -187,5 +187,22 @@ namespace LeoLang.CodeAnalysis.Diagnostics
             Report(span, message);
         }
 
+        public void ReportNotAFunction(TextLocation location, string name)
+        {
+            var message = $"'{name}' is not a function.";
+            Report(location, message);
+        }
+
+        public void ReportUndefinedVariable(TextLocation location, string name)
+        {
+            var message = $"Variable '{name}' doesn't exist.";
+            Report(location, message);
+        }
+
+        public void ReportNotAVariable(TextLocation location, string name)
+        {
+            var message = $"'{name}' is not a variable.";
+            Report(location, message);
+        }
     }
 }
