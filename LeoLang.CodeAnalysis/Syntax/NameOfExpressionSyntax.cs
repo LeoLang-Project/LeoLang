@@ -3,8 +3,9 @@
 namespace LeoLang.CodeAnalysis
 {
     public class NameOfExpressionSyntax : ExpressionSyntax
-    {
-        public NameOfExpressionSyntax(SyntaxToken nameOfToken, SyntaxToken openParan, SyntaxToken identifier, SyntaxToken closeParan)
+    { 
+        public NameOfExpressionSyntax(SyntaxTree syntaxTree, SyntaxToken nameOfToken, SyntaxToken openParan, SyntaxToken identifier, SyntaxToken closeParan)
+        : base(syntaxTree)
         {
             NameOfToken = nameOfToken;
             OpenParan = openParan;

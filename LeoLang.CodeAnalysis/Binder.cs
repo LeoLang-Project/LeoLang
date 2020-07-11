@@ -86,7 +86,7 @@ namespace LeoLang.CodeAnalysis
                     var loweredBody = Lowerer.Lower(body);
 
                     if (function.Type != TypeSymbol.Void && !ControlFlowGraph.AllPathsReturn(loweredBody))
-                        binder._diagnostics.ReportAllPathsMustReturn(function.Declaration.Identifier.Span);
+                        binder._diagnostics.ReportAllPathsMustReturn(function.Declaration.Identifier.Location);
 
                     functionBodies.Add(function, loweredBody);
 
@@ -107,21 +107,21 @@ namespace LeoLang.CodeAnalysis
 
             if (_function == null)
             {
-                _diagnostics.ReportInvalidReturn(syntax.ReturnKeyword.Span);
+                _diagnostics.ReportInvalidReturn(syntax.ReturnKeyword.Location);
             }
             else
             {
                 if (_function.Type == TypeSymbol.Void)
                 {
                     if (expression != null)
-                        _diagnostics.ReportInvalidReturnExpression(syntax.Expression.Span, _function.Name);
+                        _diagnostics.ReportInvalidReturnExpression(syntax.Expression.Location, _function.Name);
                 }
                 else
                 {
                     if (expression == null)
-                        _diagnostics.ReportMissingReturnExpression(syntax.ReturnKeyword.Span, _function.Type);
+                        _diagnostics.ReportMissingReturnExpression(syntax.ReturnKeyword.Location, _function.Type);
                     else
-                        expression = BindConversion(syntax.Expression.Span, expression, _function.Type);
+                        expression = BindConversion(syntax.Expression.Location, expression, _function.Type);
                 }
             }
 
@@ -140,7 +140,7 @@ namespace LeoLang.CodeAnalysis
                 var parameterType = BindTypeClause(parameterSyntax.Type);
                 if (!seenParameterNames.Add(parameterName))
                 {
-                    _diagnostics.ReportParameterAlreadyDeclared(parameterSyntax.Span, parameterName);
+                    _diagnostics.ReportParameterAlreadyDeclared(parameterSyntax.Location, parameterName);
                 }
                 else
                 {
@@ -153,7 +153,7 @@ namespace LeoLang.CodeAnalysis
 
             var function = new FunctionSymbol(syntax.Identifier.Text, parameters.ToImmutable(), type, syntax);
             if (!_scope.TryDeclareFunction(function))
-                _diagnostics.ReportSymbolAlreadyDeclared(syntax.Identifier.Span, function.Name);
+                _diagnostics.ReportSymbolAlreadyDeclared(syntax.Identifier.Location, function.Name);
         }
 
         private static BoundScope CreateParentScope(BoundGlobalScope previous)
@@ -224,24 +224,24 @@ namespace LeoLang.CodeAnalysis
         private BoundExpression BindConversion(ExpressionSyntax syntax, TypeSymbol type, bool allowExplicit = false)
         {
             var expression = BindExpression(syntax);
-            return BindConversion(syntax.Span, expression, type, allowExplicit);
+            return BindConversion(syntax.Location, expression, type, allowExplicit);
         }
 
-        private BoundExpression BindConversion(TextSpan diagnosticSpan, BoundExpression expression, TypeSymbol type, bool allowExplicit = false)
+        private BoundExpression BindConversion(TextLocation diagnosticLocation, BoundExpression expression, TypeSymbol type, bool allowExplicit = false)
         {
             var conversion = Conversion.Classify(expression.Type, type);
 
             if (!conversion.Exists)
             {
                 if (expression.Type != TypeSymbol.Error && type != TypeSymbol.Error)
-                    _diagnostics.ReportCannotConvert(diagnosticSpan, expression.Type, type);
+                    _diagnostics.ReportCannotConvert(diagnosticLocation, expression.Type, type);
 
                 return new BoundErrorExpression();
             }
 
             if (!allowExplicit && conversion.IsExplicit)
             {
-                _diagnostics.ReportCannotConvertImplicitly(diagnosticSpan, expression.Type, type);
+                _diagnostics.ReportCannotConvertImplicitly(diagnosticLocation, expression.Type, type);
             }
 
             if (conversion.IsIdentity)
@@ -266,13 +266,13 @@ namespace LeoLang.CodeAnalysis
 
             if (!_scope.TryLookupFunction(syntax.Identifier.Text, out var function))
             {
-                _diagnostics.ReportUndefinedFunction(syntax.Identifier.Span, syntax.Identifier.Text);
+                _diagnostics.ReportUndefinedFunction(syntax.Identifier.Location, syntax.Identifier.Text);
                 return new BoundErrorExpression();
             }
 
             if (syntax.Arguments.Count != function.Parameters.Length)
             {
-                _diagnostics.ReportWrongArgumentCount(syntax.Span, function.Name, function.Parameters.Length, syntax.Arguments.Count);
+                _diagnostics.ReportWrongArgumentCount(syntax.Location, function.Name, function.Parameters.Length, syntax.Arguments.Count);
                 return new BoundErrorExpression();
             }
 
@@ -283,7 +283,7 @@ namespace LeoLang.CodeAnalysis
 
                 if (argument.Type != parameter.Type)
                 {
-                    _diagnostics.ReportWrongArgumentType(syntax.Span, parameter.Name, parameter.Type, argument.Type);
+                    _diagnostics.ReportWrongArgumentType(syntax.Location, parameter.Name, parameter.Type, argument.Type);
                     return new BoundErrorExpression();
                 }
             }
@@ -315,7 +315,7 @@ namespace LeoLang.CodeAnalysis
                                 : new LocalVariableSymbol(name, isReadOnly, type);
 
             if (declare && !_scope.TryDeclareVariable(variable))
-                _diagnostics.ReportSymbolAlreadyDeclared(identifier.Span, name);
+                _diagnostics.ReportSymbolAlreadyDeclared(identifier.Location, name);
 
             return variable;
         }
@@ -344,7 +344,7 @@ namespace LeoLang.CodeAnalysis
         {
             if (_loopStack.Count == 0)
             {
-                _diagnostics.ReportInvalidBreakOrContinue(syntax.Keyword.Span, syntax.Keyword.Text);
+                _diagnostics.ReportInvalidBreakOrContinue(syntax.Keyword.Location, syntax.Keyword.Text);
                 return BindErrorStatement();
             }
 
@@ -356,7 +356,7 @@ namespace LeoLang.CodeAnalysis
         {
             if (_loopStack.Count == 0)
             {
-                _diagnostics.ReportInvalidBreakOrContinue(syntax.Keyword.Span, syntax.Keyword.Text);
+                _diagnostics.ReportInvalidBreakOrContinue(syntax.Keyword.Location, syntax.Keyword.Text);
                 return BindErrorStatement();
             }
 
@@ -395,7 +395,7 @@ namespace LeoLang.CodeAnalysis
             var initializer = BindExpression(syntax.Initializer);
             var variableType = type ?? initializer.Type;
             var variable = BindVariable(syntax.Identifier, isReadOnly, variableType);
-            var convertedInitializer = BindConversion(syntax.Initializer.Span, initializer, variableType);
+            var convertedInitializer = BindConversion(syntax.Initializer.Location, initializer, variableType);
 
             return new BoundVariableDeclaration(variable, convertedInitializer);
         }
@@ -418,7 +418,7 @@ namespace LeoLang.CodeAnalysis
 
             var type = LookupType(syntax.Identifier.Text);
             if (type == null)
-                _diagnostics.ReportUndefinedType(syntax.Identifier.Span, syntax.Identifier.Text);
+                _diagnostics.ReportUndefinedType(syntax.Identifier.Location, syntax.Identifier.Text);
 
             return type;
         }
@@ -433,7 +433,7 @@ namespace LeoLang.CodeAnalysis
             var result = BindExpressionInternal(syntax);
             if (!canBeVoid && result.Type == TypeSymbol.Void)
             {
-                _diagnostics.ReportExpressionMustHaveValue(syntax.Span);
+                _diagnostics.ReportExpressionMustHaveValue(syntax.Location);
                 return new BoundErrorExpression();
             }
 
@@ -450,8 +450,6 @@ namespace LeoLang.CodeAnalysis
                     return BindUnaryExpression((UnaryExpressionSyntax)syntax);
                 case SyntaxKind.BinaryExpression:
                     return BindBinaryExpression((BinaryExpressionSyntax)syntax);
-                case SyntaxKind.SomeExpression:
-                    return BindSomeExpression((SomeExpressionSyntax)syntax);
                 case SyntaxKind.DefaultExpression:
                     return BindDefaultExpression((DefaultExpressionSyntax)syntax);
                 case SyntaxKind.ParenthesizedExpression:
@@ -460,8 +458,6 @@ namespace LeoLang.CodeAnalysis
                     return BindNameExpression((NameExpressionSyntax)syntax);
                 case SyntaxKind.AssignmentExpression:
                     return BindAssignmentExpression((AssignmentExpressionSyntax)syntax);
-                case SyntaxKind.TypeOfExpression:
-                    return BindTypeOfExpression((TypeOfExpressionSyntax)syntax);
                 case SyntaxKind.CallExpression:
                     return BindCallExpression((CallExpressionSyntax)syntax);
                 case SyntaxKind.NameOfExpression:
@@ -477,19 +473,6 @@ namespace LeoLang.CodeAnalysis
             return new BoundLiteralExpression(value);
         }
 
-        private BoundExpression BindTypeOfExpression(TypeOfExpressionSyntax syntax)
-        {
-            var typename = syntax.Identifier.Text;
-
-            if (syntax.Identifier.Kind == SyntaxKind.IdentifierToken && typename != null)
-            {
-                return new BoundTypeOfExpression(new BoundLiteralExpression(typename));
-            }
-
-            _diagnostics.ReportNotBindable(syntax.TypeToken.Span, BoundNodeKind.DefaultExpression);
-            return new BoundLiteralExpression(Maybe.None<object>());
-        }
-
 
         private BoundExpression BindNameExpression(NameExpressionSyntax syntax)
         {
@@ -503,7 +486,7 @@ namespace LeoLang.CodeAnalysis
 
             if (!_scope.TryLookupVariable(name, out var variable))
             {
-                _diagnostics.ReportUndefinedName(syntax.IdentifierToken.Span, name);
+                _diagnostics.ReportUndefinedName(syntax.IdentifierToken.Location, name);
                 return new BoundErrorExpression();
             }
 
@@ -517,16 +500,16 @@ namespace LeoLang.CodeAnalysis
 
             if (!_scope.TryLookupVariable(name, out var variable))
             {
-                _diagnostics.ReportUndefinedName(syntax.IdentifierToken.Span, name);
+                _diagnostics.ReportUndefinedName(syntax.IdentifierToken.Location, name);
                 return boundExpression;
             }
 
             if (variable.IsReadOnly)
-                _diagnostics.ReportCannotAssign(syntax.EqualsToken.Span, name);
+                _diagnostics.ReportCannotAssign(syntax.EqualsToken.Location, name);
 
             if (boundExpression.Type != variable.Type)
             {
-                _diagnostics.ReportCannotConvert(syntax.Expression.Span, boundExpression.Type, variable.Type);
+                _diagnostics.ReportCannotConvert(syntax.Expression.Location, boundExpression.Type, variable.Type);
                 return boundExpression;
             }
 
@@ -543,7 +526,7 @@ namespace LeoLang.CodeAnalysis
                 return new BoundDefaultExpression(new BoundLiteralExpression(boundValue));
             }
 
-            _diagnostics.ReportNoDefault(syntax.Identifier.Span, syntax.Identifier.Text);
+            _diagnostics.ReportNoDefault(syntax.Identifier.Location, syntax.Identifier.Text);
             return new BoundLiteralExpression(boundValue);
         }
 
@@ -560,19 +543,6 @@ namespace LeoLang.CodeAnalysis
             return new BoundLiteralExpression(value);
         }
 
-        private BoundExpression BindSomeExpression(SomeExpressionSyntax syntax)
-        {
-            var boundValue = BindExpression(syntax.Value);
-
-            if(syntax.Value.Kind != SyntaxKind.SomeKeyword || syntax.Value.Kind != SyntaxKind.EmptyKeyword)
-            {
-                return new BoundSomeExpression(boundValue);
-            }
-
-            _diagnostics.ReportNotBindable(syntax.SomeToken.Span, boundValue.Kind);
-            return boundValue;
-        }
-
         private BoundExpression BindUnaryExpression(UnaryExpressionSyntax syntax)
         {
             var boundOperand = BindExpression(syntax.Operand);
@@ -583,7 +553,7 @@ namespace LeoLang.CodeAnalysis
 
             if (boundOperator == null)
             {
-                _diagnostics.ReportUndefinedUnaryOperator(syntax.OperatorToken.Span, syntax.OperatorToken.Text, boundOperand.Type);
+                _diagnostics.ReportUndefinedUnaryOperator(syntax.OperatorToken.Location, syntax.OperatorToken.Text, boundOperand.Type);
                 return new BoundErrorExpression();
             }
 
@@ -601,7 +571,7 @@ namespace LeoLang.CodeAnalysis
 
             if (boundOperator == null)
             {
-                _diagnostics.ReportUndefinedBinaryOperator(syntax.OperatorToken.Span, syntax.OperatorToken.Text, boundLeft.Type, boundRight.Type);
+                _diagnostics.ReportUndefinedBinaryOperator(syntax.OperatorToken.Location, syntax.OperatorToken.Text, boundLeft.Type, boundRight.Type);
                 return new BoundErrorExpression();
             }
 

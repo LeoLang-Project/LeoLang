@@ -85,18 +85,10 @@ namespace LeoLang.CodeAnalysis.Syntax
                     return SyntaxKind.ForKeyword;
                 case "to":
                     return SyntaxKind.ToKeyword;
-                case "empty":
-                    return SyntaxKind.EmptyKeyword;
-                case "none":
-                    return SyntaxKind.EmptyKeyword;
-                case "some":
-                    return SyntaxKind.SomeKeyword;
                 case "default":
                     return SyntaxKind.DefaultKeyword;
                 case "nameof":
                     return SyntaxKind.NameOfKeyword;
-                case "typeof":
-                    return SyntaxKind.TypeOfKeyword;
                 default:
                     return SyntaxKind.IdentifierToken;
             }
@@ -200,8 +192,6 @@ namespace LeoLang.CodeAnalysis.Syntax
                     return "var";
                 case SyntaxKind.DefaultKeyword:
                     return "default";
-                case SyntaxKind.TypeOfKeyword:
-                    return "typeof";
                 case SyntaxKind.ApostropheEqualsToken:
                     return "'==";
                 case SyntaxKind.EqualsEqualsEqualsToken:

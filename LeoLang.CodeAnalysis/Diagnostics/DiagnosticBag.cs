@@ -19,111 +19,110 @@ namespace LeoLang.CodeAnalysis.Diagnostics
             _diagnostics.AddRange(diagnostics._diagnostics);
         }
 
-        private void Report(TextSpan span, string message)
+        private void Report(TextLocation span, string message)
         {
             var diagnostic = new Diagnostic(span, message);
             _diagnostics.Add(diagnostic);
         }
 
-        public void ReportUndefinedName(TextSpan span, string name)
+        public void ReportUndefinedName(TextLocation span, string name)
         {
             var message = $"Variable '{name}' doesn't exist.";
             Report(span, message);
         }
 
-        public void ReportVariableAlreadyDeclared(TextSpan span, string name)
+        public void ReportVariableAlreadyDeclared(TextLocation span, string name)
         {
             var message = $"Variable '{name}' is already declared.";
             Report(span, message);
         }
 
-        public void ReportInvalidBreakOrContinue(TextSpan span, string text)
+        public void ReportInvalidBreakOrContinue(TextLocation span, string text)
         {
             var message = $"The keyword '{text}' can only be used inside of loops.";
             Report(span, message);
         }
 
 
-        public void ReportCannotAssign(TextSpan span, string name)
+        public void ReportCannotAssign(TextLocation span, string name)
         {
             var message = $"Variable '{name}' is read-only and cannot be assigned to.";
             Report(span, message);
         }
 
-        public void ReportInvalidNumber(TextSpan span, string text, TypeSymbol TypeSymbol)
+        public void ReportInvalidNumber(TextLocation span, string text, TypeSymbol TypeSymbol)
         {
             var message = $"The number {text} isn't valid {TypeSymbol}.";
             Report(span, message);
         }
 
-        public void ReportUnterminatedString(TextSpan span)
+        public void ReportUnterminatedString(TextLocation span)
         {
             var message = "Unterminated string literal.";
             Report(span, message);
         }
 
-        public void ReportUndefinedFunction(TextSpan span, string name)
+        public void ReportUndefinedFunction(TextLocation span, string name)
         {
             var message = $"Function '{name}' doesn't exist.";
             Report(span, message);
         }
 
-        public void ReportWrongArgumentCount(TextSpan span, string name, int expectedCount, int actualCount)
+        public void ReportWrongArgumentCount(TextLocation span, string name, int expectedCount, int actualCount)
         {
             var message = $"Function '{name}' requires {expectedCount} arguments but was given {actualCount}.";
             Report(span, message);
         }
 
-        public void ReportWrongArgumentType(TextSpan span, string name, TypeSymbol expectedType, TypeSymbol actualType)
+        public void ReportWrongArgumentType(TextLocation span, string name, TypeSymbol expectedType, TypeSymbol actualType)
         {
             var message = $"Parameter '{name}' requires a value of type '{expectedType}' but was given a value of type '{actualType}'.";
             Report(span, message);
         }
 
-        public void ReportExpressionMustHaveValue(TextSpan span)
+        public void ReportExpressionMustHaveValue(TextLocation span)
         {
             var message = "Expression must have a value.";
             Report(span, message);
         }
 
-        public void ReportBadCharacter(int position, char character)
+        public void ReportBadCharacter(TextLocation location, char character)
         {
-            var span = new TextSpan(position, 1);
             var message = $"Bad character input: '{character}'.";
-            Report(span, message);
+            Report(location, message);
         }
 
-        public void ReportUnexpectedToken(TextSpan span, SyntaxKind actualKind, SyntaxKind expectedKind)
+        public void ReportUnexpectedToken(TextLocation span, SyntaxKind actualKind, SyntaxKind expectedKind)
         {
             var message = $"Unexpected token <{actualKind}>, expected <{expectedKind}>.";
             Report(span, message);
         }
 
-        public void ReportAllPathsMustReturn(TextSpan span)
+        public void ReportAllPathsMustReturn(TextLocation span)
         {
             var message = "Not all code paths return a value.";
             Report(span, message);
         }
 
-        public void ReportUndefinedUnaryOperator(TextSpan span, string operatorText, TypeSymbol operandTypeSymbol)
+        public void ReportUndefinedUnaryOperator(TextLocation span, string operatorText, TypeSymbol operandTypeSymbol)
         {
             var message = $"Unary operator '{operatorText}' is not defined for TypeSymbol '{operandTypeSymbol}'.";
             Report(span, message);
         }
 
-        public void ReportUndefinedBinaryOperator(TextSpan span, string operatorText, TypeSymbol leftTypeSymbol, TypeSymbol rightTypeSymbol)
+        public void ReportUndefinedBinaryOperator(TextLocation span, string operatorText, TypeSymbol leftTypeSymbol, TypeSymbol rightTypeSymbol)
         {
             var message = $"Binary operator '{operatorText}' is not defined for TypeSymbols '{leftTypeSymbol}' and '{rightTypeSymbol}'.";
             Report(span, message);
         }
 
-        internal void ReportNoDefault(TextSpan span, string value)
+        internal void ReportNoDefault(TextLocation span, string value)
         {
             var message = $"No Default Value found for TypeSymbol '{value}'.";
             Report(span, message);
         }
 
-        public void ReportNotBindable(TextSpan span, BoundNodeKind kind)
+        public void ReportNotBindable(TextLocation span, BoundNodeKind kind)
         {
             var message = $"Unable to bind {kind}";
             Report(span, message);
@@ -134,49 +133,49 @@ namespace LeoLang.CodeAnalysis.Diagnostics
             return _diagnostics.GetEnumerator();
         }
 
-        public void ReportCannotConvert(TextSpan span, TypeSymbol fromTypeSymbol, TypeSymbol toTypeSymbol)
+        public void ReportCannotConvert(TextLocation span, TypeSymbol fromTypeSymbol, TypeSymbol toTypeSymbol)
         {
             var message = $"Cannot convert TypeSymbol '{fromTypeSymbol}' to '{toTypeSymbol}'.";
             Report(span, message);
         }
 
-        public void ReportSymbolAlreadyDeclared(TextSpan span, string name)
+        public void ReportSymbolAlreadyDeclared(TextLocation span, string name)
         {
             var message = $"'{name}' is already declared.";
             Report(span, message);
         }
 
-        public void ReportUndefinedType(TextSpan span, string name)
+        public void ReportUndefinedType(TextLocation span, string name)
         {
             var message = $"Type '{name}' doesn't exist.";
             Report(span, message);
         }
 
-        public void ReportCannotConvertImplicitly(TextSpan span, TypeSymbol fromType, TypeSymbol toType)
+        public void ReportCannotConvertImplicitly(TextLocation span, TypeSymbol fromType, TypeSymbol toType)
         {
             var message = $"Cannot convert type '{fromType}' to '{toType}'. An explicit conversion exists (are you missing a cast?)";
             Report(span, message);
         }
 
-        public void ReportParameterAlreadyDeclared(TextSpan span, string parameterName)
+        public void ReportParameterAlreadyDeclared(TextLocation span, string parameterName)
         {
             var message = $"A parameter with the name '{parameterName}' already exists.";
             Report(span, message);
         }
 
-        public void ReportInvalidReturn(TextSpan span)
+        public void ReportInvalidReturn(TextLocation span)
         {
             var message = "The 'return' keyword can only be used inside of functions.";
             Report(span, message);
         }
 
-        public void ReportInvalidReturnExpression(TextSpan span, string functionName)
+        public void ReportInvalidReturnExpression(TextLocation span, string functionName)
         {
             var message = $"Since the function '{functionName}' does not return a value the 'return' keyword cannot be followed by an expression.";
             Report(span, message);
         }
 
-        public void ReportMissingReturnExpression(TextSpan span, TypeSymbol returnType)
+        public void ReportMissingReturnExpression(TextLocation span, TypeSymbol returnType)
         {
             var message = $"An expression of type '{returnType}' expected.";
             Report(span, message);

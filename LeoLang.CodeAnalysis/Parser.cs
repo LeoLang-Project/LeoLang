@@ -11,16 +11,15 @@ namespace LeoLang.CodeAnalysis
     public class Parser
     {
         private readonly ImmutableArray<SyntaxToken> _tokens;
-
-        private readonly DiagnosticBag _diagnostics = new DiagnosticBag();
         private int _position;
         private readonly SourceText _text;
+        private readonly SyntaxTree _syntaxTree;
 
-        public Parser(SourceText text)
+        public Parser(SyntaxTree syntaxTree)
         {
             var tokens = new List<SyntaxToken>();
 
-            var lexer = new Lexer(text);
+            var lexer = new Lexer(syntaxTree);
             SyntaxToken token;
             do
             {
@@ -33,12 +32,13 @@ namespace LeoLang.CodeAnalysis
                 }
             } while (token.Kind != SyntaxKind.EndOfFileToken);
 
-            _text = text;
+            _syntaxTree = syntaxTree;
+            _text = syntaxTree.Text;
             _tokens = tokens.ToImmutableArray();
-            _diagnostics.AddRange(lexer.Diagnostics);
+            Diagnostics.AddRange(lexer.Diagnostics);
         }
 
-        public DiagnosticBag Diagnostics => _diagnostics;
+        public DiagnosticBag Diagnostics { get; } = new DiagnosticBag();
 
         private SyntaxToken Peek(int offset)
         {
@@ -63,8 +63,8 @@ namespace LeoLang.CodeAnalysis
             if (Current.Kind == kind)
                 return NextToken();
 
-            _diagnostics.ReportUnexpectedToken(Current.Span, Current.Kind, kind);
-            return new SyntaxToken(kind, Current.Position, null, null);
+            Diagnostics.ReportUnexpectedToken(Current.Location, Current.Kind, kind);
+            return new SyntaxToken(_syntaxTree, kind, Current.Position, null, null);
         }
 
         private ExpressionSyntax ParseCallExpression()
@@ -74,7 +74,7 @@ namespace LeoLang.CodeAnalysis
             var arguments = ParseArguments();
             var closeParenthesisToken = MatchToken(SyntaxKind.CloseParenthesisToken);
 
-            return new CallExpressionSyntax(identifier, openParenthesisToken, arguments, closeParenthesisToken);
+            return new CallExpressionSyntax(_syntaxTree, identifier, openParenthesisToken, arguments, closeParenthesisToken);
         }
 
         private SeparatedSyntaxList<ExpressionSyntax> ParseArguments()
@@ -111,7 +111,7 @@ namespace LeoLang.CodeAnalysis
                 var operatorToken = NextToken();
                 var right = ParseAssignmentExpression();
 
-                return new AssignmentExpressionSyntax(identifierToken, operatorToken, right);
+                return new AssignmentExpressionSyntax(_syntaxTree, identifierToken, operatorToken, right);
             }
 
             return ParseBinaryExpression();
@@ -130,7 +130,7 @@ namespace LeoLang.CodeAnalysis
             {
                 var operatorToken = NextToken();
                 var operand = ParseBinaryExpression(unaryOperatorPrecedence);
-                left = new UnaryExpressionSyntax(operatorToken, operand);
+                left = new UnaryExpressionSyntax(_syntaxTree, operatorToken, operand);
             }
             else
             {
@@ -145,7 +145,7 @@ namespace LeoLang.CodeAnalysis
 
                 var operatorToken = NextToken();
                 var right = ParseBinaryExpression(precedence);
-                left = new BinaryExpressionSyntax(left, operatorToken, right);
+                left = new BinaryExpressionSyntax(_syntaxTree, left, operatorToken, right);
             }
 
             return left;
@@ -155,7 +155,7 @@ namespace LeoLang.CodeAnalysis
         {
             var members = ParseMembers();
             var endOfFileToken = MatchToken(SyntaxKind.EndOfFileToken);
-            return new CompilationUnitSyntax(members, endOfFileToken);
+            return new CompilationUnitSyntax(_syntaxTree, members, endOfFileToken);
         }
 
         private ImmutableArray<MemberSyntax> ParseMembers()
@@ -200,12 +200,12 @@ namespace LeoLang.CodeAnalysis
             var closeParenthesisToken = MatchToken(SyntaxKind.CloseParenthesisToken);
             var type = ParseOptionalTypeClause();
             var body = ParseBlockStatement();
-            return new FunctionDeclarationSyntax(functionKeyword, identifier, openParenthesisToken, parameters, closeParenthesisToken, type, body);
+            return new FunctionDeclarationSyntax(_syntaxTree, functionKeyword, identifier, openParenthesisToken, parameters, closeParenthesisToken, type, body);
         }
         private MemberSyntax ParseGlobalStatement()
         {
             var statement = ParseStatement();
-            return new GlobalStatementSyntax(statement);
+            return new GlobalStatementSyntax(_syntaxTree, statement);
         }
 
 
@@ -241,7 +241,7 @@ namespace LeoLang.CodeAnalysis
         {
             var identifier = MatchToken(SyntaxKind.IdentifierToken);
             var type = ParseTypeClause();
-            return new ParameterSyntax(identifier, type);
+            return new ParameterSyntax(_syntaxTree, identifier, type);
         }
 
 
@@ -280,19 +280,19 @@ namespace LeoLang.CodeAnalysis
             var isEof = Current.Kind == SyntaxKind.EndOfFileToken;
             var sameLine = !isEof && keywordLine == currentLine;
             var expression = sameLine ? ParseExpression() : null;
-            return new ReturnStatementSyntax(keyword, expression);
+            return new ReturnStatementSyntax(_syntaxTree, keyword, expression);
         }
 
         private StatementSyntax ParseBreakStatement()
         {
             var keyword = MatchToken(SyntaxKind.BreakKeyword);
-            return new BreakStatementSyntax(keyword);
+            return new BreakStatementSyntax(_syntaxTree, keyword);
         }
 
         private StatementSyntax ParseContinueStatement()
         {
             var keyword = MatchToken(SyntaxKind.ContinueKeyword);
-            return new ContinueStatementSyntax(keyword);
+            return new ContinueStatementSyntax(_syntaxTree, keyword);
         }
 
         private StatementSyntax ParseWhileStatement()
@@ -300,7 +300,7 @@ namespace LeoLang.CodeAnalysis
             var keyword = MatchToken(SyntaxKind.WhileKeyword);
             var condition = ParseExpression();
             var body = ParseStatement();
-            return new WhileStatementSyntax(keyword, condition, body);
+            return new WhileStatementSyntax(_syntaxTree, keyword, condition, body);
         }
 
         private StatementSyntax ParseForStatement()
@@ -313,7 +313,7 @@ namespace LeoLang.CodeAnalysis
             var upperBound = ParseExpression();
             var body = ParseStatement();
 
-            return new ForStatementSyntax(keyword, identifier, equalsToken, lowerBound, toKeyword, upperBound, body);
+            return new ForStatementSyntax(_syntaxTree, keyword, identifier, equalsToken, lowerBound, toKeyword, upperBound, body);
         }
 
         private StatementSyntax ParseIfStatement()
@@ -322,7 +322,7 @@ namespace LeoLang.CodeAnalysis
             var condition = ParseExpression();
             var statement = ParseStatement();
             var elseClause = ParseElseClause();
-            return new IfStatementSyntax(keyword, condition, statement, elseClause);
+            return new IfStatementSyntax(_syntaxTree, keyword, condition, statement, elseClause);
         }
 
         private ElseClauseSyntax ParseElseClause()
@@ -332,7 +332,7 @@ namespace LeoLang.CodeAnalysis
 
             var keyword = NextToken();
             var statement = ParseStatement();
-            return new ElseClauseSyntax(keyword, statement);
+            return new ElseClauseSyntax(_syntaxTree, keyword, statement);
         }
 
         private StatementSyntax ParseVariableDeclaration()
@@ -344,7 +344,7 @@ namespace LeoLang.CodeAnalysis
             var equals = MatchToken(SyntaxKind.EqualsToken);
             var initializer = ParseExpression();
 
-            return new VariableDeclarationSyntax(keyword, identifier, typeClause, equals, initializer);
+            return new VariableDeclarationSyntax(_syntaxTree, keyword, identifier, typeClause, equals, initializer);
         }
 
         private BlockStatementSyntax ParseBlockStatement()
@@ -374,25 +374,25 @@ namespace LeoLang.CodeAnalysis
 
             var closeBraceToken = MatchToken(SyntaxKind.CloseBraceToken);
 
-            return new BlockStatementSyntax(openBraceToken, statements.ToImmutable(), closeBraceToken);
+            return new BlockStatementSyntax(_syntaxTree, openBraceToken, statements.ToImmutable(), closeBraceToken);
         }
 
         private ExpressionStatementSyntax ParseExpressionStatement()
         {
             var expression = ParseExpression();
-            return new ExpressionStatementSyntax(expression);
+            return new ExpressionStatementSyntax(_syntaxTree, expression);
         }
 
         private ExpressionSyntax ParseStringLiteral()
         {
             var stringToken = MatchToken(SyntaxKind.StringToken);
-            return new LiteralExpressionSyntax(stringToken);
+            return new LiteralExpressionSyntax(_syntaxTree, stringToken);
         }
 
         private ExpressionSyntax ParseNumberLiteral()
         {
             var numberToken = MatchToken(SyntaxKind.NumberToken);
-            return new LiteralExpressionSyntax(numberToken);
+            return new LiteralExpressionSyntax(_syntaxTree, numberToken);
         }
 
         private ExpressionSyntax ParsePrimaryExpression()
@@ -404,7 +404,7 @@ namespace LeoLang.CodeAnalysis
                         var left = NextToken();
                         var expression = ParseExpression();
                         var right = MatchToken(SyntaxKind.CloseParenthesisToken);
-                        return new ParenthesizedExpressionSyntax(left, expression, right);
+                        return new ParenthesizedExpressionSyntax(_syntaxTree, left, expression, right);
                     }
                 case SyntaxKind.NumberToken:
                     return ParseNumberLiteral();
@@ -426,21 +426,6 @@ namespace LeoLang.CodeAnalysis
                     }
                 case SyntaxKind.NameOfKeyword:
                     return ParseNameOfExpression();
-                case SyntaxKind.SomeKeyword:
-                    {
-                        var someToken = NextToken();
-
-                        return new SomeExpressionSyntax(someToken, ParsePrimaryExpression());
-                    }
-                case SyntaxKind.TypeOfKeyword:
-                    {
-                        var typeToken = NextToken();
-                        var open = MatchToken(SyntaxKind.OpenParenthesisToken);
-                        var id = MatchToken(SyntaxKind.IdentifierToken);
-                        var close = MatchToken(SyntaxKind.CloseParenthesisToken);
-
-                        return new TypeOfExpressionSyntax(typeToken, id);
-                    }
                 case SyntaxKind.DefaultKeyword:
                     {
                         var defaultToken = NextToken();
@@ -448,13 +433,7 @@ namespace LeoLang.CodeAnalysis
                         var id = MatchToken(SyntaxKind.IdentifierToken);
                         var close = MatchToken(SyntaxKind.CloseParenthesisToken);
 
-                        return new DefaultExpressionSyntax(defaultToken, id);
-                    }
-                case SyntaxKind.EmptyKeyword:
-                    {
-                        var emptyKeyword = NextToken();
-
-                        return new LiteralExpressionSyntax(emptyKeyword);
+                        return new DefaultExpressionSyntax(_syntaxTree, defaultToken, open, id, close);
                     }
                 default:
                     {
@@ -470,7 +449,7 @@ namespace LeoLang.CodeAnalysis
             var identifier = MatchToken(SyntaxKind.IdentifierToken);
             var closeParan = MatchToken(SyntaxKind.CloseParenthesisToken);
 
-            return new NameOfExpressionSyntax(nameOfToken, openParan, identifier, closeParan);
+            return new NameOfExpressionSyntax(_syntaxTree, nameOfToken, openParan, identifier, closeParan);
         }
 
         private ExpressionSyntax ParseSymbolLiteral()
@@ -478,7 +457,7 @@ namespace LeoLang.CodeAnalysis
             var symbolToken = NextToken();
             var valueToken = MatchToken(SyntaxKind.IdentifierToken);
 
-            return new LiteralExpressionSyntax(new SyntaxToken(SyntaxKind.SymbolLiteral, symbolToken.Position, valueToken.Text, valueToken.Value));
+            return new LiteralExpressionSyntax(_syntaxTree, new SyntaxToken(_syntaxTree, SyntaxKind.SymbolLiteral, symbolToken.Position, valueToken.Text, valueToken.Value));
         }
 
         private ExpressionSyntax ParseBooleanLiteral()
@@ -486,7 +465,7 @@ namespace LeoLang.CodeAnalysis
             var keywordToken = NextToken();
             var value = keywordToken.Kind != SyntaxKind.FalseKeyword;
 
-            return new LiteralExpressionSyntax(keywordToken, value);
+            return new LiteralExpressionSyntax(_syntaxTree, keywordToken, value);
         }
 
         private ExpressionSyntax ParseNameOrCallExpression()
@@ -503,7 +482,7 @@ namespace LeoLang.CodeAnalysis
         {
             var identifierToken = NextToken();
 
-            return new NameExpressionSyntax(identifierToken);
+            return new NameExpressionSyntax(_syntaxTree, identifierToken);
         }
 
         private TypeClauseSyntax ParseOptionalTypeClause()
@@ -518,7 +497,7 @@ namespace LeoLang.CodeAnalysis
         {
             var colonToken = MatchToken(SyntaxKind.ColonToken);
             var identifier = MatchToken(SyntaxKind.IdentifierToken);
-            return new TypeClauseSyntax(colonToken, identifier);
+            return new TypeClauseSyntax(_syntaxTree, colonToken, identifier);
         }
     }
 }

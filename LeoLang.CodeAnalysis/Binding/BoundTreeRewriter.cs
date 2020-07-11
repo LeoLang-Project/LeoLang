@@ -164,10 +164,6 @@ namespace LeoLang.CodeAnalysis.Binding
                     return RewriteCallExpression((BoundCallExpression)node);
                 case BoundNodeKind.ConversionExpression:
                     return RewriteConversionExpression((BoundConversionExpression)node);
-                case BoundNodeKind.TypeOfExpression:
-                    return RewriteTypeOfExpression((BoundTypeOfExpression)node);
-                case BoundNodeKind.SomeExpression:
-                    return RewriteSomeExpression((BoundSomeExpression)node);
                 case BoundNodeKind.DefaultExpression:
                     return RewriteDefaultExpression((BoundDefaultExpression)node);
                 default:
@@ -182,16 +178,6 @@ namespace LeoLang.CodeAnalysis.Binding
                 return node;
 
             return new BoundConversionExpression(node.Type, expression);
-        }
-
-        private BoundExpression RewriteTypeOfExpression(BoundTypeOfExpression node)
-        {
-            return node;
-        }
-
-        private BoundExpression RewriteSomeExpression(BoundSomeExpression node)
-        {
-            return node.Value;
         }
 
         private BoundExpression RewriteDefaultExpression(BoundDefaultExpression node)

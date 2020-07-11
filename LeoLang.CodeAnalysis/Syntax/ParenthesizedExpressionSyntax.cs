@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace LeoLang.CodeAnalysis.Syntax
+﻿namespace LeoLang.CodeAnalysis.Syntax
 {
     public class ParenthesizedExpressionSyntax : ExpressionSyntax
     {
-        public ParenthesizedExpressionSyntax(SyntaxToken openParenthesizeToken, ExpressionSyntax expression, SyntaxToken closeParenthesizeToken)
+        public ParenthesizedExpressionSyntax(SyntaxTree syntaxTree, SyntaxToken openParenthesizeToken, ExpressionSyntax expression, SyntaxToken closeParenthesizeToken)
+            : base(syntaxTree)
         {
             OpenParenthesizeToken = openParenthesizeToken;
             Expression = expression;
