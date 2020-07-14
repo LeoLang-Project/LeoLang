@@ -76,6 +76,13 @@ namespace LeoLang.CodeAnalysis.Diagnostics
             Report(span, message);
         }
 
+        public void ReportRequiredMethodNotFound(string typeName, string methodName, string[] parameterTypeNames)
+        {
+            var parameterTypeNameList = string.Join(", ", parameterTypeNames);
+            var message = $"The required method '{typeName}.{methodName}({parameterTypeNameList})' cannot be resolved among the given references.";
+            Report(default, message);
+        }
+
         public void ReportInvalidNumber(TextLocation span, string text, TypeSymbol TypeSymbol)
         {
             var message = $"The number {text} isn't valid {TypeSymbol}.";

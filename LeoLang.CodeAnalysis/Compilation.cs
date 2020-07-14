@@ -8,6 +8,7 @@ using System.Threading;
 using LeoLang.CodeAnalysis.Binding;
 using LeoLang.CodeAnalysis.ControlFlow;
 using LeoLang.CodeAnalysis.Diagnostics;
+using LeoLang.CodeAnalysis.Emit;
 using LeoLang.CodeAnalysis.Symbols;
 
 namespace LeoLang.CodeAnalysis
@@ -137,6 +138,13 @@ namespace LeoLang.CodeAnalysis
             if (!program.Functions.TryGetValue(symbol, out var body))
                 return;
             body.WriteTo(writer);
+        }
+
+        public ImmutableArray<Diagnostic> Emit(string moduleName, string[] references, string outputPath)
+        {
+            var program = GetProgram();
+            
+            return Emitter.Emit(program, moduleName, references, outputPath);
         }
     }
 }
