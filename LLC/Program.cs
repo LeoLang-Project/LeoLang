@@ -49,6 +49,9 @@ namespace LLC
             if (moduleName == null)
                 moduleName = Path.GetFileNameWithoutExtension(outputPath);
 
+            referencePaths.Add(typeof(int).Assembly.Location);
+            referencePaths.Add(typeof(Console).Assembly.Location);
+
             var syntaxTrees = new List<SyntaxTree>();
             var hasErrors = false;
 
@@ -86,6 +89,7 @@ namespace LLC
                 Console.Error.WriteDiagnostics(diagnostics);
                 return 1;
             }
+
 
             return 0;
         }

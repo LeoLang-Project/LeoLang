@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "LLC": {
+      "commandName": "Project",
+      "commandLineArgs": "hellworld.leo"
+    }
+  }
+}
