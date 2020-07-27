@@ -4,7 +4,7 @@ using System.Collections.Immutable;
 
 namespace LeoLang.CodeAnalysis.Binding
 {
-    internal sealed class BoundProgram
+    public sealed class BoundProgram
     {
         public BoundProgram(BoundProgram previous,
                             ImmutableArray<Diagnostic> diagnostics,
