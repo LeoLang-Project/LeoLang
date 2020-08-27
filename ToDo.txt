@@ -2,4 +2,8 @@ change syntax of
  [ ] if-statement
  [ ] while-statement
  [ ] for-statement
-design syntax for statements
+
+[ ] design syntax for statements
+
+[ ] implement generic AST representation to allow to be extended
+[ ] turn AST into new generic AST
