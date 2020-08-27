@@ -28,3 +28,4 @@ LeoLang is a general pupose Language with multiple backends. It is a null-free m
   - Planned Backends:
     - MSIL
   - Compiler Plugins (Backend)
+  - Akka.Net Plugin with integrated Syntax
